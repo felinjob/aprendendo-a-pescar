@@ -164,37 +164,33 @@
   id="auditor-igfa"
   data-cais-keep
   aria-labelledby="auditor-igfa-title"
-  class="tufte-full-bleed border border-line-strong bg-elevated p-4 sm:p-6 my-8"
+  class="console-band tufte-full-bleed"
 >
-  <header class="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4 mb-5">
+  <header class="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-4 mb-6">
     <div>
-      <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-        CONFORMIDADE DE TORNEIO · AUDITOR DUPLO IGFA
+      <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage m-0">
+        Conformidade de Torneio · Auditor Duplo IGFA
       </p>
       <h2
         id="auditor-igfa-title"
-        class="font-sans text-xl sm:text-2xl font-bold tracking-tight text-ink mt-1 mb-0"
+        class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-0"
       >
         Auditor de Rigging (2–130 lb), Strike Drag &amp; 6 Cenários de Desclassificação
       </h2>
-      <p class="font-sans text-xs sm:text-sm text-ink-secondary mt-1 mb-0">
-        Calibragem de 1/3 vale apenas para bobina cheia; no rigging, 9,14 m + 9,14 m passa o teto de 12,19 m e anula a equipe no vídeo.
+      <p class="text-sm text-ink-secondary mt-1.5 mb-0 max-w-[66ch]">
+        Calibragem de 1/3 vale apenas para bobina cheia; no rigging, 9,14 m + 9,14 m ultrapassa o teto de 12,19 m e anula a equipe no vídeo.
       </p>
     </div>
 
-    <div
-      role="group"
-      aria-label="Ambiente da prova IGFA"
-      class="inline-flex border border-line-strong bg-surface p-0.5"
-    >
+    <div role="group" aria-label="Ambiente da prova IGFA" class="flex gap-4">
       <button
         type="button"
         aria-pressed={waterType === 'saltwater'}
         onclick={() => switchWater('saltwater')}
-        class="px-3 py-1.5 font-mono text-xs font-bold uppercase cursor-pointer transition-colors {waterType ===
+        class="cursor-pointer bg-transparent border-0 pb-1.5 border-b-2 font-mono text-xs font-semibold uppercase tracking-wider transition-colors {waterType ===
         'saltwater'
-          ? 'bg-ocean text-elevated'
-          : 'bg-transparent text-ink-secondary hover:text-ink'}"
+          ? 'border-ocean text-ink'
+          : 'border-transparent text-ink-muted hover:text-ink'}"
       >
         Água Salgada
       </button>
@@ -202,20 +198,20 @@
         type="button"
         aria-pressed={waterType === 'freshwater'}
         onclick={() => switchWater('freshwater')}
-        class="px-3 py-1.5 font-mono text-xs font-bold uppercase cursor-pointer transition-colors {waterType ===
+        class="cursor-pointer bg-transparent border-0 pb-1.5 border-b-2 font-mono text-xs font-semibold uppercase tracking-wider transition-colors {waterType ===
         'freshwater'
-          ? 'bg-ocean text-elevated'
-          : 'bg-transparent text-ink-secondary hover:text-ink'}"
+          ? 'border-ocean text-ink'
+          : 'border-transparent text-ink-muted hover:text-ink'}"
       >
         Água Doce
       </button>
     </div>
   </header>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
     <!-- CÁLCULO 1: DRAG & RIGGING (2 LB A 130 LB) -->
-    <div class="lg:col-span-7 flex flex-col gap-4">
-      <div class="border border-line bg-surface p-4">
+    <div class="lg:col-span-7 flex flex-col gap-6">
+      <div>
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
           <span class="font-mono text-xs font-bold uppercase tracking-wider text-ink">
             1. Classe de Linha IGFA (2 lb a 130 lb)
@@ -243,7 +239,7 @@
       </div>
 
       <!-- Sliders de Rigging + Bobina -->
-      <div class="border border-line bg-surface p-4 flex flex-col gap-4">
+      <div class="border-t border-line pt-5 flex flex-col gap-4">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line pb-2.5">
           <span class="font-mono text-xs font-bold uppercase tracking-wider text-ink">
             2. Matemática Seca do Rigging ({waterType === 'freshwater'
@@ -417,12 +413,12 @@
     </div>
 
     <!-- CÁLCULO 2: MINI-AUDITOR IGFA (6 CENÁRIOS) -->
-    <div class="lg:col-span-5 border border-line bg-surface p-4 flex flex-col gap-3">
+    <div class="lg:col-span-5 border-t border-line pt-5 lg:border-t-0 lg:pt-0 lg:border-l lg:border-line lg:pl-7 flex flex-col gap-3">
       <div>
-        <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-          MINI-AUDITOR DE CONVÉS · 6 CENÁRIOS
+        <p class="font-mono text-[11px] font-semibold uppercase tracking-widest text-salvage m-0">
+          Mini-Auditor de Convés · 6 Cenários
         </p>
-        <h3 class="font-sans text-base font-bold text-ink mt-1 mb-0">
+        <h3 class="font-display text-lg font-semibold text-ink mt-1 mb-0">
           Veredicto Instantâneo da Auditoria
         </h3>
       </div>

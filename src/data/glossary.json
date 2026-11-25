@@ -1,44 +1,268 @@
 [
   {
-    "id": "sancocho",
-    "term": "Sancocho",
-    "shortDef": "Tensionar a isca natural cedo demais no ataque de um marlin, recolhendo de volta apenas a cabeça da isca.",
-    "causalMechanism": "Peixes de bico batem e abocanham a presa de lado antes de girá-la para engolir; subir o drag sem conceder os segundos de drop-back em freespool arranca o corpo do ballyhoo antes que o circle hook deslize até a dobradiça da mandíbula."
+    "id": "talude",
+    "term": "Talude (O Corte)",
+    "category": "Biologia & Lei",
+    "shortDef": "Queda abrupta do fundo oceânico onde a plataforma continental despenca de 100–200 m para além de 1.000 m.",
+    "causalMechanism": "As correntes profundas batem nessa parede submarina e sobem trazendo nutrientes frios, concentrando plâncton, cardumes de isca e grandes pelágicos de bico entre 43 e 55 MN da costa fluminense."
   },
   {
-    "id": "repiquete",
-    "term": "Repiquete",
-    "shortDef": "Subida brusca do nível do rio por chuvas nas cabeceiras durante a vazante, dispersando os peixes na mata alagada.",
-    "causalMechanism": "A inversão hidrológica reabre o igapó inundado; com abrigo infinito e forragem espalhada sob a floresta onde o casco não entra, o tucunaré-açu abandona as pontas de praia e apenas reboja sem fechar o ataque até o rio estabilizar."
+    "id": "ressurgencia",
+    "term": "Ressurgência",
+    "category": "Biologia & Lei",
+    "shortDef": "Afloramento de águas profundas frias (até 14°C em Cabo Frio) ricas em nutrientes até a superfície.",
+    "causalMechanism": "O vento Nordeste contínuo empurra a camada superficial quente para o largo; a massa fria abissal sobe para preencher o vazio, explodindo a cadeia alimentar mas bloqueando espécies de água quente quando chega gelada à costa."
   },
   {
     "id": "high-sticking",
-    "term": "High-sticking",
-    "shortDef": "Erguer exageradamente a vara na vertical durante a briga, transferindo toda a carga para a ponteira fina e fraturando o carbono.",
-    "causalMechanism": "Acima de 60° de elevação, o blank perde o braço de amortecimento da seção média e concentra um raio de curvatura crítico na parede delgada da ponteira, colapsando as fibras de grafite por compressão instantânea."
+    "term": "High-Sticking",
+    "category": "Mecânica & Tralha",
+    "shortDef": "Erro mecânico de levantar a vara acima de 65°–90° sob carga pesada, sobretudo perto do barco.",
+    "causalMechanism": "Concentra toda a tensão em poucos centímetros da ponteira fina de carbono em vez de distribuí-la até a base (butt), causando colapso imediato das paredes do tubo por compressão."
+  },
+  {
+    "id": "wind-on-leader",
+    "term": "Wind-On Leader",
+    "category": "Mecânica & Tralha",
+    "shortDef": "Líder grosso encamisado em luva de Dacron/hollow core ligado loop-to-loop à linha dupla.",
+    "causalMechanism": "Passa sem trancos pelos passadores direto para o carretel, permitindo ao pescador trazer o peixe até o costado sem que o marinheiro precise segurar o líder na mão sob carga."
+  },
+  {
+    "id": "drop-back",
+    "term": "Drop-Back",
+    "category": "Oceânica & Cais",
+    "shortDef": "Abertura imediata da carretilha para freespool no instante em que o peixe de bico ataca o pitch bait.",
+    "causalMechanism": "Simula uma presa atordoada ou morta afundando, dando tempo para o marlin engolir a isca e virar a cabeça — momento em que o circle hook desliza para o canto da boca ao fechar o freio."
+  },
+  {
+    "id": "sancocho",
+    "term": "Sancocho",
+    "category": "Oceânica & Cais",
+    "shortDef": "Perda de um peixe de bico no bait-and-switch por tensionar a linha ou fisgar cedo demais.",
+    "causalMechanism": "Fechar a alavanca ou dar ferrada antes de o marlin engolir e virar arranca o circle hook da boca, deixando muitas vezes apenas o corpo mutilado do ballyhoo na linha."
   },
   {
     "id": "balseiro",
-    "term": "Balseiro",
-    "shortDef": "Tronco, boia desgarrada ou mancha de sargaço flutuando em alto-mar que concentra cardumes e dourados.",
-    "causalMechanism": "No deserto aberto da zona pelágica, qualquer sombra sólida forma um ponto de agregação para crustáceos e peixes forrageiros em busca de refúgio, atraindo predadores como dourados-do-mar (mahi-mahi) e bijupirás."
-  },
-  {
-    "id": "estofo",
-    "term": "Estofo / Reponto",
-    "shortDef": "Intervalo breve de água parada na transição entre maré enchente e vazante, onde a atividade alimentar cai ao mínimo.",
-    "causalMechanism": "Sem fluxo hidrodinâmico para varrer camarões, tatuíras e pequenos peixes pelas valas e canais, cessa a esteira de emboscada; predadores costeiros poupam energia e suspendem a caça ativa até a maré voltar a correr."
+    "term": "Balseiro (Weedline)",
+    "category": "Oceânica & Cais",
+    "shortDef": "Linha flutuante de sargaço, galhos, troncos ou detritos reunidos por convergência de correntes.",
+    "causalMechanism": "Funciona como oásis de sombra e abrigo em mar aberto: peixes-isca se escondem embaixo, atraindo dourados, wahoos e peixes de bico que patrulham toda a borda."
   },
   {
     "id": "acender",
     "term": "Acender (Lit Up)",
-    "shortDef": "Exibição súbita de listras azul-elétricas e violetas brilhantes no marlin ou peixe-vela ao entrar em caça atrás do teaser.",
-    "causalMechanism": "A descarga nervosa predatória expande cromatóforos e iridóforos na pele do peixe de bico, sinalizando excitação máxima no instante exato de recolher o teaser e entregar o pitch bait na água limpa."
+    "category": "Oceânica & Cais",
+    "shortDef": "Explosão instantânea de cor azul-cobalto neon nas faixas laterais do marlin ou sailfish ao atacar.",
+    "causalMechanism": "Descarga hormonal de excitação predatória sobre os cromatóforos da pele: sinal visual inequívoco na esteira de que o peixe está em modo de caça ativa."
   },
   {
-    "id": "encachorrar",
-    "term": "Encachorrar",
-    "shortDef": "Manter um exemplar fisgado dentro d'água junto à popa para segurar o restante do cardume curioso ao alcance dos arremessos.",
-    "causalMechanism": "Cardumes de dourados-do-mar operam sob forte coesão social e competição alimentar; manter o primeiro peixe ativo na água ao lado do barco trava o grupo inteiro na sombra do casco."
+    "id": "backing-down",
+    "term": "Backing Down (Dar Ré)",
+    "category": "Oceânica & Cais",
+    "shortDef": "Manobra em que o comandante engata ré agressiva perseguindo um peixe de bico em corrida.",
+    "causalMechanism": "Reduz drasticamente a distância entre o barco e o peixe, recupera centenas de metros de linha na bobina e corta o risco de estouro pelo efeito bobina vazia e arrasto hidrodinâmico."
+  },
+  {
+    "id": "bait-and-switch",
+    "term": "Bait-and-Switch",
+    "category": "Oceânica & Cais",
+    "shortDef": "Coreografia oceânica de atrair peixes de bico com teasers sem anzol e lançar um pitch bait na frente do bico.",
+    "causalMechanism": "Separa o estímulo visual (cadeia de lulas/dredges) da captura com circle hook, multiplicando a taxa de ferrada limpa no canto da boca."
+  },
+  {
+    "id": "ballyhoo",
+    "term": "Ballyhoo (Agulhinha)",
+    "category": "Oceânica & Cais",
+    "shortDef": "Peixe alongado de bico fino (Hemiramphus), padrão mundial de isca natural para corrico oceânico.",
+    "causalMechanism": "Seu perfil hidrodinâmico fino permite nadar reto a 7–8 nós sem girar na água quando os olhos são removidos, a espinha amaciada e o chumbo de queixo (chin weight) balanceado."
+  },
+  {
+    "id": "calca-branca",
+    "term": "Calça Branca",
+    "category": "Oceânica & Cais",
+    "shortDef": "Gíria de cais para o novato na pesca oceânica — frequentemente de roupa clara inadequada ao sangue e sal.",
+    "causalMechanism": "Identifica quem ainda desconhece etiqueta de convés, hierarquia de bandeiras ou mecânica de alavanca; respeito se ganha ouvindo a tripulação e operando limpo."
+  },
+  {
+    "id": "chum",
+    "term": "Chum / Ceva (Chumming)",
+    "category": "Oceânica & Cais",
+    "shortDef": "Trilha contínua de pedaços de sardinha, sangue e óleo lançada na correnteza atrás do barco.",
+    "causalMechanism": "Cria um corredor olfativo contínuo (chum slick) que puxa atuns, dourados e peixes de fundo contra a corrente diretamente até a zona onde as iscas com anzol derivam soltas."
+  },
+  {
+    "id": "dredge",
+    "term": "Dredge",
+    "category": "Oceânica & Cais",
+    "shortDef": "Armação radial submersa tipo guarda-chuva carregando dezenas de iscas naturais ou lulas plásticas sem anzol.",
+    "causalMechanism": "Simula um cardume compacto completo debaixo da esteira, gerando assinatura visual e de pressão que arrasta marlins profundos até a popa."
+  },
+  {
+    "id": "fish-on",
+    "term": "Fish On!",
+    "category": "Oceânica & Cais",
+    "shortDef": "Grito padrão de convés anunciando peixe ferrado na linha.",
+    "causalMechanism": "Dispara protocolo imediato de equipe: todos os demais recolhem as outras linhas para limpar a popa, o comandante alinha o barco e libera espaço para o pescador titular."
+  },
+  {
+    "id": "freespool",
+    "term": "Freespool",
+    "category": "Mecânica & Tralha",
+    "shortDef": "Posição de alavanca totalmente recuada onde o carretel gira livre sem resistência de freio.",
+    "causalMechanism": "Essencial para dar linha no drop-back ou descer jigs rápidos; exige controle leve do polegar na borda da bobina para impedir a cabeleira por inércia."
+  },
+  {
+    "id": "gaff",
+    "term": "Gaff (Bicheiro)",
+    "category": "Oceânica & Cais",
+    "shortDef": "Haste longa com gancho metálico usada exclusivamente para embarcar peixes destinados ao consumo (gelo).",
+    "causalMechanism": "Perfura o corpo do peixe com trauma letal — estritamente proibido em qualquer espécie de pesque-e-solte, torneios de liberação ou espécies protegidas."
+  },
+  {
+    "id": "grander",
+    "term": "Grander",
+    "category": "Oceânica & Cais",
+    "shortDef": "Marlin ou atum acima de 1.000 libras (453,6 kg), marco supremo da pesca oceânica mundial.",
+    "causalMechanism": "O recorde mundial absoluto IGFA de Marlin Azul (636 kg / 1.402 lb) foi capturado no Brasil, em Vitória-ES, por Paulo Amorim em 1992."
+  },
+  {
+    "id": "leadering",
+    "term": "Leadering (Segurar o Líder)",
+    "category": "Oceânica & Cais",
+    "shortDef": "Ato técnico de o marinheiro segurar apenas o líder com luvas na fase final da briga.",
+    "causalMechanism": "Em torneios IGFA, tocar o líder já valida a soltura oficial; porém o marinheiro jamais pode enrolar a linha na mão sem soltura rápida nem tocar na linha dupla."
+  },
+  {
+    "id": "outrigger",
+    "term": "Outrigger (Tangão)",
+    "category": "Oceânica & Cais",
+    "shortDef": "Longas hastes laterais de alumínio ou carbono projetadas para fora do casco com clipes de liberação.",
+    "causalMechanism": "Alargam a frente de corrico para fora da espuma, impedem enrosco nas curvas, elevam o ângulo das linhas e servem de mastro (boreste) para içar as bandeiras de captura."
+  },
+  {
+    "id": "pitch-bait",
+    "term": "Pitch Bait",
+    "category": "Oceânica & Cais",
+    "shortDef": "Vara leve já armada com isca natural e circle hook, pronta na mão para arremesso imediato.",
+    "causalMechanism": "Permite atacar alvos avistados no teaser ou na superfície em segundos, apresentando a isca natural antes que o predador perca interesse."
+  },
+  {
+    "id": "spread",
+    "term": "Spread (Padrão de Corrico)",
+    "category": "Oceânica & Cais",
+    "shortDef": "Arranjo geométrico das 4 a 7 iscas distribuídas atrás da popa em diferentes ondas e distâncias.",
+    "causalMechanism": "Cada posição (Short/Long Corner, Short/Long Rigger, Shotgun) simula uma presa em posição distinta do cardume sem cruzar linhas nas manobras."
+  },
+  {
+    "id": "strike-drag",
+    "term": "Strike Drag (Posição Strike)",
+    "category": "Mecânica & Tralha",
+    "shortDef": "Batente calibrado na alavanca da carretilha entre 25% e 33% da resistência da linha com bobina cheia.",
+    "causalMechanism": "Cria teto mecânico previsível que impede o pescador de travar demais o freio no calor da briga, preservando margem para o aumento exponencial de tensão quando a bobina esvazia."
+  },
+  {
+    "id": "teaser",
+    "term": "Teaser (Provocador)",
+    "category": "Oceânica & Cais",
+    "shortDef": "Isca ruidosa, espelho ou cadeia de lulas sem anzol puxada perto da popa.",
+    "causalMechanism": "Gera bolhas, vibração e brilho que acordam predadores profundos e os conduzem para a zona de ataque das linhas armadas."
+  },
+  {
+    "id": "wiring",
+    "term": "Wiring",
+    "category": "Oceânica & Cais",
+    "shortDef": "Condução final do peixe ao costado segurando o líder de cabo de aço ou monofilamento grosso.",
+    "causalMechanism": "Usa técnica de dobra (wrap) com luvas específicas para controlar a cabeça do marlin na hora do tagging ou remoção do anzol sem risco de amputação em arranque súbito."
+  },
+  {
+    "id": "blank",
+    "term": "Blank",
+    "category": "Mecânica & Tralha",
+    "shortDef": "Haste estrutural nua da vara (fibra de carbono, vidro ou composto) sem passadores nem cabo.",
+    "causalMechanism": "Define simultaneamente a ação (ponto de dobra), a potência (força necessária para dobrar) e a sensibilidade tátil transmitida à mão."
+  },
+  {
+    "id": "cabeleira",
+    "term": "Cabeleira (Backlash)",
+    "category": "Mecânica & Tralha",
+    "shortDef": "Emaranhado de linha dentro do carretel da carretilha durante o arremesso.",
+    "causalMechanism": "Ocorre quando o carretel continua girando por inércia mais rápido do que a isca puxa linha ao desacelerar no ar ou tocar a água sem frenagem do polegar."
+  },
+  {
+    "id": "arbor-slip",
+    "term": "Arbor Slip (Giro em Falso)",
+    "category": "Mecânica & Tralha",
+    "shortDef": "Escorregamento de todo o bloco de linha multifilamento sobre o eixo liso da bobina.",
+    "causalMechanism": "O multifilamento liso não adere ao alumínio polido; sem uma cama de 10–15 voltas de monofilamento ou fita no eixo, o drag parece quebrado enquanto o peixe corre."
+  },
+  {
+    "id": "cpt-ipt",
+    "term": "CPT / IPT (Recolhimento Real)",
+    "category": "Mecânica & Tralha",
+    "shortDef": "Centímetros (ou polegadas) reais de linha recolhidos a cada volta completa da manivela.",
+    "causalMechanism": "Depende de π × diâmetro da bobina × relação de recolhimento (gear ratio): dois equipamentos 6.2:1 podem ter velocidades totalmente distintas se os carretéis tiverem diâmetros diferentes."
+  },
+  {
+    "id": "barotrauma",
+    "term": "Barotrauma",
+    "category": "Biologia & Lei",
+    "shortDef": "Expansão violenta dos gases da bexiga natatória ao subir rapidamente peixes de fundo (>15–20 m).",
+    "causalMechanism": "Pela Lei de Boyle, a queda de pressão expande o gás interno, projetando o estômago pela boca e impedindo o peixe de mergulhar; reverte-se com descompressor (SeaQualizer/Moro) devolvendo o peixe ao fundo."
+  },
+  {
+    "id": "shock-leader",
+    "term": "Shock Leader (Arranque)",
+    "category": "Água Doce & Costão",
+    "shortDef": "Segmento de linha grossa (~2× o tamanho da vara + 5 voltas na bobina) usado na pesca de praia.",
+    "causalMechanism": "Absorve o pico violento de aceleração de chumbadas de 100–200 g no arremesso longo, evitando que a linha principal fina (0,18–0,25 mm) arrebente e chicoteie."
+  },
+  {
+    "id": "skipping",
+    "term": "Skipping (Arremesso Quicado)",
+    "category": "Água Doce & Costão",
+    "shortDef": "Técnica de fazer uma isca soft quicar várias vezes na superfície da água como uma pedra chata.",
+    "causalMechanism": "Envia a isca horizontalmente sob galhadas baixas, raízes de mangue e flutuantes onde robalos e tucunarés emboscam protegidos de arremessos parabólicos."
+  },
+  {
+    "id": "zara-stick",
+    "term": "Zara (Walk the Dog) & Stick",
+    "category": "Água Doce & Costão",
+    "shortDef": "Trabalhos rítmicos de ponta de vara em iscas de superfície sem barbela.",
+    "causalMechanism": "Toques curtos com folga de linha fazem a Zara deslizar em zigue-zague contínuo na flor d'água e o Stick mergulhar e boiar como peixe agonizando."
+  },
+  {
+    "id": "piracema",
+    "term": "Piracema (Defeso Continental)",
+    "category": "Biologia & Lei",
+    "shortDef": "Migração reprodutiva anual de peixes de água doce rio acima durante a cheia (em geral 1º nov a 28 fev).",
+    "causalMechanism": "Durante o defeso é proibido pescar espécies nativas ou retê-las conforme portaria da bacia, protegendo as matrizes carregadas de ovas que garantem o estoque dos anos seguintes."
+  },
+  {
+    "id": "rebojo",
+    "term": "Rebojo",
+    "category": "Água Doce & Costão",
+    "shortDef": "Redemoinho súbito na superfície causado por um grande predador girando ou errando o bote na isca.",
+    "causalMechanism": "Indica presença ativa imediata: manter a isca em trabalho cadenciado ou lançar uma isca de fundo (jig/soft) no mesmo ponto costuma acionar o segundo ataque."
+  },
+  {
+    "id": "mare-sizigia",
+    "term": "Maré de Sizígia vs. Quadratura",
+    "category": "Biologia & Lei",
+    "shortDef": "Marés de amplitude máxima (Luas Cheia e Nova) versus marés de amplitude suave (Quartos Crescente e Minguante).",
+    "causalMechanism": "A sizígia gera correntes fortes que turvam o estuário e drenam mangues; a quadratura entrega água mais limpa e correnteza moderada, favorecendo artificiais e jigs verticais."
+  },
+  {
+    "id": "cota-zero",
+    "term": "Cota Zero / Transporte Zero",
+    "category": "Biologia & Lei",
+    "shortDef": "Regime estadual ou federal que proíbe o transporte, armazenamento e abate de espécies nativas, restringindo ao pesque-e-solte.",
+    "causalMechanism": "Vigente em estados como MT (12 espécies até 2029), MS (Dourado proibido até março/2027), GO, TO e MG — transforma o peixe vivo em ativo econômico recorrente do turismo de pesca."
+  },
+  {
+    "id": "termoclina",
+    "term": "Termoclina",
+    "category": "Biologia & Lei",
+    "shortDef": "Camada intermediária estreita onde a temperatura da água cai bruscamente entre o epilímnio quente e o hipolímnio frio.",
+    "causalMechanism": "Abaixo da termoclina o oxigênio dissolvido frequentemente despenca em represas e lagos estratificados; os predadores concentram-se logo acima ou na borda dessa faixa térmica."
   }
 ]

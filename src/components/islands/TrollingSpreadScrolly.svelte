@@ -294,22 +294,22 @@
   id="corrico-scrolly"
   data-study-only
   aria-labelledby="corrico-scrolly-title"
-  class="tufte-full-bleed border border-line-strong bg-elevated p-4 sm:p-6"
+  class="console-band tufte-full-bleed"
   bind:this={containerEl}
 >
-  <header class="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4 mb-5">
+  <header class="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-4 mb-6">
     <div>
-      <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-        TÁTICA OCEÂNICA · SCROLLYTELLING INTERATIVO
+      <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage m-0">
+        Tática Oceânica · Scrollytelling Interativo
       </p>
       <h2
         id="corrico-scrolly-title"
-        class="font-sans text-xl sm:text-2xl font-bold tracking-tight text-ink mt-1 mb-0"
+        class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-0"
       >
         Geometria do Spread &amp; Coreografia de Bait-and-Switch
       </h2>
-      <p class="font-sans text-xs sm:text-sm text-ink-secondary mt-1 mb-0">
-        Role as etapas para mover o padrão de esteira, ou ative o Modo Oclusão para testar o reconhecimento de linhas e aves marinhas.
+      <p class="text-sm text-ink-secondary mt-1.5 mb-0 max-w-[66ch]">
+        Role ou clique nas etapas para mover o padrão de esteira, ou ative o Modo Oclusão para testar o reconhecimento de linhas e aves.
       </p>
     </div>
 
@@ -318,9 +318,9 @@
         type="button"
         onclick={toggleOcclusionMode}
         aria-pressed={occlusionMode}
-        class="px-3 py-1.5 border font-mono text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors {occlusionMode
+        class="px-3.5 py-2 border font-mono text-xs font-semibold uppercase tracking-wider cursor-pointer transition-colors {occlusionMode
           ? 'border-salvage bg-salvage text-elevated'
-          : 'border-line-strong bg-surface text-ink hover:border-salvage'}"
+          : 'border-line-strong bg-elevated text-ink hover:border-salvage'}"
       >
         {occlusionMode ? 'Mostrar Rótulos' : 'Modo Oclusão (Desafio)'}
       </button>
@@ -880,14 +880,14 @@
     </div>
 
     <!-- COLUNA NARRATIVA DE PASSOS (Scrollama triggers, offset 0.5) -->
-    <div class="flex flex-col gap-4">
+    <div class="divide-y divide-line">
       {#each STEPS as step, idx}
         {@const isActive = activeStep === idx}
         <article
           data-step-index={idx}
-          class="scrolly-step border p-4 sm:p-5 transition-colors {isActive
-            ? 'border-salvage bg-surface'
-            : 'border-line bg-canvas opacity-80 hover:opacity-100'}"
+          class="scrolly-step py-5 px-4 transition-colors {isActive
+            ? 'bg-elevated border-t-2 border-salvage'
+            : 'bg-transparent opacity-75 hover:opacity-100'}"
         >
           <button
             type="button"
@@ -896,7 +896,7 @@
           >
             <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
               <span
-                class="font-mono text-[11px] font-bold uppercase tracking-widest {isActive
+                class="font-mono text-[11px] font-semibold uppercase tracking-widest {isActive
                   ? 'text-salvage'
                   : 'text-ink-muted'}"
               >
@@ -907,18 +907,18 @@
               </span>
             </div>
 
-            <h3 class="font-sans text-lg font-bold tracking-tight text-ink mt-0 mb-2">
+            <h3 class="font-display text-lg font-semibold text-ink mt-0 mb-2">
               {step.title}
             </h3>
 
-            <p class="font-editorial text-sm sm:text-base leading-relaxed text-ink-secondary m-0">
+            <p class="text-sm leading-relaxed text-ink-secondary m-0">
               {step.summary}
             </p>
           </button>
 
           {#if step.warning}
-            <div class="mt-3 border-l-3 border-salvage bg-salvage-soft p-3">
-              <p class="font-mono text-[11px] font-bold text-salvage m-0 leading-snug">
+            <div class="mt-3 pt-2.5 border-t border-salvage/50">
+              <p class="font-mono text-xs font-semibold text-salvage m-0 leading-snug">
                 {step.warning}
               </p>
             </div>

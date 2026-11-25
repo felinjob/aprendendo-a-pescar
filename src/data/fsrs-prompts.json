@@ -1,42 +1,194 @@
 [
   {
-    "id": "igfa-windon-teto-1219",
-    "moduleId": "cap-05",
-    "category": "Foco Mecânico",
-    "question": "Acima da classe 20 lb da IGFA, qual é o limite máximo de comprimento de um wind-on leader se a linha dupla (Bimini Twist) já mede 3,05 m?",
-    "answer": "9,14 m (30 pés), respeitando o teto combinado de 12,19 m (40 pés).",
-    "causalExplanation": "Acima de 20 lb, a IGFA limita linha dupla e líder a 9,14 m individuais, mas trava a soma combinada em 12,19 m — jamais 18,28 m. Com 3,05 m de linha dupla, sobram exatos 9,14 m de wind-on para girar o peixe junto à popa sem handlining e sem desclassificação na auditoria."
+    "id": "cap01-recorde-marlin-azul",
+    "module": "cap-01",
+    "type": "retrieval",
+    "question": "Qual o peso do recorde mundial absoluto IGFA de Marlin-Azul, onde foi batido e qual pescador brasileiro o detém?",
+    "answer": "636 kg (1.402 lb 2 oz), capturado em Vitória (ES) por Paulo Amorim em 29 de fevereiro de 1992 — recorde imbatível há mais de três décadas.",
+    "mnemonicCue": "Vitória-ES · 1992 · 636 kg · Paulo Amorim (Grander brasileiro)."
   },
   {
-    "id": "circle-hook-non-offset",
-    "moduleId": "cap-06",
-    "category": "Foco Conservação",
-    "question": "Por que regulamentos rigorosos de peixes de bico exigem circle hook sem offset (deslocamento lateral) em iscas naturais?",
-    "answer": "Porque o offset severo (~15°) anula a proteção anatômica do circle hook, elevando a fisgada profunda de 2% para 44% — patamar quase idêntico ao anzol J (46%).",
-    "causalExplanation": "Sem deslocamento lateral, a ponta curvada para dentro desliza para fora da garganta sob recolhimento contínuo e só gira para travar na dobradiça do canto da mandíbula (85% das fisgadas), reduzindo em 20,75× o risco de sangramento."
+    "id": "cap01-igfa-slams",
+    "module": "cap-01",
+    "type": "retrieval",
+    "question": "Qual a diferença operacional entre um IGFA Billfish Grand Slam, um Super Grand Slam e um Royal Slam?",
+    "answer": "Grand Slam = 3 espécies diferentes de peixes de bico no mesmo dia; Super Grand Slam = 4 espécies no mesmo dia; Royal Slam = capturar ao longo da vida todas as 9 espécies reconhecidas de peixes de bico (incl. Broadbill Swordfish).",
+    "mnemonicCue": "3 no dia (Grand) · 4 no dia (Super) · todas as 9 na vida (Royal)."
   },
   {
-    "id": "lavagem-carretilha-drag",
-    "moduleId": "cap-08",
-    "category": "Foco Saliência (Cais)",
-    "question": "Você lava a carretilha oceânica após a pescaria. Qual atitude mecânica obrigatória toma ANTES da água doce e qual DEPOIS da secagem?",
-    "answer": "Travar firmemente o drag ANTES de molhar; soltar totalmente o drag DEPOIS de seca para guardar.",
-    "causalExplanation": "Fechar o freio antes do enxágue suave comprime a pilha de discos e impede a entrada de água e sal nas arruelas internas; aliviar totalmente a alavanca ou estrela ao guardar evita comprimir e deformar os discos de carbono durante o armazenamento."
+    "id": "cap01-owc-2026-sonar",
+    "module": "cap-01",
+    "type": "retrieval",
+    "question": "Por que o Offshore World Championship (OWC 2026) alterou a pontuação para barcos com Omni Sonar 360°?",
+    "answer": "Porque sonares omnidirecionais retráteis (como o Furuno CSH8L/CSH10) dão vantagem desproporcional rastreando marlins a centenas de metros sob o casco; a pontuação maior agora premia solturas realizadas sem Omni Sonar.",
+    "mnemonicCue": "Equilíbrio esportivo: soltura sem Omni vale mais pontos no OWC."
   },
   {
-    "id": "peroa-portaria-1667-2026",
-    "moduleId": "cap-07",
-    "category": "Foco Legal (Portarias 2026)",
-    "question": "Em novembro de 2026, você fisga um peroá (Balistes capriscus) no parcel. Pode embarcar para consumo próprio?",
-    "answer": "Não. Proibição total de captura, retenção e transporte em pleno vigor desde 27 de outubro de 2026 (Portaria GM/MMA nº 1.667/2026).",
-    "causalExplanation": "Enquadrado como Em Perigo (EN) sem Plano de Recuperação ativo nas Portarias 1.666 e 1.667/2026, o peroá encerrou seu prazo de adaptação de 180 dias em 27/10/2026; captura incidental só não gera autuação quando o peixe é devolvido imediatamente à água."
+    "id": "cap02-bobina-vazia",
+    "module": "cap-02",
+    "type": "calculation",
+    "question": "Você calibra o Strike Drag em 15 lb (30% de uma linha 50 lb) com bobina cheia. Se um marlin esvazia metade do diâmetro da bobina (50%), qual a tensão real na linha sem mexer na alavanca?",
+    "answer": "Cerca de 30 lb (60% da classe) apenas pela redução do braço de alavanca — sem contar o arrasto hidrodinâmico de centenas de metros de linha na água. É obrigatório recuar a alavanca durante corridas longas.",
+    "mnemonicCue": "Raio cai pela metade → força de puxada dobra (T_eff = T_0 × 100 / %cheio)."
   },
   {
-    "id": "tiagra-50w-bobina-vazia",
-    "moduleId": "cap-02",
-    "category": "Foco de Duelo 50W",
-    "question": "Numa briga prolongada, por que um pescador com uma Shimano Tiagra 50W precisa reduzir o drag à medida que o carretel esvazia?",
-    "answer": "Porque o menor diâmetro de linha no carretel diminui o braço de alavanca sob torque constante dos discos, multiplicando a tensão efetiva sobre a linha.",
-    "causalExplanation": "Os discos internos exercem torque fixo no eixo; quando a corrida reduz o raio útil da bobina pela metade, a força linear necessária para girar o carretel dobra — somada ao arrasto hidrodinâmico de centenas de metros submersos. Avançar a alavanca em pânico estoura o conjunto."
+    "id": "cap02-high-sticking",
+    "module": "cap-02",
+    "type": "retrieval",
+    "question": "Por que levantar uma vara de carbono extra-rápida acima de 65°–90° (high-sticking) perto do barco costuma fraturar o blank mesmo abaixo da libragem da linha?",
+    "answer": "Porque a carga deixa de se distribuir progressivamente até a base (butt) e concentra-se em poucos centímetros do tubo fino da ponteira, causando flambagem e colapso estrutural por compressão.",
+    "mnemonicCue": "Vara não é guindaste: 45° no combate, freio faz o trabalho."
+  },
+  {
+    "id": "cap02-fluorocarbono-optica",
+    "module": "cap-02",
+    "type": "retrieval",
+    "question": "Qual o mecanismo físico que torna o líder de fluorocarbono menos visível na água do que o monofilamento de nylon?",
+    "answer": "Seu índice de refração (1,42) é muito mais próximo ao da água (1,33) do que o do nylon (1,52), reduzindo o reflexo luminoso na interface; além disso, sua densidade (1,78 g/cm³) faz o líder afundar em vez de boiar.",
+    "mnemonicCue": "Água 1,33 · Fluoro 1,42 (afunda 1,78) · Nylon 1,52."
+  },
+  {
+    "id": "cap02-corrosao-galvanica",
+    "module": "cap-02",
+    "type": "retrieval",
+    "question": "Por que nunca se deve usar luvas (crimps) de cobre em cabo de aço inox no mar, nem de alumínio em fluorocarbono sem proteção?",
+    "answer": "Em água salgada (eletrólito), cobre + aço inox cria pilha galvânica que corrói o cabo por dentro; usa-se luva de alumínio para monofilamento grosso e luva de cobre/latão duplo (double-barrel) para fluorocarbono grosso ou cabo revestido, sempre deixando uma pequena margem nas pontas sem esmagar a borda.",
+    "mnemonicCue": "Água salgada = eletrólito. Metal errado = corrosão oculta."
+  },
+  {
+    "id": "cap02-arbor-slip",
+    "module": "cap-02",
+    "type": "retrieval",
+    "question": "O que causa o arbor slip (giro em falso do bloco de linha) em molinetes e carretilhas com multifilamento e como preveni-lo?",
+    "answer": "O multifilamento liso não gera atrito suficiente contra o eixo metálico liso; sob tensão forte, todo o rolo gira em falso simulando falha no drag. Previne-se fazendo uma cama de 10–15 voltas de monofilamento (ou fita adesiva própria) no eixo.",
+    "mnemonicCue": "Nunca multi puro direto no alumínio liso."
+  },
+  {
+    "id": "cap03-vhf-canais",
+    "module": "cap-03",
+    "type": "retrieval",
+    "question": "Qual a função exclusiva do Canal 16 no VHF marítimo, qual canal é usado para barco-a-barco de pesca e em qual modo (U/I) deve operar no Brasil?",
+    "answer": "Canal 16 (156,8 MHz) é exclusivamente para socorro (Mayday), urgência (Pan-Pan), segurança (Sécurité) e chamada inicial; Canal 72 é barco-a-barco de pesca (68/69 clubes, 70 DSC); no Brasil opera-se em modo Americano (U) com licença Anatel e MMSI de 9 dígitos.",
+    "mnemonicCue": "16 emergência · 68/69 clube · 70 DSC · 72 barco-barco · Modo U."
+  },
+  {
+    "id": "cap03-chirp-frequencias",
+    "module": "cap-03",
+    "type": "retrieval",
+    "question": "Quando selecionar Low CHIRP (~28–75 kHz) em vez de High CHIRP (~130–250 kHz) no sonar do barco?",
+    "answer": "Low CHIRP tem ondas mais longas que perdem menos energia e penetram grandes profundidades (até ~760 m no Airmar B175L para o corte/talude); High CHIRP oferece máxima definição para separar cardumes de isca e arcos rasos perto da superfície.",
+    "mnemonicCue": "Frequência baixa = vai fundo (talude). Frequência alta = alta nitidez no raso."
+  },
+  {
+    "id": "cap04-spread-short-rigger",
+    "module": "cap-04",
+    "type": "visual-occlusion",
+    "question": "No spread clássico de 5 linhas, qual posição corre exatamente na fronteira entre a espuma branca da esteira e a água azul limpa?",
+    "answer": "Short Rigger (~20–35 m), suspensa pelo clipe interno do outrigger — historicamente uma das posições mais produtivas para peixes de bico e dourados que caçam pela borda visual.",
+    "mnemonicCue": "Short/Long Corner = espuma. Short Rigger = fronteira. Long Rigger = água limpa."
+  },
+  {
+    "id": "cap04-sancocho-dropback",
+    "module": "cap-04",
+    "type": "retrieval",
+    "question": "Como evitar o sancocho no bait-and-switch quando um marlin ataca o pitch bait armado com circle hook?",
+    "answer": "Abrir imediatamente para freespool (drop-back) deixando o peixe engolir e virar a cabeça; jamais dar fisgada seca. Apenas empurrar a alavanca suavemente até Strike para a linha esticar e deslizar o circle hook até o canto da boca.",
+    "mnemonicCue": "Drop-back livre → peixe vira → alavanca suave em Strike (zero ferrada)."
+  },
+  {
+    "id": "cap04-absorcao-vermelho",
+    "module": "cap-04",
+    "type": "retrieval",
+    "question": "Como um peixe percebe uma isca vermelha viva a 20 metros de profundidade em água azul limpa e por quê?",
+    "answer": "Como silhueta cinza-escura ou preta: as ligações O–H da água absorvem fótons vermelhos ~100× mais rápido que azuis, extinguindo o vermelho já entre 4,5 e 6 metros de profundidade.",
+    "mnemonicCue": "Vermelho some a 5 m · Laranja/Amarelo 10–14 m · Verde 20–24 m · Só Azul >30 m."
+  },
+  {
+    "id": "cap04-falacia-barometrica",
+    "module": "cap-04",
+    "type": "calculation",
+    "question": "A quanto equivale em coluna d'água uma queda barométrica severa de 0,09 inHg (~3 hPa) antes de uma tempestade?",
+    "answer": "Apenas ~3 centímetros de profundidade (0,003 atm) — insignificante frente às dezenas de metros que um peixe sobe e desce em segundos. O que realmente altera a atividade são temperatura, luminosidade (nuvens/turbidez) e vento/ressurgência.",
+    "mnemonicCue": "0,09 inHg = 3 cm de água. Barômetro não dói na bexiga natatória."
+  },
+  {
+    "id": "cap04-aves-indicadoras",
+    "module": "cap-04",
+    "type": "visual-occlusion",
+    "question": "Qual a diferença de leitura tática entre Trinta-réis, Atobás e Fragatas caçando em mar aberto?",
+    "answer": "Trinta-réis mergulham raso (~1 m) indicando isca na flor d'água; Atobás mergulham em picada profunda (até 20 m) revelando predadores empurrando cardumes de baixo; Fragatas não pousam na água (sem óleo nas penas) e acompanham dourados e marlins de alto.",
+    "mnemonicCue": "Trinta-réis = 1 m · Atobá = picada 20 m · Fragata = seca no alto (dourado/bico)."
+  },
+  {
+    "id": "cap04-slow-pitch-peso",
+    "module": "cap-04",
+    "type": "calculation",
+    "question": "Pela regra prática do Slow Pitch Jigging, qual o peso inicial aproximado de jig para trabalhar um parcel a 90 metros (~295 pés) com corrente moderada?",
+    "answer": "Cerca de 300 g (regra de ~1 grama por pé de profundidade, ou ~3,3 g por metro, ajustando para cima se a deriva/corrente apertar para manter a linha próxima da vertical).",
+    "mnemonicCue": "Slow Pitch = 1 g por pé de fundo (~3,3 g/m)."
+  },
+  {
+    "id": "cap05-teto-igfa-combinado",
+    "module": "cap-05",
+    "type": "calculation",
+    "question": "Em água salgada acima de 20 lb (ex.: classe 50 lb), se você monta um Wind-On Leader de 9,14 m (30 pés), qual o limite máximo legal para sua Linha Dupla (Bimini)?",
+    "answer": "No máximo 3,05 m (10 pés), pois embora cada segmento tenha teto individual de 9,14 m, a soma combinada (Dupla + Líder) nunca pode ultrapassar 12,19 m (40 pés).",
+    "mnemonicCue": "9,14 + 3,05 = 12,19 m. Nunca 9,14 + 9,14 (desclassificação automática)."
+  },
+  {
+    "id": "cap05-soltura-oficial-igfa",
+    "module": "cap-05",
+    "type": "retrieval",
+    "question": "Quais são os 3 critérios que validam oficialmente uma soltura (release) de peixe de bico em torneios IGFA?",
+    "answer": "Ocorre assim que o marinheiro toca o líder (leadering), OU o nó/emenda entre linha principal e líder entra na ponteira da vara, OU o peixe é trazido ao costado com identificação inequívoca em vídeo contínuo.",
+    "mnemonicCue": "Toque no líder · Nó na ponteira · Vídeo contínuo provando espécie + soltura."
+  },
+  {
+    "id": "cap05-hierarquia-bandeiras",
+    "module": "cap-05",
+    "type": "visual-occlusion",
+    "question": "Qual a hierarquia correta de topo para base na adriça do tangão de boreste e como se indica um peixe liberado e marcado (tag)?",
+    "answer": "Ordem 1→7: Marlin-Azul (topo) → Marlin-Branco → Sailfish → Atuns → Wahoo → Dourado → Tubarão (base absoluta). Bandeira de ponta-cabeça = Liberado; ponta-cabeça com flâmula 'T' abaixo = Marcado e Liberado.",
+    "mnemonicCue": "Azul no topo, Tubarão na base; ponta-cabeça = C&R; +T = Tag."
+  },
+  {
+    "id": "cap06-circle-offset",
+    "module": "cap-06",
+    "type": "retrieval",
+    "question": "O que acontece com a taxa de fisgada profunda (esôfago/guelra) ao trocar um Circle Hook Inline (0°) por um Circle Hook com Offset de 15°?",
+    "answer": "A fisgada profunda dispara de apenas ~2% para 44% — igualando a taxa letal do anzol J comum. A ponta precisa estar alinhada (inline 0°) para deslizar até o canto da boca (85% vs. 27% no J).",
+    "mnemonicCue": "Inline 0° = 85% boca / 2% fundo. Offset 15° = 44% fundo (= J)."
+  },
+  {
+    "id": "cap06-cooke-barotrauma",
+    "module": "cap-06",
+    "type": "retrieval",
+    "question": "Segundo Cooke et al. (2022) e estudos de barotrauma, por que descompressores (SeaQualizer/Moro BFDD) superam a punção com agulha (venting) e qual o efeito do lip-gripper vertical?",
+    "answer": "A punção erra o órgão em 50%–75% das tentativas amadoras, enquanto o descompressor reverte o gás pela pressão do fundo com sobrevivência próxima a 90–100%. Já pendurar peixes na vertical pelo lip-gripper causa lesão mandibular ou espinhal em 100% dos casos.",
+    "mnemonicCue": "Descompressor vence agulha · Apoio horizontal sempre · Amassar farpa reduz rasgo 6×."
+  },
+  {
+    "id": "cap06-hermafroditismo-manejo",
+    "module": "cap-06",
+    "type": "retrieval",
+    "question": "Como a biologia reprodutiva da Garoupa-Verdadeira difere da do Robalo-Flecha e como isso justifica janelas de captura (slot limits)?",
+    "answer": "A Garoupa é protogínica (nasce fêmea e vira grande macho dominante >73 cm); o Robalo é protândrico (nasce macho e vira grande fêmea matriz). Em ambos os casos, abater exemplares gigantes elimina o sexo mais raro e colapsa o recrutamento.",
+    "mnemonicCue": "Garoupa: F→M (slot 47–73 cm). Robalo: M→F (solte grandes matrizes)."
+  },
+  {
+    "id": "cap07-portarias-1666-2026",
+    "module": "cap-07",
+    "type": "retrieval",
+    "question": "Quais espécies costeiras/marinhas populares têm proibição total de captura e retenção sob as Portarias GM/MMA nº 1.666 e 1.667/2026 (em vigor desde 27/10/2026)?",
+    "answer": "Peroá (Balistes capriscus), Miragaia (Pogonias courbina), Mero (Epinephelus itajara), Badejo-mira, Pargo-verdadeiro, Chernes poveiro/negro/amarelo, Tambaqui selvagem e tubarões/raias ameaçados.",
+    "mnemonicCue": "Out/2026: Peroá e Miragaia viraram captura zero ao lado de Mero e Pargo."
+  },
+  {
+    "id": "cap08-pos-mar-magsealed",
+    "module": "cap-08",
+    "type": "retrieval",
+    "question": "Qual a sequência correta das 5 etapas de lavagem pós-mar e por que WD-40 e óleo comum destroem carretilhas e molinetes modernos?",
+    "answer": "1) Fechar o drag; 2) Enxaguar com névoa suave (jamais jato forte ou balde); 3) Secar à sombra com microfibra; 4) Soltar totalmente o drag para guardar; 5) Lubrificar com critério. WD-40 dissolve a graxa das engrenagens e óleo comum destrói o fluido magnético de rolamentos Daiwa MagSealed.",
+    "mnemonicCue": "Fecha drag → névoa → sombra → solta drag → zero WD-40 / zero óleo em MagSealed."
   }
 ]

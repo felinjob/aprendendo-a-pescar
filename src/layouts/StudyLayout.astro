@@ -1,325 +1,392 @@
 ---
 import '../styles/global.css';
-import { pwaInfo } from 'virtual:pwa-info';
+import BackupStatus from '../components/islands/BackupStatus.svelte';
 
-interface TocItem {
+export interface SectionLink {
   id: string;
   label: string;
-  tag?: string;
-  studyOnly?: boolean;
 }
 
 interface Props {
   title: string;
   description?: string;
-  chapterCode?: string;
-  tocItems?: TocItem[];
+  chapterNumber?: string;
+  chapterTitle?: string;
+  activeRoute: '/' | '/tralha' | '/tatica' | '/especies' | '/regras-lei' | '/cais';
+  sectionNav?: SectionLink[];
 }
 
 const {
   title,
-  description = 'Caderno técnico-editorial e instrumentos de convés sobre Pesca Esportiva oceânica e costeira.',
-  chapterCode = '23°00′S · 042°00′W // CADERNO DE CONVÉS',
-  tocItems = [],
+  description = 'Monografia interativa de pesca esportiva: circuito de iate clubes, física da tralha, eletrônica, táticas mar/água doce, enciclopédia de espécies, regras IGFA e legislação ambiental 2026.',
+  chapterNumber = 'Cap. 01',
+  chapterTitle = 'Atlas & Ecossistema',
+  activeRoute,
+  sectionNav = [],
 } = Astro.props;
+
+const CHAPTERS = [
+  { href: '/', short: 'Atlas', full: '01 · Ecossistema & Recordes', code: 'Cap. 01' },
+  { href: '/tralha', short: 'Tralha', full: '02 · Engenharia da Tralha', code: 'Cap. 02' },
+  { href: '/tatica', short: 'Tática', full: '03–04 · Eletrônica, Táticas & Mar', code: 'Cap. 03–04' },
+  { href: '/especies', short: 'Espécies', full: '06 · Espécies & Conservação', code: 'Cap. 06' },
+  { href: '/regras-lei', short: 'Regras & Lei', full: '05 & 07 · IGFA & Lei 2026', code: 'Cap. 05 & 07' },
+  { href: '/cais', short: 'Cais', full: '08 · Cais, Etiqueta & Glossário', code: 'Cap. 08' },
+] as const;
+
+const currentIdx = CHAPTERS.findIndex((c) => c.href === activeRoute);
+const prevChapter = currentIdx > 0 ? CHAPTERS[currentIdx - 1] : null;
+const nextChapter = currentIdx >= 0 && currentIdx < CHAPTERS.length - 1 ? CHAPTERS[currentIdx + 1] : null;
 ---
 
 <!doctype html>
-<html lang="pt-BR" data-theme="light" data-mode="estudo" data-study-mode="estudo">
+<html lang="pt-BR" data-theme="light" data-study-mode="estudo">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#171613" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#f5f1e8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    {pwaInfo ? (
-      <Fragment set:html={pwaInfo.webManifest.linkTag} />
-    ) : (
-      <link rel="manifest" href="/manifest.webmanifest" />
-    )}
-    <title>{title} — Aprendendo a Pescar</title>
-
-    <!-- Inicialização bloqueante zero-FOUC para Tema (Claro/Escuro) e Modo (Estudo/Cais) -->
-    <script is:inline>
-      (() => {
-        try {
-          const root = document.documentElement;
-          const savedTheme = localStorage.getItem('ap-theme');
-          const prefersDark =
-            window.matchMedia &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const theme =
-            savedTheme === 'dark' || savedTheme === 'light'
-              ? savedTheme
-              : prefersDark
-                ? 'dark'
-                : 'light';
-
-          const savedMode = localStorage.getItem('ap-mode');
-          const mode = savedMode === 'cais' ? 'cais' : 'estudo';
-
-          root.dataset.theme = theme;
-          root.dataset.mode = mode;
-          root.dataset.studyMode = mode;
-        } catch {
-          document.documentElement.dataset.theme = 'light';
-          document.documentElement.dataset.mode = 'estudo';
-          document.documentElement.dataset.studyMode = 'estudo';
-        }
-      })();
-    </script>
+    <title>{title}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=Space+Grotesk:wght@500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Hidratação síncrona de tema e modo antes do primeiro frame (evita FOUC) -->
+    <script is:inline>
+      (function () {
+        try {
+          var savedTheme = localStorage.getItem('ap-theme');
+          var theme =
+            savedTheme === 'dark' || savedTheme === 'light'
+              ? savedTheme
+              : window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.dataset.theme = theme;
+
+          var savedMode = localStorage.getItem('ap-study-mode');
+          var mode = savedMode === 'cais' ? 'cais' : 'estudo';
+          document.documentElement.dataset.studyMode = mode;
+          document.documentElement.dataset.mode = mode;
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body>
-    <a href="#conteudo-principal" class="skip-link">
-      Ir direto para a leitura
-    </a>
 
-    <!-- Barra Superior de Passadiço -->
-    <header class="sticky top-0 z-40 border-b border-line bg-canvas/92 backdrop-blur-md">
-      <div class="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-2.5">
-        <div class="flex items-center gap-3 min-w-0">
-          <a
-            href="/"
-            class="group inline-flex items-center gap-2.5 no-underline"
-            aria-label="Aprendendo a Pescar — Início"
+  <body class="bg-canvas text-ink selection:bg-salvage-soft selection:text-ink">
+    <div class="reading-progress-bar" aria-hidden="true"></div>
+
+    <!-- TOP BAR EDITORIAL — 3 ZONAS LIMPAS, ALTURA COMPACTA -->
+    <header class="sticky top-0 z-40 border-b border-line bg-canvas/95 backdrop-blur-sm">
+      <div class="mx-auto flex h-14 max-w-[86rem] items-center justify-between gap-4 sm:gap-8 px-5 lg:px-8">
+        <!-- Zona 1: Wordmark tipográfico limpo -->
+        <a
+          href="/"
+          class="font-display text-base sm:text-lg font-semibold tracking-tight text-ink no-underline whitespace-nowrap shrink-0 hover:text-salvage transition-colors"
+        >
+          Aprendendo a Pescar
+        </a>
+
+        <!-- Zona 2: Navegação de capítulos (Desktop) -->
+        <nav aria-label="Capítulos da monografia" class="hidden md:flex items-center gap-6 lg:gap-7">
+          {CHAPTERS.map((ch) => {
+            const isActive = ch.href === activeRoute;
+            return (
+              <a
+                href={ch.href}
+                aria-current={isActive ? 'page' : undefined}
+                class:list={[
+                  'py-4 text-[13px] font-medium whitespace-nowrap no-underline transition-colors border-b-2 -mb-[1px]',
+                  isActive
+                    ? 'border-salvage text-ink font-semibold'
+                    : 'border-transparent text-ink-secondary hover:text-ink',
+                ]}
+              >
+                {ch.short}
+              </a>
+            );
+          })}
+        </nav>
+
+        <!-- Zona 3: Ação primária de Modo + Menu Mobile -->
+        <div class="flex items-center gap-3 shrink-0">
+          <button
+            type="button"
+            data-mode-toggle
+            class="cursor-pointer border border-line-strong bg-ink px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-canvas hover:bg-salvage hover:border-salvage transition-colors whitespace-nowrap"
+            aria-label="Alternar entre Modo Estudo e Modo Cais"
           >
-            <span
-              class="inline-flex h-6 w-6 items-center justify-center rounded-[3px] border border-line-strong bg-ink font-mono text-[10px] font-bold text-canvas transition-colors group-hover:border-salvage group-hover:bg-salvage"
-              aria-hidden="true"
-            >
-              AP
-            </span>
-            <span class="font-sans text-sm font-bold tracking-tight text-ink">
-              Aprendendo a Pescar
-            </span>
-          </a>
+            <span data-mode-toggle-label>Modo Cais</span>
+          </button>
 
-          <span
-            class="hidden md:inline-block h-3.5 w-px bg-line"
-            aria-hidden="true"
-          ></span>
-          <span class="hidden md:inline-block font-mono text-[11px] text-ink-muted tabular-telemetry truncate">
-            {chapterCode}
-          </span>
+          <button
+            type="button"
+            data-mobile-menu-toggle
+            aria-expanded="false"
+            aria-controls="mobile-chapter-drawer"
+            class="md:hidden cursor-pointer border border-line bg-surface px-2.5 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-ink"
+          >
+            Índice
+          </button>
+        </div>
+      </div>
+
+      <!-- Drawer Mobile (abre apenas sob demanda, mantendo header compacto) -->
+      <div
+        id="mobile-chapter-drawer"
+        hidden
+        class="md:hidden border-t border-line bg-canvas px-5 py-4"
+      >
+        <div class="flex flex-col gap-1">
+          {CHAPTERS.map((ch) => {
+            const isActive = ch.href === activeRoute;
+            return (
+              <a
+                href={ch.href}
+                aria-current={isActive ? 'page' : undefined}
+                class:list={[
+                  'flex items-baseline justify-between py-2 border-b border-line text-sm no-underline',
+                  isActive ? 'font-semibold text-salvage' : 'text-ink-secondary',
+                ]}
+              >
+                <span>{ch.full}</span>
+                <span class="font-mono text-[10px] uppercase text-ink-muted">{ch.code}</span>
+              </a>
+            );
+          })}
         </div>
 
-        <div class="flex items-center gap-2 sm:gap-2.5">
-          <!-- Alternador Tátil em Pílula: Modo Estudo vs. Modo Cais -->
-          <div
-            class="seg-pill-group"
-            role="group"
-            aria-label="Alternar regime de interface"
-          >
-            <button
-              type="button"
-              data-mode-btn="estudo"
-              aria-pressed="true"
-              class="seg-pill"
-            >
-              Estudo
-            </button>
-            <button
-              type="button"
-              data-mode-btn="cais"
-              aria-pressed="false"
-              class="seg-pill"
-            >
-              Cais
-            </button>
-          </div>
-
-          <!-- Alternador Tema Papel / Abissal -->
+        <div class="mt-4 flex items-center justify-between gap-3 pt-2">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-ink-muted">Aparência</span>
           <button
             type="button"
             data-theme-toggle
-            aria-label="Alternar entre tema claro e abissal"
-            class="inline-flex items-center gap-1.5 cursor-pointer rounded-full border border-line bg-surface px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-ink-secondary transition-colors hover:border-line-strong hover:text-ink"
+            class="cursor-pointer border border-line-strong bg-surface px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-ink"
           >
-            <span
-              class="inline-block h-2 w-2 rounded-full bg-salvage"
-              aria-hidden="true"
-            ></span>
-            <span data-theme-label>Papel</span>
+            <span data-theme-label>Abissal</span>
           </button>
         </div>
-      </div>
-
-      <!-- Sonda de progresso mobile (CSS Scroll-Driven) -->
-      <div class="scroll-progress-mobile-track" aria-hidden="true">
-        <div class="scroll-progress-mobile-bar"></div>
       </div>
     </header>
 
-    <!-- Grade Tufte Assimétrica (>= 1200px: 180px | 66ch | 260px) -->
-    <div class="tufte-grid">
-      <!-- COLUNA 1: Esquerda (180px, sticky) — Carta de Navegação & Progresso -->
-      <aside class="tufte-rail-left" aria-label="Carta de navegação do caderno">
-        <div class="flex items-start gap-3.5">
-          <div
-            class="scroll-progress-vertical-track shrink-0 mt-1"
-            aria-hidden="true"
-          >
-            <div class="scroll-progress-vertical-bar"></div>
-          </div>
-
-          <div class="min-w-0 flex-1">
-            <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-ink-muted m-0 mb-3">
-              ROTEIRO DE BORDO
-            </p>
-            <nav aria-label="Seções do caderno">
-              <ul class="m-0 list-none space-y-1.5 p-0">
-                {
-                  tocItems.map((item) => (
-                    <li {...(item.studyOnly ? { 'data-study-only': '' } : {})}>
-                      <a
-                        href={`#${item.id}`}
-                        class="group flex items-baseline gap-2 rounded-[2px] py-0.5 text-xs leading-snug text-ink-secondary no-underline transition-colors hover:text-ink"
-                      >
-                        {item.tag && (
-                          <span class="shrink-0 font-mono text-[9.5px] font-bold text-ink-muted tabular-telemetry transition-colors group-hover:text-salvage">
-                            {item.tag}
-                          </span>
-                        )}
-                        <span class="font-sans font-medium truncate">{item.label}</span>
-                      </a>
-                    </li>
-                  ))
-                }
-              </ul>
-            </nav>
-
-            <div class="tufte-rail-note mt-5 border-t border-line pt-3">
-              <p class="font-mono text-[9.5px] font-bold uppercase tracking-widest text-ink-muted m-0">
-                OPERAÇÃO NO PÍER
-              </p>
-              <p class="font-sans text-[11px] leading-relaxed text-ink-secondary mt-1 mb-0">
-                Acione <strong>Cais</strong> no topo para recolher a prosa e operar direto nas escalas, rádio e checklists.
-              </p>
-            </div>
-
-            <slot name="rail-left" />
-          </div>
-        </div>
-      </aside>
-
-      <!-- COLUNA 2: Centro (max-width: 66ch) — Monografia interativa & instrumentos -->
-      <main id="conteudo-principal" class="tufte-main">
-        <!-- Indicador enxuto visível apenas no Modo Cais -->
-        <div
-          class="cais-banner items-center justify-between gap-3 rounded-[4px] border border-line-strong border-l-3 border-l-salvage bg-surface px-4 py-2.5 mb-6"
-          role="status"
-        >
-          <div class="min-w-0">
-            <span class="block font-mono text-[10px] font-bold uppercase tracking-widest text-salvage">
-              REGIME DE CAIS · CONSULTA DIRETA
-            </span>
-            <span class="font-sans text-xs text-ink-secondary">
-              Ensaios, scrollytelling e cartas de estudo recolhidos; instrumentos prontos para operação.
-            </span>
-          </div>
-          <button
-            type="button"
-            data-mode-btn="estudo"
-            class="shrink-0 cursor-pointer rounded-full border border-line-strong bg-elevated px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-ink transition-colors hover:border-salvage hover:text-salvage"
-          >
-            Reabrir Estudo
-          </button>
-        </div>
-
-        <slot />
-
-        <!-- Colofão Editorial -->
-        <footer class="mt-16 border-t border-line pt-5 pb-2 flex flex-wrap items-center justify-between gap-3 font-mono text-[10px] text-ink-muted tabular-telemetry">
-          <span>APRENDENDO A PESCAR · EDIÇÃO NOV/2026</span>
-          <span>OFFLINE-FIRST PWA · DEXIE INDEXEDDB · FSRS 0.90</span>
-        </footer>
-      </main>
-
-      <!-- COLUNA 3: Direita (260px) — Margem de Notas Laterais (Tufte) -->
-      <aside class="tufte-rail-right" aria-label="Margem para notas laterais" data-study-only>
-        <p class="font-mono text-[9.5px] font-bold uppercase tracking-widest text-ink-muted border-b border-line pb-2 m-0">
-          MARGEM TÉCNICA // ESCÓLIOS
+    <!-- Faixa contextual visível apenas no Modo Cais -->
+    <div
+      data-cais-banner
+      class="hidden items-center justify-between gap-3 border-b border-salvage bg-salvage-soft px-5 py-2.5 lg:px-8"
+    >
+      <div class="mx-auto flex w-full max-w-[86rem] flex-wrap items-center justify-between gap-2">
+        <p class="m-0 font-mono text-xs font-semibold text-salvage">
+          MODO CAIS ATIVO · Prosa teórica recolhida. Apenas instrumentos, tabelas e referências rápidas em tela.
         </p>
-      </aside>
+        <button
+          type="button"
+          data-mode-toggle
+          class="cursor-pointer bg-transparent border-0 p-0 font-mono text-xs font-semibold underline text-ink"
+        >
+          Voltar ao Modo Estudo
+        </button>
+      </div>
     </div>
 
-    <!-- Controle persistente de Tema e Modo -->
-    <script>
-      function syncControls() {
-        const root = document.documentElement;
-        const currentTheme = root.dataset.theme === 'dark' ? 'dark' : 'light';
-        const currentMode = root.dataset.mode === 'cais' ? 'cais' : 'estudo';
+    <!-- CORPO DA MONOGRAFIA (GRID ASSIMÉTRICO TUFTE) -->
+    <div class="tufte-shell py-8 sm:py-12">
+      <!-- Rail Esquerdo: Índice de Capítulos + Seções Locais + Controles Operacionais -->
+      <aside class="tufte-rail-left" aria-label="Navegação lateral e preferências">
+        <div class="border-t-2 border-line-strong pt-3">
+          <p class="m-0 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
+            {chapterNumber}
+          </p>
+          <p class="mt-1 mb-0 font-display text-base font-semibold leading-snug text-ink">
+            {chapterTitle}
+          </p>
+        </div>
 
-        const themeLabel = document.querySelector('[data-theme-label]');
-        if (themeLabel) {
-          themeLabel.textContent = currentTheme === 'dark' ? 'Abissal' : 'Papel';
+        {sectionNav.length > 0 && (
+          <nav aria-label="Nesta página" class="mt-5 border-t border-line pt-3">
+            <p class="m-0 mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
+              Nesta seção
+            </p>
+            <ul class="m-0 list-none p-0 flex flex-col gap-1.5">
+              {sectionNav.map((item) => (
+                <li>
+                  <a
+                    href={`#${item.id}`}
+                    class="block text-xs leading-snug text-ink-secondary no-underline hover:text-salvage transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
+        <nav aria-label="Todos os capítulos" class="mt-6 border-t border-line pt-3">
+          <p class="m-0 mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
+            Monografia
+          </p>
+          <ul class="m-0 list-none p-0 flex flex-col gap-1.5">
+            {CHAPTERS.map((ch) => {
+              const isActive = ch.href === activeRoute;
+              return (
+                <li>
+                  <a
+                    href={ch.href}
+                    class:list={[
+                      'block text-xs leading-snug no-underline transition-colors',
+                      isActive
+                        ? 'font-semibold text-salvage'
+                        : 'text-ink-secondary hover:text-ink',
+                    ]}
+                  >
+                    {ch.full}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <!-- Controles silenciosos de Leitura e Tema -->
+        <div class="mt-6 border-t border-line pt-3 flex flex-col gap-2.5">
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-mono text-[10px] uppercase tracking-wider text-ink-muted">Tema</span>
+            <button
+              type="button"
+              data-theme-toggle
+              class="cursor-pointer border border-line bg-surface px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-ink hover:border-line-strong transition-colors"
+            >
+              <span data-theme-label>Abissal</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-6 border-t border-line pt-3">
+          <BackupStatus client:idle />
+        </div>
+      </aside>
+
+      <!-- Conteúdo Principal -->
+      <main id="conteudo-principal" class="tufte-main">
+        <slot />
+
+        <!-- Paginação Editorial entre Capítulos -->
+        <nav
+          aria-label="Navegação entre capítulos"
+          class="mt-16 border-t-2 border-line-strong pt-6 pb-8 grid grid-cols-1 sm:grid-cols-2 gap-6"
+        >
+          <div>
+            {prevChapter && (
+              <a href={prevChapter.href} class="group block no-underline">
+                <span class="block font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
+                  ← Capítulo Anterior
+                </span>
+                <span class="mt-1 block font-display text-lg font-semibold text-ink group-hover:text-salvage transition-colors">
+                  {prevChapter.full}
+                </span>
+              </a>
+            )}
+          </div>
+          <div class="sm:text-right">
+            {nextChapter && (
+              <a href={nextChapter.href} class="group block no-underline">
+                <span class="block font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
+                  Próximo Capítulo →
+                </span>
+                <span class="mt-1 block font-display text-lg font-semibold text-ink group-hover:text-salvage transition-colors">
+                  {nextChapter.full}
+                </span>
+              </a>
+            )}
+          </div>
+        </nav>
+
+        <footer class="border-t border-line pt-5 pb-10 flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11px] text-ink-muted">
+          <span>Aprendendo a Pescar · Caderno Técnico &amp; Referência de Campo · Vigência Nov/2026</span>
+          <span>Operação Local-First (IndexedDB + FSRS + PWA Offline)</span>
+        </footer>
+      </main>
+    </div>
+
+    <!-- Controlador global de Tema, Modo Estudo/Cais e Drawer Mobile -->
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        var themeButtons = document.querySelectorAll('[data-theme-toggle]');
+        var themeLabels = document.querySelectorAll('[data-theme-label]');
+        var modeButtons = document.querySelectorAll('[data-mode-toggle]');
+        var modeLabels = document.querySelectorAll('[data-mode-toggle-label]');
+        var mobileBtn = document.querySelector('[data-mobile-menu-toggle]');
+        var mobileDrawer = document.getElementById('mobile-chapter-drawer');
+
+        function syncThemeUI() {
+          var isDark = root.dataset.theme === 'dark';
+          themeLabels.forEach(function (el) {
+            el.textContent = isDark ? 'Papel' : 'Abissal';
+          });
+          var metaTheme = document.querySelector('meta[name="theme-color"]');
+          if (metaTheme) {
+            metaTheme.setAttribute('content', isDark ? '#18212b' : '#f5f1e8');
+          }
         }
 
-        document.querySelectorAll<HTMLButtonElement>('[data-mode-btn]').forEach((btn) => {
-          const targetMode = btn.dataset.modeBtn;
-          const isActive = targetMode === currentMode;
-          btn.setAttribute('aria-pressed', String(isActive));
-        });
-      }
-
-      function setTheme(nextTheme: 'light' | 'dark') {
-        document.documentElement.dataset.theme = nextTheme;
-        try {
-          localStorage.setItem('ap-theme', nextTheme);
-        } catch {
-          // Contexto restrito sem localStorage
-        }
-        syncControls();
-      }
-
-      function setMode(nextMode: 'estudo' | 'cais') {
-        document.documentElement.dataset.mode = nextMode;
-        document.documentElement.dataset.studyMode = nextMode;
-        try {
-          localStorage.setItem('ap-mode', nextMode);
-        } catch {
-          // Contexto restrito sem localStorage
-        }
-        syncControls();
-      }
-
-      function bindControlEvents() {
-        const themeToggle = document.querySelector('[data-theme-toggle]');
-        if (themeToggle && !themeToggle.hasAttribute('data-bound')) {
-          themeToggle.setAttribute('data-bound', 'true');
-          themeToggle.addEventListener('click', () => {
-            const isDark = document.documentElement.dataset.theme === 'dark';
-            setTheme(isDark ? 'light' : 'dark');
+        function syncModeUI() {
+          var isCais = root.dataset.studyMode === 'cais';
+          modeLabels.forEach(function (el) {
+            el.textContent = isCais ? 'Modo Estudo' : 'Modo Cais';
+          });
+          modeButtons.forEach(function (btn) {
+            btn.setAttribute('aria-pressed', String(isCais));
           });
         }
 
-        document.querySelectorAll<HTMLButtonElement>('[data-mode-btn]').forEach((btn) => {
-          if (btn.hasAttribute('data-bound')) return;
-          btn.setAttribute('data-bound', 'true');
-          btn.addEventListener('click', () => {
-            const target = btn.dataset.modeBtn === 'cais' ? 'cais' : 'estudo';
-            setMode(target);
+        themeButtons.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+            root.dataset.theme = next;
+            try {
+              localStorage.setItem('ap-theme', next);
+            } catch (e) {}
+            syncThemeUI();
           });
         });
 
-        syncControls();
-      }
+        modeButtons.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var next = root.dataset.studyMode === 'cais' ? 'estudo' : 'cais';
+            root.dataset.studyMode = next;
+            root.dataset.mode = next;
+            try {
+              localStorage.setItem('ap-study-mode', next);
+            } catch (e) {}
+            syncModeUI();
+          });
+        });
 
-      bindControlEvents();
-      document.addEventListener('astro:after-swap', bindControlEvents);
-    </script>
+        if (mobileBtn && mobileDrawer) {
+          mobileBtn.addEventListener('click', function () {
+            var isOpen = !mobileDrawer.hasAttribute('hidden');
+            if (isOpen) {
+              mobileDrawer.setAttribute('hidden', '');
+              mobileBtn.setAttribute('aria-expanded', 'false');
+            } else {
+              mobileDrawer.removeAttribute('hidden');
+              mobileBtn.setAttribute('aria-expanded', 'true');
+            }
+          });
+        }
 
-    <!-- Registro Offline-First PWA (Workbox autoUpdate) -->
-    <script>
-      import { registerSW } from 'virtual:pwa-register';
-      registerSW({ immediate: true });
+        syncThemeUI();
+        syncModeUI();
+      })();
     </script>
   </body>
 </html>

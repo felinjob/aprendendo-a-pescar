@@ -4,6 +4,9 @@ import tailwindcss from '@tailwindcss/vite';
 import { AstroPWAIntegration } from '@vite-pwa/astro';
 
 export default defineConfig({
+  devToolbar: {
+    enabled: false,
+  },
   integrations: [
     svelte(),
     AstroPWAIntegration({
@@ -42,7 +45,18 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    port: 3000,
+    host: true,
+  },
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      port: 3000,
+      host: '0.0.0.0',
+      strictPort: true,
+      allowedHosts: true,
+      hmr: process.env.DISABLE_HMR !== 'true',
+    },
   },
 });

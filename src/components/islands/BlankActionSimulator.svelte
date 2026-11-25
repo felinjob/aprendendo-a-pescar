@@ -118,25 +118,25 @@
   id="sim-blank"
   data-study-only
   aria-labelledby="sim-blank-title"
-  class="tufte-full-bleed border border-line-strong bg-surface p-5 sm:p-6 my-8"
+  class="console-band tufte-full-bleed"
 >
-  <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-3 mb-5">
+  <div class="flex flex-wrap items-end justify-between gap-3 border-b border-line pb-4 mb-6">
     <div>
-      <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-        SIMULADOR DE FLEXÃO · D3-SHAPE + SVELTE 5
+      <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage m-0">
+        Simulador de Flexão · Curvas D3-Shape
       </p>
-      <h2 id="sim-blank-title" class="font-sans text-lg sm:text-xl font-bold tracking-tight text-ink mt-1 mb-0">
-        Curva de Ação do Blank &amp; Zona de Fratura por High-Sticking
+      <h2 id="sim-blank-title" class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-0">
+        Curva de Ação do Blank &amp; Colapso por High-Sticking
       </h2>
     </div>
     <span
-      class="font-mono text-xs font-bold px-2.5 py-1 border tabular-telemetry {isHighSticking
-        ? 'border-salvage bg-salvage-soft text-salvage'
-        : 'border-line bg-elevated text-ocean'}"
+      class="font-mono text-xs font-semibold tabular-telemetry {isHighSticking
+        ? 'text-salvage'
+        : 'text-ocean'}"
     >
       {isHighSticking
-        ? `ALERTA CRÍTICO: ${loadKg.toFixed(1)} KG A ${rodAngleDeg}°`
-        : `OPERAÇÃO SEGURA: ${loadKg.toFixed(1)} KG A ${rodAngleDeg}°`}
+        ? `ALERTA CRÍTICO · ${loadKg.toFixed(1)} KG A ${rodAngleDeg}°`
+        : `OPERAÇÃO SEGURA · ${loadKg.toFixed(1)} KG A ${rodAngleDeg}°`}
     </span>
   </div>
 
@@ -317,27 +317,23 @@
     </svg>
   </div>
 
-  <!-- Mecânica Seca de Convés (Fausto) -->
-  <div class="mt-4 grid gap-3 sm:grid-cols-2 border-t border-line pt-4">
-    <div class="border border-line bg-elevated p-3.5">
-      <p class="font-mono text-[10px] font-bold uppercase tracking-wider text-salvage m-0">
-        RESPOSTA DE ANZOL &amp; GARATEIA
+  <!-- Mecânica Seca de Convés -->
+  <div class="mt-6 grid gap-6 sm:grid-cols-2 border-t border-line pt-5">
+    <div>
+      <p class="font-mono text-[10px] font-semibold uppercase tracking-wider text-salvage m-0">
+        Resposta de Anzol &amp; Garateia
       </p>
-      <p class="font-sans text-xs sm:text-sm leading-relaxed text-ink-secondary mt-1.5 mb-0">
+      <p class="text-sm leading-relaxed text-ink-secondary mt-1.5 mb-0">
         <strong>Ação Rápida</strong> rasga a boca do peixe se você usar garateias pequenas em plugs — a pancada seca arranca o anzol antes de o peixe virar. <strong>Ação Moderada</strong> trabalha como amortecedor contínuo, absorvendo o choque inicial sem abrir a fisgada.
       </p>
     </div>
 
-    <div
-      class="border p-3.5 {isHighSticking
-        ? 'border-salvage bg-salvage-soft'
-        : 'border-line bg-elevated'}"
-    >
-      <p class="font-mono text-[10px] font-bold uppercase tracking-wider text-ink m-0">
-        MECÂNICA DA FRATURA (HIGH-STICKING)
+    <div class="{isHighSticking ? 'border-t-2 border-salvage pt-3 sm:border-t-0 sm:pt-0' : ''}">
+      <p class="font-mono text-[10px] font-semibold uppercase tracking-wider {isHighSticking ? 'text-salvage' : 'text-ink'} m-0">
+        Mecânica da Fratura (High-Sticking)
       </p>
-      <p class="font-sans text-xs sm:text-sm leading-relaxed text-ink-secondary mt-1.5 mb-0">
-        <strong>High-sticking</strong> concentra toda a carga na ponta fina e fratura o carbono por compressão; o <em>blank</em> não foi feito para trabalhar na vertical içando peso como guindaste. Aponte a vara em ângulo moderado e deixe o freio da carretilha trabalhar.
+      <p class="text-sm leading-relaxed text-ink-secondary mt-1.5 mb-0">
+        <strong>High-sticking</strong> concentra toda a carga na ponta fina e fratura o carbono por compressão; o <em>blank</em> não foi feito para trabalhar na vertical içando peso como guindaste. Aponte a vara em ângulo moderado (~45°) e deixe o freio trabalhar.
       </p>
     </div>
   </div>

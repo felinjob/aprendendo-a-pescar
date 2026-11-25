@@ -79,24 +79,24 @@
   id="raio-x-carretel"
   data-study-only
   aria-labelledby="spool-xray-title"
-  class="my-8 border border-line-strong bg-surface p-5 sm:p-6"
+  class="console-band"
 >
-  <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-3 mb-5">
+  <div class="flex flex-wrap items-end justify-between gap-2 border-b border-line pb-4 mb-5">
     <div>
-      <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-        CORTE TRANSVERSAL INTERATIVO · ARQUITETURA 4 CAMADAS
+      <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage m-0">
+        Corte Transversal Interativo · 4 Camadas
       </p>
-      <h2 id="spool-xray-title" class="font-sans text-lg font-bold tracking-tight text-ink mt-1 mb-0">
+      <h2 id="spool-xray-title" class="font-display text-2xl font-semibold text-ink mt-1 mb-0">
         Raio-X do Carretel Oceânico Moderno
       </h2>
     </div>
     <span class="font-mono text-[11px] text-ink-muted">
-      CLIQUE OU FOQUE NUMA CAMADA
+      Selecione uma camada no anel ou abaixo
     </span>
   </div>
 
   <!-- Seletor rápido de camadas -->
-  <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-5" role="tablist" aria-label="Camadas do carretel">
+  <div class="flex flex-wrap gap-5 border-b border-line pb-3 mb-6" role="tablist" aria-label="Camadas do carretel">
     {#each LAYERS as layer}
       <button
         type="button"
@@ -104,14 +104,12 @@
         aria-selected={activeId === layer.id}
         onclick={() => (activeId = layer.id)}
         onfocus={() => (activeId = layer.id)}
-        class="cursor-pointer border px-2.5 py-2 text-left transition-colors {activeId === layer.id
-          ? 'border-line-strong bg-ink text-canvas'
-          : 'border-line bg-elevated text-ink hover:border-line-strong'}"
+        class="cursor-pointer bg-transparent border-0 pb-2 -mb-[13px] border-b-2 text-left transition-colors {activeId === layer.id
+          ? 'border-salvage text-ink'
+          : 'border-transparent text-ink-muted hover:text-ink'}"
       >
-        <span class="block font-mono text-[10px] font-bold opacity-80">
-          CAMADA {layer.order}
-        </span>
-        <span class="block font-sans text-xs font-bold leading-tight mt-0.5">
+        <span class="font-mono text-[10px] font-semibold mr-1.5">{layer.order}</span>
+        <span class="font-mono text-xs font-semibold uppercase tracking-wider">
           {layer.name.split(' (')[0]}
         </span>
       </button>
@@ -119,8 +117,8 @@
   </div>
 
   <!-- SVG Corte Transversal + Justificativa Mecânica -->
-  <div class="grid gap-5 sm:grid-cols-[260px_1fr] items-center">
-    <div class="border border-line bg-canvas p-3">
+  <div class="grid gap-8 sm:grid-cols-[260px_1fr] items-center">
+    <div class="bg-canvas p-3 border border-line">
       <svg
         viewBox="0 0 340 340"
         class="w-full h-auto block"
@@ -184,16 +182,14 @@
       </svg>
     </div>
 
-    <div class="border border-line-strong bg-elevated p-4 sm:p-5">
-      <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-2.5 mb-3">
-        <span class="font-mono text-xs font-bold uppercase tracking-wider text-salvage">
-          CAMADA {activeLayer.order} · {activeLayer.name}
-        </span>
-      </div>
-      <p class="font-mono text-xs font-bold text-ocean mt-0 mb-3">
+    <div class="border-t-2 border-line-strong pt-4">
+      <span class="block font-mono text-xs font-semibold uppercase tracking-wider text-salvage">
+        Camada {activeLayer.order} · {activeLayer.name}
+      </span>
+      <p class="font-mono text-xs font-semibold text-ocean mt-2 mb-3">
         {activeLayer.spec}
       </p>
-      <p class="font-sans text-sm leading-relaxed text-ink m-0">
+      <p class="text-sm leading-relaxed text-ink m-0 max-w-[54ch]">
         {activeLayer.justification}
       </p>
     </div>

@@ -1,0 +1,279 @@
+---
+import { getCollection } from 'astro:content';
+import StudyLayout from '../layouts/StudyLayout.astro';
+import EditorialPlate from '../components/EditorialPlate.astro';
+import Sidenote from '../components/Sidenote.astro';
+import GlossaryTerm from '../components/GlossaryTerm.astro';
+import BoatElectronicsReference from '../components/islands/BoatElectronicsReference.svelte';
+import TrollingSpreadScrolly from '../components/islands/TrollingSpreadScrolly.svelte';
+import WaterColumnExplorer from '../components/islands/WaterColumnExplorer.svelte';
+import MnemonicDeck from '../components/islands/MnemonicDeck.svelte';
+import plateCoastalImg from '../assets/images/plate_coastal_estuary_1795644460459.jpg';
+
+const fsrsEntries = await getCollection('fsrsPrompts');
+const prompts = fsrsEntries.map((e) => e.data);
+
+const sectionNav = [
+  { id: 'eletronica-bordo', label: 'VHF, CHIRP, Omni & Radar' },
+  { id: 'corrico-scrolly', label: 'Spread & Bait-and-Switch' },
+  { id: 'wahoo-ballyhoo-jig', label: 'High-Speed, Ballyhoo & Jig' },
+  { id: 'coluna-agua', label: 'Talude, 14°C & Óptica' },
+  { id: 'ciencia-folclore', label: 'Ciência vs. Folclore' },
+  { id: 'agua-doce-costao', label: 'Água Doce, Praia, Costão & Fly' },
+];
+---
+
+<StudyLayout
+  title="Cap. 03 & 04 · Eletrônica, Táticas (Mar & Água Doce) & Oceanografia | Aprendendo a Pescar"
+  chapterNumber="Cap. 03–04"
+  chapterTitle="Eletrônica, Táticas & Mar"
+  activeRoute="/tatica"
+  sectionNav={sectionNav}
+>
+  <header class="pb-6 border-b border-line">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-salvage">
+      Capítulos 03 &amp; 04 · Sistemas de Bordo, Táticas &amp; Física Ambiental
+    </p>
+    <h1 class="font-display text-4xl sm:text-5xl font-semibold leading-[1.08] tracking-[-0.02em] text-ink mt-2.5 mb-3.5 max-w-[24ch]">
+      Ler a água, dominar o convés e substituir mitos por física.
+    </h1>
+    <p class="m-0 text-base sm:text-lg leading-relaxed text-ink-secondary max-w-[62ch]">
+      Da eletrônica embarcada e coreografia do corrico oceânico às técnicas de mangue, costão, praia, pesqueiros, rios amazônicos e fly fishing — conectando cada manobra à biologia do predador e à óptica da coluna d'água.
+    </p>
+  </header>
+
+  <EditorialPlate
+    image={plateCoastalImg}
+    alt="Costão rochoso brasileiro encontrando ondulação azul do Atlântico e canal de mangue sob névoa matinal"
+    plateNumber="Prancha 03"
+    caption="Transição estuário–costão–mar aberto ao amanhecer: encontro de maré de vazante rica em matéria orgânica com o espumeiro oxigenado de pedra — zona clássica de emboscada de robalos, anchovas e xaréus."
+    aspect="21/9"
+    priority={true}
+  />
+
+  <!-- 1. ARQUITETURA DE BARCOS & ELETRÔNICA -->
+  <section id="arquitetura-bordo" data-study-only class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+      03.1 · Arquitetura de Convés
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-5">
+      Equipamentos de Convés: Outriggers, Tuna Tubes &amp; Cadeira de Briga
+    </h2>
+
+    <div class="tufte-article-grid">
+      <div class="tufte-flow editorial-prose">
+        <p>
+          O layout do casco determina como a equipe se move no combate. Os <GlossaryTerm id="outrigger" label="outriggers (tangões)" /> abrem o ângulo das linhas laterais para fora da espuma turbulenta e eliminam o cruzamento nas curvas; os <strong>tuna tubes</strong> mantêm bonitos e cavalinhas vivos de cabeça para baixo sob fluxo contínuo de água bombeada diretamente pelas guelras; e a <strong>cadeira de briga</strong> ancora o pescador com apoio de pés e gimbal central para alavancar peixes acima de 150 kg em classes 80–130 lb.<Sidenote id="tuna-tubes" number={1}>Bonitos e atuns pequenos (iscas vivas nobres para marlin-azul) são ventiladores obrigatórios (ram ventilators): se ficarem parados num viveiro comum sem jato contínuo de água entrando pela boca, morrem por asfixia em poucos minutos.</Sidenote>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ELETRÔNICA DE BORDO (VHF, CHIRP, OMNI, RADAR) -->
+  <BoatElectronicsReference client:visible />
+
+  <!-- 2. SCROLLYTELLING DO SPREAD & BAIT-AND-SWITCH -->
+  <TrollingSpreadScrolly client:visible />
+
+  <!-- 3. HIGH-SPEED WAHOO, BALLYHOO & SPEED VS. SLOW PITCH JIGGING -->
+  <section id="wahoo-ballyhoo-jig" data-cais-keep class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ocean">
+      04.1 · Táticas Oceânicas Especializadas
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-6">
+      High-Speed Wahoo (12–16 nós), Preparo de Ballyhoo &amp; Speed vs. Slow Pitch Jigging
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 border-t border-line pt-5">
+      <div>
+        <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-salvage">
+          Corrico de Alta Velocidade (Wahoo)
+        </span>
+        <h3 class="font-display text-lg font-semibold text-ink mt-1 mb-2">12 a 16 Nós com Chumbada Inline</h3>
+        <p class="text-sm leading-relaxed text-ink-secondary m-0">
+          Diferente do corrico padrão (7–8 nós), a caça ao Wahoo usa cabeças pesadas de aço/chumbo, <strong>cabo de aço obrigatório</strong> e chumbadas torpedo inline (24–48 oz) ligadas a shock leaders de mono 250–400 lb. A velocidade cobre grandes trechos do talude, filtra predadores lentos e dispara ataques explosivos acima de 70 km/h.
+        </p>
+      </div>
+
+      <div>
+        <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-ocean">
+          Artesanato de Popa
+        </span>
+        <h3 class="font-display text-lg font-semibold text-ink mt-1 mb-2">Preparo do <GlossaryTerm id="ballyhoo" label="Ballyhoo" /></h3>
+        <p class="text-sm leading-relaxed text-ink-secondary m-0">
+          Um ballyhoo mal armado gira na esteira ("helicóptero") e espanta qualquer marlin. O protocolo artesanal exige: quebrar suavemente a espinha dorsal para devolver flexibilidade, esvaziar o intestino, remover os olhos (ou usar pino de aço), fixar chumbo de queixo (<em>chin weight</em>) para manter a barriga sempre para baixo e amarrar com arame de cobre fino ou elástico sem travar o circle hook.
+        </p>
+      </div>
+
+      <div>
+        <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-ink">
+          Vertical no Parcel
+        </span>
+        <h3 class="font-display text-lg font-semibold text-ink mt-1 mb-2">Speed Jigging vs. Slow Pitch</h3>
+        <p class="text-sm leading-relaxed text-ink-secondary m-0">
+          <strong>Speed Jigging:</strong> jigs longos e pesados trabalhados em recolhimento contínuo explosivo (<em>mechanical jigging</em>) mirando olho-de-boi e atuns na subida. <strong>Slow Pitch:</strong> jigs assimétricos planos (~1 g/pé), linha fina (PE 1.5–2.5) e vara parabólica que "dobra e devolve" energia fazendo o metal planar na queda — onde ocorre 80% das pancadas de garoupas, pargos e badejos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. OCEANOGRAFIA, RESSURGÊNCIA & ABSORÇÃO ÓPTICA -->
+  <WaterColumnExplorer client:visible />
+
+  <!-- 5. ESTRATIFICAÇÃO TÉRMICA, MARÉS & CIÊNCIA VS. FOLCLORE -->
+  <section id="ciencia-folclore" data-study-only class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+      04.2 · Limnologia, Marés &amp; Crítica Científica
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-6">
+      Estratificação Térmica, <GlossaryTerm id="mare-sizigia" label="Marés" /> &amp; Ciência vs. Folclore
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-6 editorial-prose">
+        <p>
+          Em represas profundas e lagos, o calor divide a coluna d'água em três zonas: <strong>epilímnio</strong> (superfície quente e oxigenada), <GlossaryTerm id="termoclina" label="termoclina" /> (degrau térmico brusco) e <strong>hipolímnio</strong> (fundo frio, frequentemente pobre em oxigênio). Lançar iscas abaixo de uma termoclina anóxica significa pescar num deserto biológico — os predadores patrulham a borda superior desse degrau.
+        </p>
+        <p>
+          No litoral, o motor primário não é a altura absoluta da maré, mas a <strong>velocidade de escoamento</strong>: o ápice de ataque ocorre na virada e nos dois terços médios da enchente e da vazante. Marés de <strong>sizígia</strong> (Luas Cheia e Nova) geram correntezas fortes e água mais turva; marés de <strong>quadratura</strong> (Quartos) entregam água limpa e menor deriva para artificiais e jigging.
+        </p>
+      </div>
+
+      <div class="lg:col-span-6 border-t-2 border-line-strong pt-4 flex flex-col gap-4">
+        <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-wider text-salvage">
+          O Que a Evidência Empírica Confirma vs. Desmente
+        </p>
+        <div class="border-b border-line pb-3">
+          <strong class="block font-display text-base text-ink">1. Pressão Barométrica (Mito Isolado)</strong>
+          <p class="mt-1 mb-0 text-xs leading-relaxed text-ink-secondary">
+            Queda severa de 0,09 inHg equivale a descer 3 cm na água (0,003 atm). O que altera o comportamento antes da frente fria é a <strong>queda abrupta de luz solar</strong> (nuvens espessas), o vento mexendo a oxigenação superficial e a virada térmica da água.
+          </p>
+        </div>
+        <div class="border-b border-line pb-3">
+          <strong class="block font-display text-base text-ink">2. Tabelas Solunares (Estudo de 2023)</strong>
+          <p class="mt-1 mb-0 text-xs leading-relaxed text-ink-secondary">
+            Análises estatísticas massivas sobre diários de captura (incluindo estudos revisados de 2023) mostram correlação desprezível das janelas solunares em água doce isolada. Em água salgada, a Lua importa via <strong>amplitude real de maré</strong> e luminosidade noturna — não por gravidade direta sobre o apetite do peixe.
+          </p>
+        </div>
+        <div>
+          <strong class="block font-display text-base text-ink">3. Acústica Subaquática (Fato Comprovado)</strong>
+          <p class="mt-1 mb-0 text-xs leading-relaxed text-ink-secondary">
+            O som viaja ~4,3× mais rápido na água (~1.480 m/s) do que no ar. Bater caixa de isca no fundo de alumínio ou deixar o motor batendo em baixa profundidade espanta robalos e tucunarés a dezenas de metros; já a cadência regular de motores diesel de sportfishers cria assinatura rítmica que frequentemente <em>atrai</em> marlins curiosos à esteira.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. MANUAL COMPLETO DE ÁGUA DOCE, COSTÃO, PRAIA, PESQUEIROS & FLY -->
+  <section id="agua-doce-costao" data-cais-keep class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ocean">
+      04.3 · Matriz Completa de Técnicas (Rios, Mangues, Praias &amp; Lagos)
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-6">
+      Artificiais, Soft Rigs, Surfcasting, Costão, Pesqueiros, Fly (AFFTA) &amp; BFS
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 border-t border-line pt-6">
+      <div>
+        <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-salvage">
+          Iscas Artificiais &amp; Montagens Soft
+        </span>
+        <h3 class="font-display text-xl font-semibold text-ink mt-1 mb-2">
+          Superfície, Meia-Água &amp; Os 4 Rigs de Silicone
+        </h3>
+        <ul class="m-0 pl-4 text-sm leading-relaxed text-ink-secondary flex flex-col gap-1.5">
+          <li><strong>Superfície:</strong> <GlossaryTerm id="zara-stick" label="Zara & Stick" />, Popper (jato d'água e barulho) e Hélice (tucunaré-açu). Se houver <GlossaryTerm id="rebojo" label="rebojo" /> sem fisgada, arremesse imediatamente um jig ou soft no ponto.</li>
+          <li><strong>Meia-água Suspending (Jerkbait):</strong> fica imóvel na coluna durante a pausa (2–5 s) — mortal em água fria ou peixes manhosos.</li>
+          <li><strong>Texas &amp; Florida Rig:</strong> chumbo bullet solto (Texas) ou rosqueado (Florida) + anzol offset escondido para penetrar estruturas densas sem enrosco.</li>
+          <li><strong>Carolina &amp; Drop Shot:</strong> chumbo separado do anzol por líder (Carolina varre fundos limpos; Drop Shot mantém a isca vibrando suspensa exatamente no nível do peixe).</li>
+          <li><strong>Arremesso de precisão:</strong> domine Pitching, Flipping e <GlossaryTerm id="skipping" label="Skipping" /> para colocar iscas sob galhadas e raízes de mangue.</li>
+        </ul>
+      </div>
+
+      <div>
+        <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-ocean">
+          Iscas Naturais (Rios &amp; Estuários)
+        </span>
+        <h3 class="font-display text-xl font-semibold text-ink mt-1 mb-2">
+          Camarão Vivo, Rodada &amp; Espera Pesada (Araguaia)
+        </h3>
+        <ul class="m-0 pl-4 text-sm leading-relaxed text-ink-secondary flex flex-col gap-1.5">
+          <li><strong>Camarão vivo no mangue:</strong> isque pelo último gomo da cauda (nunca perfure o ponto escuro cerebral na cabeça) em jighead leve ou boia de arremesso.</li>
+          <li><strong>Pesca de Rodada (Pantanal/Paraná):</strong> barco desce à deriva na velocidade da correnteza com chumbada oliva leve tocando o canal, apresentando tuvira ou mussum natural para pintados e dourados.</li>
+          <li><strong>Pesca de Espera Pesada (Piraíba / Jaú):</strong> carretilha perfil redondo com <strong>400 m+ de linha</strong> 80–100 lb, poço de 20–40 m, âncora com boia de soltura rápida para desprender o barco e perseguir o peixe rio abaixo.</li>
+        </ul>
+      </div>
+
+      <div class="border-t border-line pt-5">
+        <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-salvage">
+          Surfcasting &amp; Segurança em Costão
+        </span>
+        <h3 class="font-display text-xl font-semibold text-ink mt-1 mb-2">
+          Leitura de Canalão, Shock Leader &amp; Onda Traiçoeira
+        </h3>
+        <p class="text-sm leading-relaxed text-ink-secondary mt-0 mb-2">
+          Na praia, não busque onde a onda quebra com espuma: procure o <strong>canalão mais escuro e calmo</strong> e as correntes de retorno (repuxos) que arrastam tatuíras e corruptos para pampos e betaras. Use sempre <GlossaryTerm id="shock-leader" label="shock leader" /> (2× a vara + 5 voltas) para evitar o chicote fatal de chumbadas de 120–180 g.
+        </p>
+        <p class="text-sm leading-relaxed text-ink m-0">
+          <strong>Segurança absoluta no costão:</strong> jamais pise na pedra escura molhada (limo invisível), observe a série de ondas por 15 minutos antes de descer ("onda maior da série"), nunca vire as costas para o mar e use calçado de solado aderente/feltro + colete leve.
+        </p>
+      </div>
+
+      <div class="border-t border-line pt-5">
+        <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-ocean">
+          Pesqueiros, Ultralight BFS &amp; Fly Fishing (AFFTA)
+        </span>
+        <h3 class="font-display text-xl font-semibold text-ink mt-1 mb-2">
+          Anteninha, Palminho &amp; Tabela de Linhas Fly #3–#12
+        </h3>
+        <p class="text-sm leading-relaxed text-ink-secondary mt-0 mb-2">
+          Nos <strong>pesqueiros esportivos</strong>, o tambaqui e o tambacu respondem à <strong>boia cevadeira + anteninha</strong> (E.V.A. imitando ração na superfície) quando estão comendo em cima, e ao <strong>palminho / chicote com miçanga</strong> na meia-água quando afundam no calor ou frio. Já o <strong>BFS (Bait Finesse System)</strong> usa carretéis ultraleves (~7–9 g) para arremessar micro-iscas de 1,5–5 g com precisão cirúrgica.
+        </p>
+        <div class="overflow-x-auto mt-3">
+          <table class="editorial-table">
+            <thead>
+              <tr>
+                <th>Classe AFFTA</th>
+                <th>Grains (30 ft)</th>
+                <th>Alvos no Brasil</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="font-mono font-bold text-ink">#3 – #5</td>
+                <td class="font-mono text-xs">100 – 140 gr</td>
+                <td class="text-xs">Truta (serra), tilápia, lambari, piraputanga</td>
+              </tr>
+              <tr>
+                <td class="font-mono font-bold text-ink">#6 – #8</td>
+                <td class="font-mono text-xs">160 – 210 gr</td>
+                <td class="text-xs">Tucunaré-azul, robalo, matrinxã, traíra</td>
+              </tr>
+              <tr>
+                <td class="font-mono font-bold text-ocean">#9 – #10</td>
+                <td class="font-mono text-xs">240 – 280 gr</td>
+                <td class="text-xs">Tucunaré-açu, dourado de rio, xaréu costeiro</td>
+              </tr>
+              <tr>
+                <td class="font-mono font-bold text-salvage">#11 – #12</td>
+                <td class="font-mono text-xs">330 – 380 gr</td>
+                <td class="text-xs">Tarpon (camurupim), pirarucu e pelágicos</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FSRS DO CAPÍTULO 04 -->
+  <div class="mt-10">
+    <MnemonicDeck
+      client:visible
+      prompts={prompts}
+      moduleFilter="cap-04"
+      heading="Retenção Ativa · Cap. 03–04 (Tática, Spread & Oceanografia)"
+    />
+  </div>
+</StudyLayout>

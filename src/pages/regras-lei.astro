@@ -1,0 +1,221 @@
+---
+import { getCollection } from 'astro:content';
+import StudyLayout from '../layouts/StudyLayout.astro';
+import EditorialPlate from '../components/EditorialPlate.astro';
+import Sidenote from '../components/Sidenote.astro';
+import GlossaryTerm from '../components/GlossaryTerm.astro';
+import IgfaAuditorCalculator from '../components/islands/IgfaAuditorCalculator.svelte';
+import FlagHalyardBuilder from '../components/islands/FlagHalyardBuilder.svelte';
+import Legislation2026Explorer from '../components/islands/Legislation2026Explorer.svelte';
+import MnemonicDeck from '../components/islands/MnemonicDeck.svelte';
+import plateHalyardImg from '../assets/images/plate_marina_halyard_1795644460930.jpg';
+
+const legEntries = await getCollection('legislation2026');
+const legItems = legEntries.map((e) => e.data);
+const fsrsEntries = await getCollection('fsrsPrompts');
+const prompts = fsrsEntries.map((e) => e.data);
+const chapterPrompts = prompts.filter((p) => p.module === 'cap-05' || p.module === 'cap-07');
+
+const sectionNav = [
+  { id: 'normas-igfa', label: 'Classes IGFA & Soltura Oficial' },
+  { id: 'auditor-igfa', label: 'Auditor de Rigging & 6 DQs' },
+  { id: 'rotina-torneio', label: 'Rotina de Torneio (7 Etapas)' },
+  { id: 'adrica-bandeiras', label: 'Adriça de Bandeiras (1→7)' },
+  { id: 'licenca-cota-zero', label: 'Licença Gov.br & Cota Zero' },
+  { id: 'legislacao-2026', label: 'Portarias 1.666 & 1.667/2026' },
+];
+---
+
+<StudyLayout
+  title="Cap. 05 & 07 · Regras IGFA, Bandeiras & Legislação Ambiental 2026 | Aprendendo a Pescar"
+  chapterNumber="Cap. 05 & 07"
+  chapterTitle="Regras IGFA & Lei 2026"
+  activeRoute="/regras-lei"
+  sectionNav={sectionNav}
+>
+  <header class="pb-6 border-b border-line">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-salvage">
+      Capítulos 05 &amp; 07 · Regulamento Esportivo Internacional &amp; Legislação Ambiental Vigente
+    </p>
+    <h1 class="font-display text-4xl sm:text-5xl font-semibold leading-[1.08] tracking-[-0.02em] text-ink mt-2.5 mb-3.5 max-w-[24ch]">
+      Conformidade rigorosa no torneio e tolerância zero na lei.
+    </h1>
+    <p class="m-0 text-base sm:text-lg leading-relaxed text-ink-secondary max-w-[62ch]">
+      Auditoria matemática do rigging IGFA (2 a 130 lb), código portuário da adriça, burocracia de campeonato, licença Gov.br 2026, leis estaduais de Transporte Zero e a matriz completa das <strong>Portarias GM/MMA nº 1.666 e 1.667/2026</strong>.
+    </p>
+  </header>
+
+  <EditorialPlate
+    image={plateHalyardImg}
+    alt="Tangão de alumínio de embarcação de pesca oceânica hasteando bandeiras náuticas azuis e brancas sob céu limpo de fim de tarde em marina"
+    plateNumber="Prancha 05"
+    caption="Tangão de boreste na chegada ao canal do iate clube: a ordem vertical das flâmulas comunica à distância cada espécie liberada, marcada ou embarcada segundo o código internacional de 1 a 7."
+    aspect="16/9"
+    priority={true}
+  />
+
+  <!-- 1. REGRAS IGFA FUNDAMENTAIS -->
+  <section id="normas-igfa" data-study-only class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+      05.1 · Código IGFA (International Game Fish Association)
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-6">
+      As 11 Classes de Linha, Limites de Vara &amp; Os 3 Critérios de Soltura Oficial
+    </h2>
+
+    <div class="tufte-article-grid">
+      <div class="tufte-flow editorial-prose">
+        <p>
+          A IGFA homologa recordes em <strong>11 classes de resistência</strong> (2, 4, 6, 8, 12, 16, 20, 30, 50, 80 e 130 lb), testadas em laboratório sobre uma <strong>amostra de 15 metros (50 pés)</strong> — embora em conferências rápidas de clube verifiquem-se frequentemente os 5 metros terminais mais a linha dupla e o líder — garantindo que a linha rompa igual ou abaixo do limite nominal da classe.<Sidenote id="igfa-rod-spec" number={1}><strong>Especificações de vara IGFA:</strong> a ponteira (tip) deve medir no mínimo <strong>101,6 cm (40 polegadas)</strong> e o cabo (butt, medido do centro do reel seat até a base do gimbal) não pode exceder <strong>68,58 cm (27 polegadas)</strong>.</Sidenote>
+        </p>
+
+        <p>
+          Para pontuar uma <strong>Soltura Oficial (Official Release)</strong> em torneios de peixes de bico sem embarcar o animal, o vídeo contínuo precisa registrar a identificação inequívoca da espécie e pelo menos um dos três gatilhos: (1) o marinheiro segura o líder (<GlossaryTerm id="leadering" label="leadering" />); (2) a emenda entre linha principal/dupla e o <GlossaryTerm id="wind-on-leader" label="wind-on leader" /> entra pela ponteira da vara; ou (3) o peixe chega ao costado e é liberado vivo em controle total.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDITOR IGFA INTERATIVO -->
+  <IgfaAuditorCalculator client:visible />
+
+  <!-- ROTINA DE TORNEIO EM 7 ETAPAS -->
+  <section id="rotina-torneio" data-study-only class="editorial-band">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ocean">
+      05.2 · Operação de Campeonato
+    </p>
+    <h2 class="font-display text-2xl font-semibold text-ink mt-1.5 mb-5">
+      As 7 Etapas Operacionais de um Torneio de Iate Clube
+    </h2>
+
+    <ol class="m-0 list-none p-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 border-t border-line pt-5">
+      <li>
+        <span class="font-mono text-xs font-bold text-salvage">01 · Inscrição &amp; RGP</span>
+        <p class="mt-1 mb-0 text-xs leading-relaxed text-ink-secondary">
+          Regularize a licença amadora (Gov.br) com antecedência mínima e verifique autorização MPA do torneio (protocolo de 30 dias antes da etapa).
+        </p>
+      </li>
+      <li>
+        <span class="font-mono text-xs font-bold text-salvage">02 · Reunião de Comandantes</span>
+        <p class="mt-1 mb-0 text-xs leading-relaxed text-ink-secondary">
+          Define canal VHF oficial de reporte, área válida (milhas/latitudes), horários de <em>Lines In / Lines Out</em> e objeto/senha secreta do vídeo.
+        </p>
+      </li>
+      <li>
+        <span class="font-mono text-xs font-bold text-salvage">03 · Largada &amp; Lines In</span>
+        <p class="mt-1 mb-0 text-xs leading-relaxed text-ink-secondary">
+          Nenhuma linha ou teaser pode tocar a água antes do sinal oficial no rádio (normalmente 07h00–08h00).
+        </p>
+      </li>
+      <li>
+        <span class="font-mono text-xs font-bold text-salvage">04 · Combate &amp; Gravação Contínua</span>
+        <p class="mt-1 mb-0 text-xs leading-relaxed text-ink-secondary">
+          Filme sem cortes desde o combate até o toque no líder e o objeto do dia. <strong>Truque anti-embaçamento:</strong> retire a GoPro da caixa estanque ou use pastilha antiembaçante antes de sair do ar-condicionado da cabine.
+        </p>
+      </li>
+      <li>
+        <span class="font-mono text-xs font-bold text-ocean">05 · Reporte via VHF</span>
+        <p class="mt-1 mb-0 text-xs leading-relaxed text-ink-secondary">
+          Chame a Comissão no canal designado informando barco, espécie, horário exato do <em>hook-up</em> e da soltura para desempate cronológico.
+        </p>
+      </li>
+      <li>
+        <span class="font-mono text-xs font-bold text-ocean">06 · Lines Out &amp; Entrada no Canal</span>
+        <p class="mt-1 mb-0 text-xs leading-relaxed text-ink-secondary">
+          Recolha no horário limite (peixe já ferrado antes de <em>Lines Out</em> pode ser brigado se reportado no rádio). Ice as bandeiras na entrada do canal.
+        </p>
+      </li>
+      <li class="md:col-span-2">
+        <span class="font-mono text-xs font-bold text-ocean">07 · Entrega de Cartão SD &amp; Auditoria</span>
+        <p class="mt-1 mb-0 text-xs leading-relaxed text-ink-secondary">
+          Entregue o cartão de memória à banca no prazo rígido de cais. Cortes de edição, ausência do objeto do dia ou toque proibido na linha dupla anulam os pontos.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- MONTADOR DA ADRIÇA DE BANDEIRAS -->
+  <FlagHalyardBuilder client:visible />
+
+  <!-- CAPÍTULO 07: LICENÇA GOV.BR, COTA ZERO ESTADUAL & PIRACEMA 2026/2027 -->
+  <section id="licenca-cota-zero" data-cais-keep class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+      Capítulo 07 · Licenciamento Federal &amp; Regras Estaduais 2026/2027
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-6">
+      Licença Gov.br (MPA 762/2026), Cota Zero Estadual &amp; Piracema
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8">
+      <div class="lg:col-span-5 border-t-2 border-line-strong pt-4">
+        <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-wider text-ocean">
+          Licença de Pesca Amadora (Gov.br · Validade 1 Ano)
+        </p>
+        <div class="grid grid-cols-2 gap-4 my-4 pb-4 border-b border-line tabular-telemetry">
+          <div>
+            <span class="block font-mono text-[10px] uppercase text-ink-muted">Categoria A (Desembarcada)</span>
+            <strong class="font-display text-2xl text-ink">R$ 20,00</strong>
+          </div>
+          <div>
+            <span class="block font-mono text-[10px] uppercase text-ink-muted">Categoria B (Embarcada)</span>
+            <strong class="font-display text-2xl text-salvage">R$ 60,00</strong>
+          </div>
+        </div>
+        <ul class="m-0 pl-4 text-xs leading-relaxed text-ink-secondary flex flex-col gap-1.5">
+          <li><strong>Isenções legais:</strong> aposentados, homens ≥ 65 anos, mulheres ≥ 60 anos e pescadores desembarcados usando apenas linha de mão/caniço simples sem molinete nem carretilha.</li>
+          <li><strong>Estrangeiros sem CPF:</strong> emitem via protocolo de passaporte no portal do MPA (Portaria MPA nº 762/2026 modernizou os fluxos digitais de emissão e validação por QR Code).</li>
+          <li><strong>Cota Federal Padrão (onde não há regra estadual mais rígida):</strong> 10 kg + 1 exemplar em água doce; 15 kg + 1 exemplar em águas marinhas/estuarinas. <strong>Venda é crime</strong> em qualquer hipótese.</li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-7 overflow-x-auto">
+        <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-wider text-salvage mb-3">
+          Leis Estaduais de <GlossaryTerm id="cota-zero" label="Cota Zero / Transporte Zero" /> &amp; <GlossaryTerm id="piracema" label="Piracema" /> (2026/2027)
+        </p>
+        <table class="editorial-table">
+          <thead>
+            <tr>
+              <th>Estado / Bacia</th>
+              <th>Regime Vigente 2026/2027</th>
+              <th>Observação Crítica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-mono font-bold text-salvage">Mato Grosso (MT)</td>
+              <td><strong>Lei Transporte Zero (até 2029)</strong> para 12 espécies nobres (dourado, pintado, cachara, jaú, piraíba, pirarara, pacu, matrinxã, etc.).</td>
+              <td class="text-xs">Apenas pesque-e-solte; proibição abrange transporte, armazenamento e venda.</td>
+            </tr>
+            <tr>
+              <td class="font-mono font-bold text-salvage">Mato Grosso do Sul (MS)</td>
+              <td><strong>Cota Zero geral</strong> + proibição específica do <strong>Dourado até março/2027</strong>.</td>
+              <td class="text-xs">Exige Autorização Ambiental estadual (Imasul) adicional à federal em rios estaduais.</td>
+            </tr>
+            <tr>
+              <td class="font-mono font-bold text-ocean">Goiás (GO) &amp; Tocantins (TO)</td>
+              <td><strong>Cota Zero (Pesque-e-Solte)</strong> no Araguaia e bacias protegidas.</td>
+              <td class="text-xs">Consumo restrito ao local (barranco/barco) para espécies não protegidas, vedado o transporte.</td>
+            </tr>
+            <tr>
+              <td class="font-mono font-bold text-ink">Minas Gerais (MG)</td>
+              <td>Cotas restritivas e proteção de espécies nativas (ex.: Dourado no São Francisco / Rio Grande).</td>
+              <td class="text-xs">Piracema rigorosa de 1º nov a 28 fev — permitida apenas pesca desembarcada de espécies exóticas (ex.: tilápia/tucunaré) conforme portaria IEF.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORADOR LEGAL PORTARIAS 1.666 & 1.667/2026 -->
+  <Legislation2026Explorer client:visible items={legItems} />
+
+  <!-- FSRS DOS CAPÍTULOS 05 & 07 -->
+  <div class="mt-10">
+    <MnemonicDeck
+      client:visible
+      prompts={chapterPrompts}
+      heading="Retenção Ativa · Cap. 05 & 07 (Regras IGFA & Lei 2026)"
+    />
+  </div>
+</StudyLayout>

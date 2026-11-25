@@ -1,31 +1,29 @@
 ---
 interface Props {
   id: string;
-  number: number | string;
-  label?: string;
+  number: number;
 }
 
-const { id, number, label = 'ESCÓLIO DE CONVÉS' } = Astro.props;
-const padded = String(number).padStart(2, '0');
+const { id, number } = Astro.props;
+const inputId = `sn-toggle-${id}`;
 ---
 
 <span class="sidenote-wrapper">
   <label
-    for={id}
+    for={inputId}
     class="sidenote-ref"
-    title="Alternar nota de margem"
-    aria-label={`Nota lateral ${padded}: ${label}`}
+    title={`Nota marginal ${number}`}
   >
-    {padded}
+    {number}
   </label>
   <input
     type="checkbox"
-    id={id}
-    class="sidenote-toggle sr-only"
-    aria-controls={`${id}-note`}
+    id={inputId}
+    class="sidenote-toggle-input"
+    aria-label={`Alternar nota marginal ${number}`}
   />
-  <span id={`${id}-note`} class="sidenote-content" role="note">
-    <span class="sidenote-header">{padded} · {label}</span>
+  <span class="sidenote-content" role="note">
+    <span class="font-mono text-[10px] font-bold text-salvage mr-1.5">[{number}]</span>
     <slot />
   </span>
 </span>

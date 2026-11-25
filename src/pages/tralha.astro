@@ -1,0 +1,356 @@
+---
+import { getCollection } from 'astro:content';
+import StudyLayout from '../layouts/StudyLayout.astro';
+import EditorialPlate from '../components/EditorialPlate.astro';
+import Sidenote from '../components/Sidenote.astro';
+import GlossaryTerm from '../components/GlossaryTerm.astro';
+import BlankActionSimulator from '../components/islands/BlankActionSimulator.svelte';
+import TackleCalculators from '../components/islands/TackleCalculators.svelte';
+import SpoolXRayDiagram from '../components/islands/SpoolXRayDiagram.svelte';
+import MnemonicDeck from '../components/islands/MnemonicDeck.svelte';
+import plateTackleImg from '../assets/images/plate_tackle_engineering_1795644480794.jpg';
+
+const peEntries = await getCollection('peLines');
+const peLines = peEntries.map((e) => e.data).sort((a, b) => a.pe - b.pe);
+const fsrsEntries = await getCollection('fsrsPrompts');
+const prompts = fsrsEntries.map((e) => e.data);
+
+const sectionNav = [
+  { id: 'blanks-carbono', label: 'Blanks, Ação & Mito IM' },
+  { id: 'sim-blank', label: 'Simulador de Flexão' },
+  { id: 'passadores-cabos', label: 'Fuji, Bent Butts & Spiral' },
+  { id: 'carretilhas-molinetes', label: 'Carretilhas, Freios & Elétricas' },
+  { id: 'calculadoras-tralha', label: 'Calculadoras PE / CPT / 50W' },
+  { id: 'raio-x-carretel', label: 'Raio-X das 4 Camadas' },
+  { id: 'optica-nos-crimpagem', label: 'Linhas, Nós & Crimpagem' },
+  { id: 'anzois-garateias', label: 'Anzóis & Garatéias 2X–6X' },
+];
+---
+
+<StudyLayout
+  title="Cap. 02 · Engenharia da Tralha, Linhas, Nós & Crimpagem | Aprendendo a Pescar"
+  chapterNumber="Cap. 02"
+  chapterTitle="Engenharia da Tralha"
+  activeRoute="/tralha"
+  sectionNav={sectionNav}
+>
+  <header class="pb-6 border-b border-line">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-salvage">
+      Capítulo 02 · Mecânica de Materiais &amp; Hidrodinâmica
+    </p>
+    <h1 class="font-display text-4xl sm:text-5xl font-semibold leading-[1.08] tracking-[-0.02em] text-ink mt-2.5 mb-3.5 max-w-[24ch]">
+      Engenharia da tralha: da fibra do blank ao crimp galvânico.
+    </h1>
+    <p class="m-0 text-base sm:text-lg leading-relaxed text-ink-secondary max-w-[62ch]">
+      Equipamento não é questão de marca cara — é transferência de torque, dissipação térmica em passadores, refração óptica de polímeros e retenção real de nós sob carga contínua.
+    </p>
+  </header>
+
+  <EditorialPlate
+    image={plateTackleImg}
+    alt="Carretilha dourada 50W lever-drag, líder de fluorocarbono, emenda hollow core e passador de titânio sobre ardósia escura e madeira teca"
+    plateNumber="Prancha 02"
+    caption="Conjunto oceânico de precisão: chassi usinado em alumínio aeronáutico, transição sem nó via hollow core (serving), líder de fluorocarbono (IR 1,42) e passador cerâmico sobre blank de carbono."
+    aspect="16/9"
+    priority={true}
+  />
+
+  <!-- 1. BLANKS, AÇÃO VS. POTÊNCIA & MITO DO CARBONO IM -->
+  <section id="blanks-carbono" data-study-only class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+      02.1 · Arquitetura de Varas
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-6">
+      Ação vs. Potência &amp; O Mito do Carbono IM / Tonelagem
+    </h2>
+
+    <div class="tufte-article-grid">
+      <div class="tufte-flow editorial-prose">
+        <p>
+          Dois atributos governam qualquer <GlossaryTerm id="blank" label="blank" /> e nunca devem ser confundidos: <strong>Ação</strong> define <em>onde</em> a vara dobra sob carga (Extra-Rápida no quarto superior, Rápida no terço, Moderada até a metade, Lenta/Parabólica até o cabo); <strong>Potência</strong> define <em>quanta força</em> é necessária para dobrá-la (Ultralight 2–6 lb até Unlimited 80–130 lb).<Sidenote id="im-myth" number={1}>O rótulo "IM8" ou "IM10" virou marketing sem norma padronizada fora da fabricante Hexcel. O parâmetro real de engenharia é o módulo de elasticidade em toneladas (24T, 30T, 40T Toray): quanto maior a tonelagem, mais leve, seco e sensível o blank — porém mais frágil a pancadas laterais e <GlossaryTerm id="high-sticking" label="high-sticking" />.</Sidenote>
+        </p>
+
+        <p>
+          A escolha da ação segue o tipo de anzol: iscas de <strong>anzol único grosso</strong> (jigs, Texas rig, soft baits) exigem ação rápida ou extra-rápida para cravar a ponta no osso; já plugs com <strong>garatéias pequenas</strong> pedem ação moderada ou fibra de vidro composta para amortecer a cabeçada sem rasgar a boca do peixe.
+        </p>
+
+        <details class="deep-dive">
+          <summary>Aprofundamento: Fibra de Vidro, Composto &amp; Carbono 24T–40T</summary>
+          <div class="deep-dive-body">
+            <p class="m-0">
+              <strong>Fibra de vidro (E-Glass / S-Glass):</strong> pesada e de baixa sensibilidade, porém quase indestrutível a impactos — padrão em varas oceânicas pesadas (50–130 lb) e crankbaits. <strong>Carbono 24T–30T:</strong> equilíbrio ideal de resistência e leitura para a maioria das pescarias brasileiras. <strong>Carbono 36T–40T+:</strong> máxima transmissão tátil para jighead finesse e slow pitch, mas exige manuseio rigoroso sem jamais encostar o blank na borda do barco.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULADOR DE FLEXÃO -->
+  <BlankActionSimulator client:visible />
+
+  <!-- 2. PASSADORES FUJI, BENT BUTTS & SPIRAL WRAP -->
+  <section id="passadores-cabos" data-cais-keep class="editorial-band">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ocean">
+      02.2 · Passadores, Cabos &amp; Geometria
+    </p>
+    <h2 class="font-display text-2xl font-semibold text-ink mt-1.5 mb-5">
+      Escala Cerâmica Fuji, Bent Butts (#1–#6) &amp; Montagem Spiral Wrap
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-7 overflow-x-auto">
+        <table class="editorial-table">
+          <thead>
+            <tr>
+              <th>Anel Fuji</th>
+              <th>Dissipação Térmica</th>
+              <th>Perfil &amp; Uso Ideal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-mono font-bold text-ink">Fazlite / Concept O</td>
+              <td class="font-mono text-xs">Entrada (Óxido)</td>
+              <td class="text-xs">Monofilamento e multifilamento leve; econômico, mas maior atrito em corridas longas.</td>
+            </tr>
+            <tr>
+              <td class="font-mono font-bold text-ink">Alconite</td>
+              <td class="font-mono text-xs">Intermediária</td>
+              <td class="text-xs">Padrão de excelente custo-benefício para água doce e costão com multifilamento.</td>
+            </tr>
+            <tr>
+              <td class="font-mono font-bold text-ocean">SiC (Carbeto de Silício)</td>
+              <td class="font-mono text-xs">Alta · Padrão Salgada</td>
+              <td class="text-xs">Extrema dureza e condutividade térmica; dissipa o calor do multifilamento sem sulcar o anel.</td>
+            </tr>
+            <tr>
+              <td class="font-mono font-bold text-salvage">Torzite (Armação Titânio)</td>
+              <td class="font-mono text-xs">Máxima · Ultraleve</td>
+              <td class="text-xs">Anel mais fino e largo internamente, reduzindo peso na ponta e recuperando a ação do blank mais rápido.</td>
+            </tr>
+            <tr>
+              <td class="font-mono font-bold text-ink">Roldanas (Winthrop / Aftco)</td>
+              <td class="font-mono text-xs">Zero Atrito Deslizante</td>
+              <td class="text-xs">Obrigatórias em varas de 50–130 lb com wind-on grosso; exigem lavagem e lubrificação periódica dos pinos.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="lg:col-span-5 flex flex-col gap-5 border-t border-line pt-4 lg:border-t-0 lg:pt-0">
+        <div>
+          <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-salvage">
+            Cabos Curvos (Bent Butts #1 a #6) &amp; Gimbal
+          </span>
+          <p class="mt-1.5 mb-0 text-sm leading-relaxed text-ink-secondary">
+            Cabos retos servem para stand-up leve; <strong>Bent Butts</strong> (curvos, padrão Stuart/Winthrop #2 para 30–50 lb e #4/#6 para 80–130 lb) baixam o centro de gravidade da briga na cadeira ou no suporte de borda, reduzindo a fadiga lombar. A cruzeta na base (<strong>gimbal</strong>) trava no pino do cinto para impedir que a vara gire sob torque.
+          </p>
+        </div>
+
+        <div class="border-t border-line pt-4">
+          <span class="font-mono text-[10px] font-semibold uppercase tracking-wider text-ocean">
+            Spiral Wrap (Acid Wrap) no Slow Pitch Jigging
+          </span>
+          <p class="mt-1.5 mb-0 text-sm leading-relaxed text-ink-secondary">
+            Em varas convencionais de carretilha, a linha passa por cima do blank e gera torque lateral tentando virar o conjunto na mão. A montagem <strong>Spiral Wrap</strong> gira os passadores em 180° ao longo da haste, levando a linha para baixo do blank na ponteira — eliminando o torque lateral e o toque da linha no carbono.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. CARRETILHAS, MOLINETES, FREIOS & MITO DOS ROLAMENTOS -->
+  <section id="carretilhas-molinetes" data-study-only class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+      02.3 · Sistemas Mecânicos de Tração
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-6">
+      Spinning, Perfil Baixo, Star vs. Lever Drag 2-Speed &amp; Carretilhas Elétricas
+    </h2>
+
+    <div class="tufte-article-grid">
+      <div class="tufte-flow editorial-prose">
+        <p>
+          <strong>O mito dos rolamentos:</strong> dez rolamentos baratos em aço carbono travam na primeira saída ao mar e valem menos que 4 rolamentos blindados de alta precisão (Shimano S A-RB ou Daiwa CRBB/MagSealed) nos pontos de carga real (eixo do carretel, pinhão e coroa). Em carretilhas de arremesso, o controle da <GlossaryTerm id="cabeleira" label="cabeleira" /> combina o ajuste fino do eixo (elimina apenas a folga lateral) com três famílias de freio: <strong>centrífugo</strong> (sapatas que atuam no início violento do arremesso), <strong>magnético</strong> (atuação linear ideal contra vento) e <strong>digital DC</strong> (microchip que lê a rotação do carretel mil vezes por segundo).<Sidenote id="jig-reels" number={2}>No jigging pesado em parcéis, carretilhas <strong>Star Drag</strong> estreitas (Shimano Ocea Jigger vs. Daiwa Saltiga 300) vencem as Lever Drag no conforto de arremesso/queda livre porque não sofrem carga axial nos rolamentos do pinhão sob drag alto.</Sidenote>
+        </p>
+
+        <p>
+          Na pesca oceânica pesada (30W a 130W), imperam as <strong>Lever Drag de 2 velocidades (2-Speed)</strong>: a alavanca possui batente físico calibrado na balança (<GlossaryTerm id="strike-drag" label="Strike Drag" /> entre 25% e 33% da classe), eliminando o "achismo" da estrela sob adrenalina. A marcha alta recolhe linha rápido quando o peixe corre em direção ao barco; apertar o botão para a marcha baixa (~1.3:1) transforma a carretilha num guincho para levantar atuns e marlins que morrem no fundo.
+        </p>
+
+        <details class="deep-dive">
+          <summary>Aprofundamento: Carretilhas Elétricas (Tanacom / BeastMaster / Hooker)</summary>
+          <div class="deep-dive-body">
+            <p class="m-0">
+              Essenciais em duas frentes distintas: (1) <strong>pesca de profundidade extrema</strong> (200–600 m para peixe-batata, cherne-verdadeiro e espadarte de dia, onde recolher 1 kg de chumbo na mão é inviável — nunca sendo aceitas para recordes IGFA) e (2) <strong>recolhimento de dredges e teasers pesados</strong> em barcos sportfisher modernos, mantendo a atenção da tripulação na água limpa.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULADORAS PE, CPT, SLOW JIG, SHOCK LEADER & DUELO 50W -->
+  <TackleCalculators client:visible peLines={peLines} />
+
+  <!-- RAIO-X DO CARRETEL 4 CAMADAS -->
+  <SpoolXRayDiagram client:visible />
+
+  <!-- 4. FÍSICA ÓPTICA DAS LINHAS, NÓS & CRIMPAGEM GALVÂNICA -->
+  <section id="optica-nos-crimpagem" data-cais-keep class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+      02.4 · Polímeros, Atrito &amp; Eletroquímica
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-5">
+      Física das Linhas, Retenção Real de Nós &amp; Corrosão Galvânica na Crimpagem
+    </h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8">
+      <div class="lg:col-span-7 overflow-x-auto">
+        <table class="editorial-table">
+          <thead>
+            <tr>
+              <th>Polímero</th>
+              <th>Refração (Água 1,33)</th>
+              <th>Densidade (g/cm³)</th>
+              <th>Elasticidade &amp; Comportamento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-display font-semibold text-ink">Monofilamento (Nylon)</td>
+              <td class="font-mono text-xs">1,52 (mais visível)</td>
+              <td class="font-mono text-xs">1,14 (afunda lento)</td>
+              <td class="text-xs">15–25% de estiramento. Absorve água (perde até 15% de resistência molhado) e degrada no sol (UV); ideal como top shot amortecedor.</td>
+            </tr>
+            <tr>
+              <td class="font-mono font-bold text-ocean">Fluorocarbono (PVDF)</td>
+              <td class="font-mono text-xs font-bold text-ocean">1,42 (quase invisível)</td>
+              <td class="font-mono text-xs">1,78 (afunda rápido)</td>
+              <td class="text-xs">Alta resistência à abrasão e zero absorção de água/UV; mais rígido — ideal para líderes de 1,5 a 9 m.</td>
+            </tr>
+            <tr>
+              <td class="font-mono font-bold text-salvage">Multifilamento (PE / UHMWPE)</td>
+              <td class="font-mono text-xs">Opaco</td>
+              <td class="font-mono text-xs">0,97 (flutua)</td>
+              <td class="text-xs">~1–3% de estiramento; sensibilidade máxima e metade do diâmetro. Exige cama de nylon no eixo contra <GlossaryTerm id="arbor-slip" label="arbor slip" />.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="lg:col-span-5 border-t-2 border-salvage pt-4 lg:mt-0">
+        <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-wider text-salvage">
+          Regra de Crimpagem &amp; Corrosão Galvânica
+        </p>
+        <p class="mt-2 mb-3 text-sm leading-relaxed text-ink">
+          Acima de <strong>80–100 lb</strong>, nós perdem eficiência e esmagam o polímero; usa-se crimpagem (luvas prensadas). Misturar metais incompatíveis no mar (eletrólito) dispara <strong>corrosão galvânica</strong> invisível por dentro da luva:
+        </p>
+        <ul class="m-0 pl-4 text-xs leading-relaxed text-ink-secondary flex flex-col gap-1.5">
+          <li><strong>Luva de Alumínio (oval):</strong> usar apenas em monofilamento grosso.</li>
+          <li><strong>Luva de Cobre / Latão Dupla (Double-Barrel):</strong> padrão para fluorocarbono grosso ou cabo de aço revestido — nunca esmagar as pontas da luva (deixar "boca de sino" nas bordas para não cortar o líder).</li>
+          <li><strong>Cabo de Aço Nu (Wahoo / Anchova):</strong> preferir <strong>Haywire Twist</strong> (torção manual em arame single-strand) sem luvas metálicas que criam pilha galvânica.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Matriz de Nós Essenciais -->
+    <div class="border-t border-line pt-6">
+      <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-wider text-ocean mb-3">
+        Os 6 Nós que Resolvem 99% das Situações (Retenção Real Lubrificada)
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
+        <div class="border-t border-line pt-2.5">
+          <strong class="font-display text-base text-ink">Nó FG / PR Bobbin</strong>
+          <span class="block font-mono text-[11px] text-ocean">Retenção: 95%–100% · Multi → Líder</span>
+          <p class="text-xs text-ink-secondary mt-1 mb-0">Trançado tipo "armadilha chinesa" que aperta sob tração sem dobrar o fluorocarbono; passa limpo pelos passadores no arremesso.</p>
+        </div>
+        <div class="border-t border-line pt-2.5">
+          <strong class="font-display text-base text-ink">Bimini Twist (20–30 voltas)</strong>
+          <span class="block font-mono text-[11px] text-ocean">Retenção: ~98%–100% · Linha Dupla</span>
+          <p class="text-xs text-ink-secondary mt-1 mb-0">Padrão absoluto IGFA para confeccionar linha dupla e conectar o wind-on leader loop-to-loop (Cat's Paw).</p>
+        </div>
+        <div class="border-t border-line pt-2.5">
+          <strong class="font-display text-base text-ink">Palomar</strong>
+          <span class="block font-mono text-[11px] text-ocean">Retenção: 90%–95% · Multi / Mono → Anzol</span>
+          <p class="text-xs text-ink-secondary mt-1 mb-0">Rápido, simples e imune a escorregamento em multifilamento; perfeito para snaps, giradores e anzóis de olho grande.</p>
+        </div>
+        <div class="border-t border-line pt-2.5">
+          <strong class="font-display text-base text-ink">Rapala Loop (Nó de Laçada)</strong>
+          <span class="block font-mono text-[11px] text-ocean">Retenção: ~85% · Líder → Isca Artificial</span>
+          <p class="text-xs text-ink-secondary mt-1 mb-0">Cria argola livre na ponta do plug ou jighead, devolvendo nado natural a iscas que ficariam travadas com nó fixo.</p>
+        </div>
+        <div class="border-t border-line pt-2.5">
+          <strong class="font-display text-base text-ink">San Diego Jam / Uni-Knot</strong>
+          <span class="block font-mono text-[11px] text-ocean">Retenção: 85%–92% · Líder Grosso → Anzol</span>
+          <p class="text-xs text-ink-secondary mt-1 mb-0">Resiste a choques brutais em fluorocarbono 40–80 lb e jigs pesados sem deslizar sob pressão contínua.</p>
+        </div>
+        <div class="border-t border-line pt-2.5">
+          <strong class="font-display text-base text-ink">Albright / Alberto</strong>
+          <span class="block font-mono text-[11px] text-ocean">Retenção: 80%–88% · Emergência no Mar</span>
+          <p class="text-xs text-ink-secondary mt-1 mb-0">Alternativa veloz ao FG em mar agitado para unir multifilamento ao líder em menos de 40 segundos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ANZÓIS & GARATÉIAS -->
+  <section id="anzois-garateias" data-study-only class="editorial-band">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ocean">
+      02.5 · Terminal Tackle
+    </p>
+    <h2 class="font-display text-2xl font-semibold text-ink mt-1.5 mb-5">
+      Anatomia de Anzóis &amp; Escala de Garatéias (2X a 6X)
+    </h2>
+
+    <div class="overflow-x-auto">
+      <table class="editorial-table">
+        <thead>
+          <tr>
+            <th>Família / Modelo</th>
+            <th>Geometria-Chave</th>
+            <th>Aplicação &amp; Regra de Uso</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="font-display font-semibold text-ink">Circle Hook Inline (0°)</td>
+            <td class="font-mono text-xs">Ponta a 90° voltada à haste, sem torção</td>
+            <td>Obrigatório em iscas naturais para peixes de bico (IGFA) e grandes couros. <strong>Nunca fisgar:</strong> apenas tensionar suavemente.</td>
+          </tr>
+          <tr>
+            <td class="font-display font-semibold text-ink">Maruseigo &amp; Chinu</td>
+            <td class="font-mono text-xs">Haste média / forjado de curvatura ampla</td>
+            <td>Maruseigo brilha em surfcasting e iscas finas; Chinu forjado resiste à mandíbula esmagadora de tambaquis, pacus e piaparas.</td>
+          </tr>
+          <tr>
+            <td class="font-display font-semibold text-ink">Offset / Extra Wide Gap (EWG)</td>
+            <td class="font-mono text-xs">Degrau próximo ao olho + vão largo</td>
+            <td>Montagens anti-enrosco (Texas/Florida) em iscas soft de silicone; esconde a ponta no corpo da isca e passa no meio de galhadas.</td>
+          </tr>
+          <tr>
+            <td class="font-display font-semibold text-ink">Assist Hooks (Kevlar / Solid Ring)</td>
+            <td class="font-mono text-xs">Anzol curto em corda Kevlar no topo/base do jig</td>
+            <td>Elimina o efeito alavanca do metal rígido do jig durante a briga, reduzindo drasticamente perdas e enroscos no fundo.</td>
+          </tr>
+          <tr>
+            <td class="font-display font-semibold text-ink">Garatéias 2X / 4X / 6X</td>
+            <td class="font-mono text-xs">Espessura do arame (multiplicador de força)</td>
+            <td><strong>1X–2X:</strong> robalo/tucunaré médio. <strong>4X:</strong> tucunaré-açu, dourado e anchova. <strong>6X:</strong> xaréus GT e atuns no popping. Atenção: trocar 2X por 6X afunda plugs floating se exceder o peso original.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FSRS DO CAPÍTULO 02 -->
+  <div class="mt-10">
+    <MnemonicDeck
+      client:visible
+      prompts={prompts}
+      moduleFilter="cap-02"
+      heading="Retenção Ativa · Cap. 02 (Engenharia da Tralha)"
+    />
+  </div>
+</StudyLayout>

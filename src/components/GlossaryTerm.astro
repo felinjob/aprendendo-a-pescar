@@ -1,197 +1,54 @@
 ---
-import { getEntry, type CollectionEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
 
 interface Props {
-  termId: string;
+  id: string;
   label?: string;
-  entry?: CollectionEntry<'glossary'>;
 }
 
-const { termId, label, entry } = Astro.props;
-const resolved = entry ?? (await getEntry('glossary', termId));
+const { id, label } = Astro.props;
+const entry = await getEntry('glossary', id);
 
-if (!resolved) {
-  throw new Error(
-    `GlossaryTerm: termo "${termId}" não encontrado na coleção "glossary".`
-  );
+if (!entry) {
+  throw new Error(`GlossaryTerm: termo "${id}" não encontrado em src/data/glossary.json`);
 }
 
-const popoverId = `gt-${termId}-${Math.random().toString(36).slice(2, 8)}`;
-const anchorName = `--anc-${popoverId}`;
-const { term, shortDef, causalMechanism } = resolved.data;
+const { term, category, shortDef, causalMechanism } = entry.data;
+const uid = `gloss-${id}-${Math.random().toString(36).slice(2, 7)}`;
+const anchorName = `--anchor-${uid}`;
 ---
 
-<button
-  type="button"
-  popovertarget={popoverId}
-  class="glossary-trigger"
-  style={`anchor-name: ${anchorName};`}
->{label ?? term}</button><div
-  id={popoverId}
-  popover="auto"
-  class="glossary-popover"
-  role="region"
-  aria-label={`Léxico náutico: ${term}`}
-  style={`position-anchor: ${anchorName};`}
->
-  <div class="glossary-popover-head">
-    <span class="glossary-kicker">LÉXICO DE CONVÉS</span>
-    <button
-      type="button"
-      popovertarget={popoverId}
-      popovertargetaction="hide"
-      class="glossary-close"
-      aria-label={`Fechar definição de ${term}`}
-    >
-      ESC ×
-    </button>
-  </div>
+<span class="inline">
+  <button
+    type="button"
+    popovertarget={uid}
+    class="glossary-trigger"
+    style={`anchor-name: ${anchorName};`}
+    aria-label={`Definir termo técnico: ${term}`}
+  >
+    {label ?? term}
+  </button>
 
-  <p class="glossary-title">{term}</p>
-  <p class="glossary-def">{shortDef}</p>
-
-  <div class="glossary-mechanism">
-    <span class="glossary-mechanism-label">Física &amp; Causa</span>
-    <p class="glossary-mechanism-body">{causalMechanism}</p>
-  </div>
-</div>
-
-<style>
-  .glossary-trigger {
-    display: inline;
-    padding: 0 0.08em;
-    border: 0;
-    border-radius: 2px;
-    background: none;
-    font: inherit;
-    color: inherit;
-    cursor: pointer;
-    text-decoration: underline dotted var(--accent-salvage) 1.75px;
-    text-underline-offset: 0.24em;
-    transition:
-      background-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
-      color 180ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .glossary-trigger:hover,
-  .glossary-trigger:focus-visible {
-    background-color: var(--accent-salvage-soft);
-    color: var(--fg-primary);
-  }
-
-  .glossary-popover {
-    width: min(23.5rem, calc(100vw - 2rem));
-    border-radius: 4px;
-    border: 1px solid var(--border-hairline);
-    border-top: 2px solid var(--accent-salvage);
-    background-color: var(--bg-elevated);
-    color: var(--fg-primary);
-    padding: 0.95rem 1.05rem;
-    box-shadow: var(--shadow-sheet);
-    text-align: left;
-    font-family: var(--font-sans);
-    z-index: 60;
-  }
-
-  .glossary-popover::backdrop {
-    background-color: transparent;
-  }
-
-  @supports (anchor-name: --a) {
-    .glossary-popover {
-      position: fixed;
-      inset: auto;
-      margin: 0;
-      bottom: calc(anchor(top) + 0.55rem);
-      left: anchor(center);
-      translate: -50% 0;
-      position-try-fallbacks: flip-block, flip-inline;
-    }
-  }
-
-  @supports not (anchor-name: --a) {
-    .glossary-popover {
-      position: fixed;
-      inset: auto 1rem 1.25rem 1rem;
-      margin-inline: auto;
-    }
-  }
-
-  .glossary-popover-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    border-bottom: 1px solid var(--border-hairline);
-    padding-bottom: 0.45rem;
-    margin-bottom: 0.55rem;
-  }
-
-  .glossary-kicker {
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--accent-salvage);
-  }
-
-  .glossary-close {
-    border-radius: 3px;
-    border: 1px solid var(--border-hairline);
-    background-color: var(--bg-surface);
-    color: var(--fg-muted);
-    padding: 0.12rem 0.4rem;
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: border-color 180ms cubic-bezier(0.22, 1, 0.36, 1), color 180ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .glossary-close:hover {
-    border-color: var(--accent-salvage);
-    color: var(--accent-salvage);
-  }
-
-  .glossary-title {
-    margin: 0 0 0.3rem;
-    font-family: var(--font-editorial);
-    font-size: 1.0625rem;
-    font-weight: 600;
-    color: var(--fg-primary);
-  }
-
-  .glossary-def {
-    margin: 0;
-    font-family: var(--font-sans);
-    font-size: 0.8125rem;
-    line-height: 1.5;
-    color: var(--fg-primary);
-  }
-
-  .glossary-mechanism {
-    margin-top: 0.7rem;
-    padding-top: 0.55rem;
-    border-top: 1px solid var(--border-hairline);
-  }
-
-  .glossary-mechanism-label {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent-ocean);
-    margin-bottom: 0.2rem;
-  }
-
-  .glossary-mechanism-body {
-    margin: 0;
-    font-family: var(--font-sans);
-    font-size: 0.775rem;
-    line-height: 1.48;
-    color: var(--fg-secondary);
-  }
-</style>
+  <span
+    id={uid}
+    popover="auto"
+    class="glossary-popover"
+    style={`position-anchor: ${anchorName};`}
+    role="region"
+    aria-label={`Definição de ${term}`}
+  >
+    <span class="flex items-baseline justify-between gap-2 pb-2 mb-2 border-b border-line">
+      <strong class="font-display text-sm font-semibold text-ink">{term}</strong>
+      <span class="font-mono text-[10px] uppercase tracking-wider text-ocean">{category}</span>
+    </span>
+    <span class="block text-xs leading-relaxed text-ink mb-2">
+      {shortDef}
+    </span>
+    <span class="block text-xs leading-relaxed text-ink-secondary pt-2 border-t border-line">
+      <strong class="font-mono text-[10px] uppercase tracking-wider text-salvage block mb-0.5">
+        Mecanismo causal
+      </strong>
+      {causalMechanism}
+    </span>
+  </span>
+</span>

@@ -202,35 +202,30 @@
   id="coluna-agua"
   data-study-only
   aria-labelledby="coluna-agua-title"
-  class="tufte-full-bleed border border-line-strong bg-elevated p-4 sm:p-6"
+  class="console-band tufte-full-bleed"
 >
-  <header class="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4 mb-5">
+  <header class="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-4 mb-5">
     <div>
-      <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-        OCEANOGRAFIA &amp; FÍSICA DA ÁGUA · 0 M A 1000 M
+      <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage m-0">
+        Oceanografia &amp; Física da Água · 0 m a 1.000 m
       </p>
       <h2
         id="coluna-agua-title"
-        class="font-sans text-xl sm:text-2xl font-bold tracking-tight text-ink mt-1 mb-0"
+        class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-0"
       >
         Explorador Batimétrico, Ressurgência (14°C) &amp; Absorção Óptica
       </h2>
     </div>
 
-    <!-- Abas Declarativas -->
-    <div
-      role="tablist"
-      aria-label="Modo de leitura da coluna d'água"
-      class="inline-flex border border-line-strong bg-surface p-0.5"
-    >
+    <div role="tablist" aria-label="Modo de leitura da coluna d'água" class="flex gap-5">
       <button
         type="button"
         role="tab"
         aria-selected={activeTab === 'mar'}
         onclick={() => (activeTab = 'mar')}
-        class="px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors {activeTab === 'mar'
-          ? 'bg-ocean text-elevated'
-          : 'bg-transparent text-ink-secondary hover:text-ink'}"
+        class="cursor-pointer bg-transparent border-0 pb-1.5 border-b-2 font-mono text-xs font-semibold uppercase tracking-wider transition-colors {activeTab === 'mar'
+          ? 'border-ocean text-ink'
+          : 'border-transparent text-ink-muted hover:text-ink'}"
       >
         Mar (Talude &amp; Ressurgência)
       </button>
@@ -239,9 +234,9 @@
         role="tab"
         aria-selected={activeTab === 'optica'}
         onclick={() => (activeTab = 'optica')}
-        class="px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors {activeTab === 'optica'
-          ? 'bg-salvage text-elevated'
-          : 'bg-transparent text-ink-secondary hover:text-ink'}"
+        class="cursor-pointer bg-transparent border-0 pb-1.5 border-b-2 font-mono text-xs font-semibold uppercase tracking-wider transition-colors {activeTab === 'optica'
+          ? 'border-salvage text-ink'
+          : 'border-transparent text-ink-muted hover:text-ink'}"
       >
         Óptica (Absorção)
       </button>
@@ -417,28 +412,28 @@
       </div>
 
       <!-- Texto Técnico: Ressurgência + Falácia Barométrica -->
-      <div class="lg:col-span-5 flex flex-col gap-4">
-        <div class="border border-line bg-surface p-4">
-          <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-ocean m-0">
-            DINÂMICA DO TALUDE (43–55 NM)
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <div class="border-t border-line pt-3">
+          <p class="font-mono text-[11px] font-semibold uppercase tracking-widest text-ocean m-0">
+            Dinâmica do Talude (43–55 NM)
           </p>
-          <h3 class="font-sans text-base font-bold text-ink mt-1 mb-2">
+          <h3 class="font-display text-lg font-semibold text-ink mt-1 mb-2">
             Por que o Peixe de Bico Concentra no "Corte"
           </h3>
-          <p class="font-editorial text-sm leading-relaxed text-ink-secondary m-0">
+          <p class="text-sm leading-relaxed text-ink-secondary m-0">
             Ao largo do Rio e de Cabo Frio, entre <strong>43 e 55 milhas náuticas</strong> da costa, a plataforma continental termina de golpe no talude — despencando de 100–200 m para além de 1.000 m. Quando o <strong>vento Nordeste</strong> sopra contínuo, ele empurra a água quente da superfície para fora e suga do abismo uma massa fria de <strong>14°C</strong> carregada de nutrientes, detonando a cadeia alimentar no degrau.
           </p>
         </div>
 
-        <div class="border-2 border-salvage bg-salvage-soft p-4">
-          <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-            DESMISTIFICAÇÃO · FÍSICA DE PRESSÃO
+        <div class="border-t-2 border-salvage pt-3">
+          <p class="font-mono text-[11px] font-semibold uppercase tracking-widest text-salvage m-0">
+            Desmistificação · Física de Pressão
           </p>
-          <h3 class="font-sans text-base font-bold text-ink mt-1 mb-2">
+          <h3 class="font-display text-lg font-semibold text-ink mt-1 mb-2">
             A Falácia Barométrica (0,09 inHg = 3 cm)
           </h3>
-          <p class="font-editorial text-sm leading-relaxed text-ink m-0">
-            Esqueça a desculpa do barômetro caindo antes da frente fria. Uma queda barométrica brutal de tempestade (<strong>0,09 inHg</strong> / ~3 hPa) reduz a pressão sobre o peixe no equivalente a apenas <strong>3 centímetros de coluna d'água</strong> (0,003 atm). A bexiga natatória ignora frentes frias — qualquer peixe ajusta metros de profundidade em segundos. O que realmente liga ou apaga a pescaria são <strong>temperatura</strong>, <strong>perda de luminosidade</strong> (nuvens espessas/turbidez) e o avanço da <strong>ressurgência a 14°C</strong>.
+          <p class="text-sm leading-relaxed text-ink m-0">
+            Esqueça a desculpa do barômetro caindo antes da frente fria. Uma queda barométrica brutal de tempestade (<strong>0,09 inHg</strong> / ~3 hPa) reduz a pressão sobre o peixe no equivalente a apenas <strong>3 centímetros de coluna d'água</strong> (0,003 atm). O que realmente liga ou apaga a pescaria são <strong>temperatura</strong>, <strong>luminosidade</strong> (nuvens/turbidez) e o avanço da <strong>ressurgência a 14°C</strong>.
           </p>
         </div>
       </div>

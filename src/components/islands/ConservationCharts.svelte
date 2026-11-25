@@ -38,26 +38,26 @@
   id="conservacao-dados"
   data-study-only
   aria-labelledby="conservacao-dados-title"
-  class="tufte-full-bleed border border-line-strong bg-elevated p-4 sm:p-6 my-8"
+  class="console-band tufte-full-bleed"
 >
   <header class="border-b border-line pb-4 mb-5">
-    <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-      EVIDÊNCIA EMPÍRICA · SMALL MULTIPLES (PALETA OKABE-ITO)
+    <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage m-0">
+      Evidência Empírica · Small Multiples (Paleta Okabe-Ito)
     </p>
     <h2
       id="conservacao-dados-title"
-      class="font-sans text-xl sm:text-2xl font-bold tracking-tight text-ink mt-1 mb-0"
+      class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-0"
     >
       Geometria do Anzol (Circle vs. Offset 15° vs. J) &amp; Manejo Pós-Captura
     </h2>
-    <p class="font-sans text-xs sm:text-sm text-ink-secondary mt-1 mb-0">
-      A ciência desmente a farpa e o boga grip na vertical: dados medidos substituem o "eu acho" no convés.
+    <p class="text-sm text-ink-secondary mt-1.5 mb-0 max-w-[66ch]">
+      A ciência desmente a farpa e o boga grip na vertical: dados medidos substituem o achismo no convés.
     </p>
   </header>
 
   <!-- Legenda Okabe-Ito colorblind-safe -->
-  <div class="flex flex-wrap items-center gap-4 border border-line bg-surface px-3.5 py-2.5 mb-5 font-mono text-xs">
-    <span class="font-bold text-ink-muted uppercase text-[10px]">LEGENDA OKABE-ITO:</span>
+  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-line pb-3 mb-6 font-mono text-xs">
+    <span class="font-semibold text-ink-muted uppercase text-[10px] tracking-wider">Legenda Okabe-Ito:</span>
     <span class="inline-flex items-center gap-1.5 font-bold text-ink">
       <span class="inline-block w-3 h-3" style="background-color: var(--oi-blue);"></span>
       Circle Inline (0° offset)
@@ -76,10 +76,9 @@
     </span>
   </div>
 
-  <!-- SMALL MULTIPLES: 2 PAINÉIS PRINCIPAIS -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
     <!-- PAINEL 1: CIRCLE HOOK VS J VS OFFSET 15° -->
-    <div class="lg:col-span-7 border border-line bg-surface p-4 flex flex-col justify-between gap-4">
+    <div class="lg:col-span-7 flex flex-col justify-between gap-4">
       <div>
         <p class="font-mono text-[11px] font-bold uppercase tracking-wider text-ocean m-0">
           PAINEL A · ANATOMIA DA FISGADA (%)
@@ -199,18 +198,18 @@
         </svg>
       </div>
 
-      <div class="border border-salvage bg-salvage-soft p-3 tabular-telemetry">
+      <div class="border-t-2 border-salvage pt-3 tabular-telemetry">
         <p class="font-mono text-xs font-bold text-salvage m-0">
           O ERRO DO OFFSET: 15° DE TORÇÃO IGUALAM O ANZOL J (2% → 44% NO ESÔFAGO)
         </p>
-        <p class="font-sans text-xs text-ink mt-1 mb-0">
+        <p class="text-xs sm:text-sm leading-relaxed text-ink mt-1.5 mb-0">
           O anzol circular só desliza até o canto da boca (<strong>85%</strong> vs. <strong>27%</strong> no J) quando a ponta está alinhada (inline 0°). Basta entortar 15° para a fisgada profunda saltar de <strong>2% para 44%</strong>.
         </p>
       </div>
     </div>
 
     <!-- PAINEL 2: COOKE ET AL. (2022) — FARPA & LIP GRIPPER -->
-    <div class="lg:col-span-5 border border-line bg-surface p-4 flex flex-col justify-between gap-4">
+    <div class="lg:col-span-5 flex flex-col justify-between gap-4">
       <div class="flex flex-col gap-4">
         <div>
           <p class="font-mono text-[11px] font-bold uppercase tracking-wider text-ocean m-0">
@@ -277,12 +276,11 @@
         </div>
       </div>
 
-      <!-- Protocolo Direto de Convés (Fausto) -->
-      <div class="border-l-4 border-salvage bg-elevated p-3.5">
-        <p class="font-mono text-[11px] font-bold uppercase tracking-wider text-salvage m-0">
-          PROTOCOLO SECO DE CONVÉS
+      <div class="border-t-2 border-line-strong pt-3">
+        <p class="font-mono text-[11px] font-semibold uppercase tracking-wider text-salvage m-0">
+          Protocolo Seco de Convés
         </p>
-        <p class="font-editorial text-sm leading-relaxed text-ink-secondary mt-1 mb-0">
+        <p class="text-sm leading-relaxed text-ink-secondary mt-1.5 mb-0">
           <strong>Fisgada funda:</strong> corte o líder rente à boca imediatamente — meter o alicate pelas guelras rasga arcos branquiais e mata o peixe por dentro. <strong>Lip Gripper:</strong> pendurar o peixe na vertical causa lesão na coluna ou rasga a membrana mandibular em <strong>100% das vezes</strong>.
         </p>
       </div>

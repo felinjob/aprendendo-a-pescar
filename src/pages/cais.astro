@@ -1,0 +1,179 @@
+---
+import { getCollection } from 'astro:content';
+import StudyLayout from '../layouts/StudyLayout.astro';
+import GlossaryTerm from '../components/GlossaryTerm.astro';
+import PostSaltwaterChecklist from '../components/islands/PostSaltwaterChecklist.svelte';
+import GlossaryExplorer from '../components/islands/GlossaryExplorer.svelte';
+import MnemonicDeck from '../components/islands/MnemonicDeck.svelte';
+
+const glossaryEntries = await getCollection('glossary');
+const terms = glossaryEntries.map((e) => e.data);
+const fsrsEntries = await getCollection('fsrsPrompts');
+const prompts = fsrsEntries.map((e) => e.data);
+
+const sectionNav = [
+  { id: 'checklist-pos-mar', label: 'Checklist Pós-Mar (5 Passos)' },
+  { id: 'dez-erros', label: '10 Erros de Iniciante' },
+  { id: 'etiqueta-conves', label: '10 Mandamentos de Convés' },
+  { id: 'seis-perguntas', label: '6 Perguntas de Cais' },
+  { id: 'glossario-global', label: 'Glossário Global (38)' },
+  { id: 'fsrs-cap-08', label: 'Retenção Ativa · Cap. 08' },
+];
+
+const TEN_ERRORS = [
+  { num: '01', title: 'High-sticking perto do barco', fix: 'Nunca erga a vara acima de 60°–65° para içar peixe ou puxar enrosco. Mantenha 45° e use o drag.' },
+  { num: '02', title: 'Drag fechado no máximo ("no talo")', fix: 'Calibre na balança em 25%–33% da resistência da linha com bobina cheia e alivie se o carretel esvaziar.' },
+  { num: '03', title: 'Multifilamento direto no eixo metálico', fix: 'Sempre dê 10–15 voltas de monofilamento (ou fita) no eixo para impedir arbor slip.' },
+  { num: '04', title: 'Dar fisgada com Circle Hook', fix: 'Arrancar a vara puxa o anzol circular para fora da boca (sancocho). Deixe o peixe virar e apenas tensione.' },
+  { num: '05', title: 'Não lubrificar o nó antes de apertar', fix: 'Apertar nylon ou fluorocarbono a seco queima o polímero por atrito e derruba a resistência em até 40%.' },
+  { num: '06', title: 'Ignorar a revisão do líder após peixe ou pedra', fix: 'Corra os dedos no primeiro metro de fluorocarbono após cada briga; qualquer aspereza exige corte e nó novo.' },
+  { num: '07', title: 'Lavar carretilha com jato forte ou WD-40', fix: 'Feche o drag, use névoa suave, seque à sombra, solte o drag e nunca aplique desengripante ou óleo em MagSealed.' },
+  { num: '08', title: 'Excesso de tralha e troca frenética de isca', fix: 'Mais tempo de isca na água no ponto certo vence meia hora trocando cores sem ler corrente, sombra e profundidade.' },
+  { num: '09', title: 'Subestimar sol, desidratação e enjoo no mar', fix: 'Leve proteção UV50+, polarizado, água abundante e tome antiemético na noite anterior se não tem hábito de alto-mar.' },
+  { num: '10', title: 'Desrespeitar defesos, janelas e espécies 2026', fix: 'Portar licença Gov.br no celular offline e checar Peroá, Miragaia, Mero e zonas de exclusão evita multa federal e apreensão.' },
+];
+
+const TEN_COMMANDMENTS = [
+  { num: '01', rule: 'O comandante manda no barco — sem debate em manobra', detail: 'Em mar aberto, decisões de rota, retorno por tempo ruim e posicionamento de briga são soberanas.' },
+  { num: '02', rule: 'Gritou "Fish On!", limpe a popa imediatamente', detail: 'Quem não está com o peixe recolhe suas linhas sem hesitar para evitar enrosco cruzado no cockpit.' },
+  { num: '03', rule: 'Respeite o espaçamento entre embarcações (30–90 m)', detail: 'Nunca corte a proa ou passe sobre a esteira de quem está corricando ou à deriva num parcel.' },
+  { num: '04', rule: 'A Lei da Banana a bordo', detail: 'Superstição secular mundial de azar na pesca: nunca leve bananas no barco sem permissão expressa do dono — respeite a cultura do convés.' },
+  { num: '05', rule: 'Sola clara (non-marking) e zero garrafa de vidro', detail: 'Solado escuro risca o gelcoat/teca; vidro quebra no balanço e transforma o cockpit em armadilha.' },
+  { num: '06', rule: 'Nunca toque na vara alheia durante uma briga', detail: 'Além de quebrar a etiqueta básica, em torneios IGFA qualquer toque de terceiros desclassifica o peixe.' },
+  { num: '07', rule: 'Rachou a saída? Pague diesel, gelo e isca antes de pedir', detail: 'No circuito de clubes, elegância de convidado significa oferecer divisão justa de custos e gorjeta digna ao marinheiro.' },
+  { num: '08', rule: 'Mantenha o cockpit limpo e seco durante a jornada', detail: 'Alicates, linhas soltas e líderes jogados no piso viram risco grave de queda e corte na hora da corrida.' },
+  { num: '09', rule: 'Bandeira sobe na entrada do canal e desce no mesmo dia', detail: 'Deixar flâmulas de captura hasteada no dia seguinte é gafe portuária clássica.' },
+  { num: '10', rule: 'Foto rápida, peixe vivo e silêncio sobre pontos alheios', detail: 'Jamais salve no celular ou repasse coordenadas de GPS (pesqueiros/parcéis) do comandante que o convidou.' },
+];
+
+const SIX_QUESTIONS = [
+  {
+    q: '01 · "Qual temperatura de superfície e distância do corte o pessoal achou água limpa essa semana?"',
+    why: 'Mostra imediatamente que você entende a relação entre talude (43–55 MN), ressurgência fria (14°C) e frentes térmicas — abre conversa técnica com comandantes sem pedir coordenada secreta.',
+  },
+  {
+    q: '02 · "Nesse barco vocês preferem puxar teaser com dredge e fazer bait-and-switch ou spread completo de skirts?"',
+    why: 'Demonstra domínio do vocabulário operacional do convés e ajuda você a entender exatamente qual será sua função no cockpit antes mesmo de largar as espias.',
+  },
+  {
+    q: '03 · "Na classe 50 lb da etapa, vocês estão montando wind-on de 9,14 m com dupla de 3,05 m ou líder mais curto?"',
+    why: 'Sinaliza conhecimento preciso da matemática IGFA de 12,19 m combinados — raríssimo em iniciantes e imediatamente respeitado por capitães experientes.',
+  },
+  {
+    q: '04 · "Como o pessoal está ajustando o spread quando o vento Nordeste aperta e traz a água verde para dentro?"',
+    why: 'Conecta meteorologia real do Sudeste (ressurgência de Cabo Frio/Rio) à tomada de decisão tática de profundidade e velocidade.',
+  },
+  {
+    q: '05 · "Qual circle hook inline vocês estão usando no ballyhoo para não perder peixe no drop-back?"',
+    why: 'Toca diretamente na diferença entre inline 0° e offset 15° e na prevenção do sancocho, revelando preparo prático real.',
+  },
+  {
+    q: '06 · "Como posso ajudar a tripulação no preparo de convés e na lavagem pós-mar hoje?"',
+    why: 'A pergunta que mais garante o segundo convite em qualquer iate clube: humildade operacional vence qualquer exibição de equipamento caro.',
+  },
+];
+---
+
+<StudyLayout
+  title="Cap. 08 · Sobrevivência no Cais, Manutenção, Etiqueta & Glossário | Aprendendo a Pescar"
+  chapterNumber="Cap. 08"
+  chapterTitle="Cais, Etiqueta & Glossário"
+  activeRoute="/cais"
+  sectionNav={sectionNav}
+>
+  <header class="pb-6 border-b border-line">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-salvage">
+      Capítulo 08 · Cultura de Cais, Manutenção &amp; Léxico Completo
+    </p>
+    <h1 class="font-display text-4xl sm:text-5xl font-semibold leading-[1.08] tracking-[-0.02em] text-ink mt-2.5 mb-3.5 max-w-[24ch]">
+      Sobrevivência no cais: cuidar da tralha e falar a língua do convés.
+    </h1>
+    <p class="m-0 text-base sm:text-lg leading-relaxed text-ink-secondary max-w-[62ch]">
+      O protocolo pós-mar que salva rolamentos de milhares de reais, os dez erros clássicos do <GlossaryTerm id="calca-branca" label="calça branca" />, a etiqueta implícita dos iate clubes, seis perguntas inteligentes de cais e o glossário causal pesquisável completo.
+    </p>
+  </header>
+
+  <!-- CHECKLIST PÓS-MAR PERSISTIDO NO INDEXEDDB -->
+  <PostSaltwaterChecklist client:visible />
+
+  <!-- 10 ERROS DE INICIANTE -->
+  <section id="dez-erros" data-study-only class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+      08.1 · Diagnóstico de Falhas Comuns
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-6">
+      Os 10 Erros que Mais Custam Peixes &amp; Equipamento
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-0 border-t border-line">
+      {TEN_ERRORS.map((err) => (
+        <div class="border-b border-line py-4 flex items-start gap-4">
+          <span class="font-mono text-xs font-bold text-salvage pt-0.5 shrink-0">{err.num}</span>
+          <div>
+            <strong class="block font-display text-base font-semibold text-ink">{err.title}</strong>
+            <p class="mt-1 mb-0 text-xs sm:text-sm leading-relaxed text-ink-secondary">{err.fix}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 10 MANDAMENTOS DE ETIQUETA & SUPERSTIÇÕES -->
+  <section id="etiqueta-conves" data-study-only class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ocean">
+      08.2 · Código Não-Escrito de Bordo
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-6">
+      Os 10 Mandamentos de Etiqueta a Bordo (Incl. a Lei da Banana)
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-0 border-t border-line">
+      {TEN_COMMANDMENTS.map((cmd) => (
+        <div class="border-b border-line py-4 flex items-start gap-4">
+          <span class="font-mono text-xs font-bold text-ocean pt-0.5 shrink-0">{cmd.num}</span>
+          <div>
+            <strong class="block font-display text-base font-semibold text-ink">{cmd.rule}</strong>
+            <p class="mt-1 mb-0 text-xs sm:text-sm leading-relaxed text-ink-secondary">{cmd.detail}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 6 PERGUNTAS INTELIGENTES DE CAIS -->
+  <section id="seis-perguntas" data-study-only class="editorial-band">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+      08.3 · Repertório de Marina &amp; Sócios
+    </p>
+    <h2 class="font-display text-2xl font-semibold text-ink mt-1.5 mb-3">
+      6 Perguntas Inteligentes para Engajar Comandantes &amp; Tripulação
+    </h2>
+    <p class="text-sm text-ink-secondary mt-0 mb-4 max-w-[66ch]">
+      Clique em cada pergunta para ler por que ela destrava conversas técnicas de alto nível no cais sem jamais soar invasiva ou amadora.
+    </p>
+
+    <div>
+      {SIX_QUESTIONS.map((item) => (
+        <details class="deep-dive">
+          <summary>{item.q}</summary>
+          <div class="deep-dive-body">
+            <p class="m-0 max-w-[66ch]">{item.why}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- GLOSSÁRIO GLOBAL PESQUISÁVEL (38 TERMOS) -->
+  <GlossaryExplorer client:visible terms={terms} />
+
+  <!-- FSRS DO CAPÍTULO 08 -->
+  <div class="mt-10">
+    <MnemonicDeck
+      client:visible
+      prompts={prompts}
+      moduleFilter="cap-08"
+      heading="Retenção Ativa · Cap. 08 (Cais & Manutenção)"
+    />
+  </div>
+</StudyLayout>

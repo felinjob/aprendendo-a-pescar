@@ -185,46 +185,46 @@
   id="adrica-bandeiras"
   data-cais-keep
   aria-labelledby="adrica-bandeiras-title"
-  class="tufte-full-bleed border border-line-strong bg-elevated p-4 sm:p-6 my-8"
+  class="console-band tufte-full-bleed"
 >
-  <header class="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4 mb-5">
+  <header class="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-4 mb-6">
     <div>
-      <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-        CÓDIGO PORTUÁRIO · TANGÃO DE BORESTE
+      <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage m-0">
+        Código Portuário · Tangão de Boreste
       </p>
       <h2
         id="adrica-bandeiras-title"
-        class="font-sans text-xl sm:text-2xl font-bold tracking-tight text-ink mt-1 mb-0"
+        class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-0"
       >
         Montador da Adriça de Bandeiras (Hierarquia 1 a 7)
       </h2>
-      <p class="font-sans text-xs sm:text-sm text-ink-secondary mt-1 mb-0">
-        Adicione capturas em qualquer ordem: o tangão reordena automaticamente de cima para baixo conforme o código portuário.
+      <p class="text-sm text-ink-secondary mt-1.5 mb-0 max-w-[66ch]">
+        Adicione capturas em qualquer ordem: o tangão reordena automaticamente de cima para baixo conforme a etiqueta marítima.
       </p>
     </div>
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-3">
       <button
         type="button"
         onclick={loadDefaultHalyard}
-        class="px-2.5 py-1.5 border border-line-strong bg-surface font-mono text-[11px] font-bold text-ink cursor-pointer hover:border-ocean"
+        class="px-3 py-1.5 border border-line-strong bg-elevated font-mono text-[11px] font-semibold text-ink cursor-pointer hover:border-ocean"
       >
         Exemplo de Torneio
       </button>
       <button
         type="button"
         onclick={clearAll}
-        class="px-2.5 py-1.5 border border-line bg-canvas font-mono text-[11px] font-bold text-salvage cursor-pointer hover:border-salvage"
+        class="px-3 py-1.5 border border-line bg-canvas font-mono text-[11px] font-semibold text-salvage cursor-pointer hover:border-salvage"
       >
         Arriar Tudo
       </button>
     </div>
   </header>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
     <!-- PAINEL DE CONTROLE + HIERARQUIA -->
-    <div class="lg:col-span-6 flex flex-col gap-4">
-      <div class="border border-line bg-surface p-4 flex flex-col gap-3">
+    <div class="lg:col-span-6 flex flex-col gap-6">
+      <div class="flex flex-col gap-3">
         <span class="font-mono text-xs font-bold uppercase tracking-wider text-ink">
           1. Lançar Captura na Adriça
         </span>
@@ -280,7 +280,7 @@
       </div>
 
       <!-- Lista ordenada ativa -->
-      <div class="border border-line bg-surface p-4">
+      <div class="border-t border-line pt-4">
         <div class="flex items-center justify-between mb-2.5">
           <span class="font-mono text-xs font-bold uppercase tracking-wider text-ink">
             Ordem Atual no Tangão ({sortedFlags.length})
@@ -323,19 +323,19 @@
         {/if}
       </div>
 
-      <!-- Etiqueta Portuária (Fausto) -->
-      <div class="border-l-4 border-salvage bg-surface p-3.5">
-        <p class="font-mono text-[11px] font-bold uppercase tracking-wider text-salvage m-0">
-          ETIQUETA PORTUÁRIA · REGRA DE CAIS
+      <!-- Etiqueta Portuária -->
+      <div class="border-t-2 border-salvage pt-3">
+        <p class="font-mono text-[11px] font-semibold uppercase tracking-wider text-salvage m-0">
+          Etiqueta Portuária · Regra de Cais
         </p>
-        <p class="font-editorial text-sm leading-relaxed text-ink-secondary mt-1 mb-0">
-          A ordem na adriça não é gosto pessoal — é código portuário de 1 a 7: <strong>Marlin Azul sempre no topo</strong>, <strong>Tubarão sempre na base</strong>. Bandeira sobe na entrada do canal e é arriada no final do dia. Deixar bandeira pendurada no tangão na tarde do dia seguinte é ostentação barata e rende punição no cais.
+        <p class="text-sm leading-relaxed text-ink-secondary mt-1.5 mb-0">
+          A ordem na adriça não é gosto pessoal — é código portuário de 1 a 7: <strong>Marlin Azul sempre no topo</strong>, <strong>Tubarão sempre na base</strong>. Bandeira sobe na entrada do canal e é arriada no final do dia; deixá-la pendurada na tarde seguinte rende punição no cais.
         </p>
       </div>
     </div>
 
     <!-- SVG DO TANGÃO DE BORESTE (TOPO -> BASE) -->
-    <div class="lg:col-span-6 border border-line bg-surface p-3">
+    <div class="lg:col-span-6">
       <div class="flex items-center justify-between font-mono text-[10px] text-ink-muted mb-2">
         <span>ADRIÇA DE BORESTE (ORDENAÇÃO AUTOMÁTICA)</span>
         <span class="tabular-telemetry">{sortedFlags.length} BANDEIRA(S)</span>

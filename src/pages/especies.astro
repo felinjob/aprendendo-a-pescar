@@ -1,0 +1,150 @@
+---
+import { getCollection } from 'astro:content';
+import StudyLayout from '../layouts/StudyLayout.astro';
+import EditorialPlate from '../components/EditorialPlate.astro';
+import Sidenote from '../components/Sidenote.astro';
+import SpeciesEncyclopedia from '../components/islands/SpeciesEncyclopedia.svelte';
+import ConservationCharts from '../components/islands/ConservationCharts.svelte';
+import MnemonicDeck from '../components/islands/MnemonicDeck.svelte';
+import plateMarlinImg from '../assets/images/plate_pelagic_marlin_1795644458972.jpg';
+
+const speciesEntries = await getCollection('species');
+const speciesList = speciesEntries.map((e) => e.data);
+const fsrsEntries = await getCollection('fsrsPrompts');
+const prompts = fsrsEntries.map((e) => e.data);
+
+const sectionNav = [
+  { id: 'enciclopedia-especies', label: 'Enciclopédia (22 Espécies)' },
+  { id: 'identificacao-diagnostica', label: 'Chaves de Identificação' },
+  { id: 'conservacao-dados', label: 'Circle Hook & Cooke (2022)' },
+  { id: 'barotrauma-reanimacao', label: 'Barotrauma, Reanimação & Tag' },
+  { id: 'fsrs-cap-06', label: 'Retenção Ativa · Cap. 06' },
+];
+---
+
+<StudyLayout
+  title="Cap. 06 · Enciclopédia de Espécies & Ciência do Pesque-e-Solte | Aprendendo a Pescar"
+  chapterNumber="Cap. 06"
+  chapterTitle="Espécies & Conservação"
+  activeRoute="/especies"
+  sectionNav={sectionNav}
+>
+  <header class="pb-6 border-b border-line">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-salvage">
+      Capítulo 06 · Biologia, Diagnóstico Taxonômico &amp; Ciência do Catch &amp; Release
+    </p>
+    <h1 class="font-display text-4xl sm:text-5xl font-semibold leading-[1.08] tracking-[-0.02em] text-ink mt-2.5 mb-3.5 max-w-[24ch]">
+      Conhecer o peixe para pescar melhor e devolver vivo.
+    </h1>
+    <p class="m-0 text-base sm:text-lg leading-relaxed text-ink-secondary max-w-[62ch]">
+      Enciclopédia tática de 22 espécies brasileiras de água doce, estuário e alto-mar — integrada à ciência comprovada de sobrevivência pós-soltura, reversão de barotrauma e protocolo TBF de marcação.
+    </p>
+  </header>
+
+  <EditorialPlate
+    image={plateMarlinImg}
+    alt="Marlin-Azul do Atlântico submerso em águas azuis límpidas exibindo faixas laterais azul-cobalto luminosas sob raios solares"
+    plateNumber="Prancha 04"
+    caption="Marlin-Azul (Makaira nigricans) com cromatóforos acesos em azul-cobalto sob a superfície pelágica — sinal visual inequívoco de caça ativa no spread e de vitalidade plena na soltura."
+    aspect="16/9"
+    priority={true}
+  />
+
+  <!-- ENCICLOPÉDIA INTERATIVA DE 22 ESPÉCIES -->
+  <SpeciesEncyclopedia client:visible speciesList={speciesList} />
+
+  <!-- CHAVES DIAGNÓSTICAS DE IDENTIFICAÇÃO EM CAMPO -->
+  <section id="identificacao-diagnostica" data-cais-keep class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ocean">
+      06.1 · Taxonomia de Convés (Zero Confusão)
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-5">
+      Chaves Rápidas para Não Confundir Espécies Parecidas
+    </h2>
+
+    <div class="overflow-x-auto">
+      <table class="editorial-table">
+        <thead>
+          <tr>
+            <th>Par / Grupo Confundido</th>
+            <th>Traço Diagnóstico Inequívoco</th>
+            <th>Por Que Importa na Lei &amp; no Torneio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="font-display font-semibold text-ink">Marlin-Azul vs. Marlin-Branco</td>
+            <td><strong>Azul:</strong> ponta da dorsal frontal pontiaguda e peitorais rígidas (não dobram rente ao corpo). <strong>Branco:</strong> pontas da 1ª dorsal, peitorais e anal nitidamente <strong>arredondadas</strong>.</td>
+            <td>Marlin-Branco tem retenção estritamente proibida no Brasil (IN SEAP 12/2005) e pontuação/hierarquia (#2) distinta do Azul (#1).</td>
+          </tr>
+          <tr>
+            <td class="font-display font-semibold text-ink">Robalo-Flecha vs. Robalo-Peva</td>
+            <td>Conte os raios moles da nadadeira anal: <strong>Flecha = 6 raios</strong> (corpo alongado); <strong>Peva = 7 raios</strong> (corpo mais alto e compacto).</td>
+            <td>Tamanhos mínimos diferentes (ex.: 50 cm vs. 30–35 cm) e gestão de fêmeas grandes protândricas.</td>
+          </tr>
+          <tr>
+            <td class="font-display font-semibold text-ink">Pintado vs. Cachara vs. Caparari</td>
+            <td><strong>Pintado:</strong> pintas redondas escuras regulares. <strong>Cachara:</strong> listras verticais escuras (zebra). <strong>Caparari:</strong> padrão reticulado em malha.</td>
+            <td>Regras específicas de cota, tamanhos mínimos e Transporte Zero no Pantanal/Araguaia.</td>
+          </tr>
+          <tr>
+            <td class="font-display font-semibold text-ink">Traíra vs. Trairão</td>
+            <td>Passe o dedo (com cuidado) na língua: o <strong>Trairão (H. aimara)</strong> possui placa dentária áspera sobre a língua e porte de corredeira amazônica até 16+ kg.</td>
+            <td>Equipamento e empate de aço completamente distintos (12–17 lb vs. 25–40 lb).</td>
+          </tr>
+          <tr>
+            <td class="font-display font-semibold text-ink">Hermafroditismo: Garoupa vs. Robalo</td>
+            <td><strong>Garoupa (Protogínica):</strong> nasce fêmea e vira macho acima de ~73 cm. <strong>Robalo (Protândrico):</strong> nasce macho e vira fêmea matriz grande.</td>
+            <td>Abater exemplares gigantes elimina justamente o sexo mais escasso no banco reprodutivo — daí o slot limit (47–73 cm) na garoupa.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- GRÁFICOS EMPÍRICOS DE CONSERVAÇÃO -->
+  <ConservationCharts client:visible />
+
+  <!-- PROTOCOLOS DE REANIMAÇÃO, BAROTRAUMA & TAGGING TBF -->
+  <section id="barotrauma-reanimacao" data-study-only class="editorial-band-strong">
+    <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+      06.2 · Protocolos Operacionais de Sobrevivência
+    </p>
+    <h2 class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-6">
+      Reanimação de Peixes de Bico, Reversão de Barotrauma &amp; Marcação TBF
+    </h2>
+
+    <div class="tufte-article-grid">
+      <div class="tufte-flow editorial-prose">
+        <p>
+          <strong>Reanimação de Peixes de Bico (Forward-Only):</strong> marlins e sailfish são ventiladores de fluxo contínuo — suas guelras só absorvem oxigênio quando a água atravessa da boca para trás. <strong>Nunca puxe o peixe para frente e para trás</strong> ("vai-e-vem") porque o fluxo reverso empurra água contrária sobre os filamentos branquiais e sufoca o animal. Segure firme pelo bico com luvas enquanto o barco avança lentamente a <strong>1–2 nós</strong> até o peixe recuperar cor viva, firmar a cauda e dar arranque vigoroso.<Sidenote id="tbf-tag" number={1}>No programa <strong>The Billfish Foundation (TBF)</strong>, a haste de marcação (tag stick) aplica o dardo de nylon/aço em ângulo de <strong>45° apontado para a cabeça</strong>, inserido no músculo dorsal sólido logo abaixo da base da primeira nadadeira dorsal — jamais perto da cabeça, olhos, guelras ou linha lateral.</Sidenote>
+        </p>
+
+        <p>
+          <strong>Barotrauma em Peixes de Fundo (> 15–20 m):</strong> ao subir rápido um pargo, garoupa, badejo ou cherne, a queda de pressão expande os gases da bexiga natatória (Lei de Boyle), empurrando o estômago para fora da boca e impedindo o peixe de mergulhar sozinho. Esqueça a prática antiga de furar o peixe com agulha (<em>venting</em>), onde <strong>50% a 75% das punções amadoras</strong> perfuram fígado, coração ou intestino. Use um <strong>descompressor mecânico</strong> (<strong>SeaQualizer</strong> ou <strong>Moro BFDD</strong>): prenda pela mandíbula e desça o peixe com chumbo até 15–30 m, onde o gatilho hidrostático libera o animal já recomprimido com taxa de sobrevivência próxima a 90–100%.
+        </p>
+
+        <details class="deep-dive">
+          <summary>Checklist Rápido de Soltura Limpa (Água Doce &amp; Costão)</summary>
+          <div class="deep-dive-body">
+            <ul class="m-0 pl-4 flex flex-col gap-1.5">
+              <li><strong>Mãos molhadas sempre:</strong> tocar o peixe com mão seca ou pano remove o muco protetor contra fungos e bactérias.</li>
+              <li><strong>Regra da apneia:</strong> se você precisa tirar o peixe da água para uma foto, segure sua própria respiração no instante em que ele sair — quando você precisar de ar, o peixe precisa voltar imediatamente (máximo 15–30 s).</li>
+              <li><strong>Apoio horizontal duplo:</strong> uma mão contém a mandíbula e a outra sustenta o ventre abaixo das nadadeiras peitorais — jamais pendure peixes grandes pelo lip-gripper verticalmente.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FSRS DO CAPÍTULO 06 -->
+  <div class="mt-10">
+    <MnemonicDeck
+      client:visible
+      prompts={prompts}
+      moduleFilter="cap-06"
+      heading="Retenção Ativa · Cap. 06 (Espécies & Pesque-e-Solte)"
+    />
+  </div>
+</StudyLayout>

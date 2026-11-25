@@ -170,76 +170,62 @@
   id="checklist-pos-mar"
   data-cais-keep
   aria-labelledby="checklist-pos-mar-title"
-  class="tufte-full-bleed border border-line-strong bg-elevated p-4 sm:p-6 my-8"
+  class="console-band tufte-full-bleed"
 >
-  <header class="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4 mb-5">
+  <header class="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5 mb-5">
     <div>
-      <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-        MANUTENÇÃO PÓS-MAR · LOCAL-FIRST (INDEXEDDB)
+      <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage m-0">
+        Manutenção Pós-Mar · Persistência Local (IndexedDB)
       </p>
       <h2
         id="checklist-pos-mar-title"
-        class="font-sans text-xl sm:text-2xl font-bold tracking-tight text-ink mt-1 mb-0"
+        class="font-display text-2xl sm:text-3xl font-semibold text-ink mt-1.5 mb-0"
       >
         Checklist Pós-Mar de Lavagem &amp; Preservação da Tralha
       </h2>
-      <p class="font-sans text-xs sm:text-sm text-ink-secondary mt-1 mb-0">
-        Ordem obrigatória no cais antes de guardar as carretilhas e molinetes. Persistido localmente em <code>PescaEstudoDB</code> mesmo sem sinal.
+      <p class="text-sm text-ink-secondary mt-1.5 mb-0 max-w-[66ch]">
+        Sequência obrigatória no cais antes de guardar carretilhas e molinetes. Progresso salvo localmente mesmo sem sinal no mar.
       </p>
     </div>
 
-    <div class="flex flex-wrap items-center gap-2.5 tabular-telemetry">
-      <span
-        class="px-2.5 py-1 border font-mono text-xs font-bold {allDone
-          ? 'border-ocean bg-ocean text-elevated'
-          : 'border-line-strong bg-surface text-ink'}"
-      >
-        {completedCount}/{totalCount} CONCLUÍDOS ({progressPct}%)
+    <div class="flex flex-wrap items-center gap-4 tabular-telemetry">
+      <span class="font-mono text-xs font-semibold {allDone ? 'text-ocean' : 'text-ink'}">
+        {completedCount}/{totalCount} concluídos ({progressPct}%)
       </span>
 
       <button
         type="button"
         onclick={resetForNewTrip}
-        class="px-3 py-1.5 border border-line-strong bg-surface font-mono text-xs font-bold uppercase tracking-wider text-ink cursor-pointer hover:border-salvage hover:text-salvage transition-colors"
+        class="px-3 py-1.5 border border-line-strong bg-elevated font-mono text-xs font-semibold uppercase tracking-wider text-ink cursor-pointer hover:border-salvage hover:text-salvage transition-colors"
       >
         Resetar p/ Nova Saída
       </button>
     </div>
   </header>
 
-  <!-- Barra de Progresso -->
-  <div class="mb-5">
-    <div class="h-2.5 w-full border border-line-strong bg-surface overflow-hidden">
+  <div class="mb-6">
+    <div class="h-1.5 w-full bg-canvas overflow-hidden">
       <div
         class="h-full transition-all {allDone ? 'bg-ocean' : 'bg-salvage'}"
         style="width: {progressPct}%"
       ></div>
     </div>
     {#if isLoading}
-      <p class="font-mono text-[11px] text-ink-muted mt-1.5 mb-0">
-        Carregando progresso salvo do IndexedDB...
-      </p>
+      <p class="font-mono text-xs text-ink-muted mt-2 mb-0">Carregando progresso salvo...</p>
     {:else if statusNote}
-      <p class="font-mono text-[11px] font-bold text-ocean mt-1.5 mb-0" role="status">
-        {statusNote}
-      </p>
+      <p class="font-mono text-xs font-semibold text-ocean mt-2 mb-0" role="status">{statusNote}</p>
     {:else if allDone}
-      <p class="font-mono text-[11px] font-bold text-ocean mt-1.5 mb-0" role="status">
-        TRALHA LAVADA, SECA E COM DRAG ALIVIADO · PRONTA PARA PRÓXIMA SAÍDA.
+      <p class="font-mono text-xs font-semibold text-ocean mt-2 mb-0" role="status">
+        Tralha lavada, seca e com drag aliviado — pronta para a próxima saída.
       </p>
     {/if}
   </div>
 
-  <!-- Os 5 Passos de Convés -->
-  <ul class="list-none p-0 m-0 flex flex-col gap-3">
+  <ul class="list-none p-0 m-0 divide-y divide-line">
     {#each STEPS as step (step.id)}
       {@const checked = Boolean(completedMap[step.id])}
       <li>
-        <label
-          class="flex items-start gap-3.5 border p-4 cursor-pointer transition-colors {checked
-            ? 'border-ocean bg-ocean-soft'
-            : 'border-line-strong bg-surface hover:border-salvage'}"
-        >
+        <label class="flex items-start gap-4 py-4 cursor-pointer transition-colors {checked ? 'opacity-75' : ''}">
           <input
             type="checkbox"
             checked={checked}
@@ -247,28 +233,28 @@
             class="mt-1 h-4 w-4 shrink-0 accent-salvage cursor-pointer"
           />
 
-          <div class="min-w-0 flex-1">
+          <div class="min-w-0 flex-1 max-w-[66ch]">
             <div class="flex flex-wrap items-baseline justify-between gap-2">
               <span
-                class="font-sans text-base font-bold {checked
+                class="font-display text-lg font-semibold {checked
                   ? 'line-through text-ink-secondary'
                   : 'text-ink'}"
               >
                 {step.order}. {step.title}
               </span>
               {#if checked && updatedMap[step.id]}
-                <span class="font-mono text-[10px] font-bold text-ocean tabular-telemetry">
-                  CONCLUÍDO ÀS {updatedMap[step.id]}
+                <span class="font-mono text-[11px] font-semibold text-ocean tabular-telemetry">
+                  Concluído às {updatedMap[step.id]}
                 </span>
               {/if}
             </div>
 
-            <p class="font-editorial text-sm leading-relaxed text-ink-secondary mt-1 mb-0">
+            <p class="text-sm leading-relaxed text-ink-secondary mt-1 mb-0">
               {step.detail}
             </p>
 
             {#if step.criticalAlert}
-              <p class="mt-2 mb-0 border-l-4 border-salvage bg-salvage-soft px-3 py-2 font-mono text-[11px] font-bold text-salvage leading-snug">
+              <p class="mt-2.5 mb-0 pt-2 border-t border-salvage/40 font-mono text-xs font-semibold text-salvage leading-snug">
                 {step.criticalAlert}
               </p>
             {/if}
@@ -278,3 +264,4 @@
     {/each}
   </ul>
 </section>
+

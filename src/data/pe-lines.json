@@ -1,12 +1,106 @@
 [
-  { "id": "pe-0-6", "pe": 0.6, "diameterMm": 0.128, "strength4xLb": 10 },
-  { "id": "pe-0-8", "pe": 0.8, "diameterMm": 0.148, "strength4xLb": 12 },
-  { "id": "pe-1-0", "pe": 1.0, "diameterMm": 0.165, "strength4xLb": 18 },
-  { "id": "pe-1-5", "pe": 1.5, "diameterMm": 0.205, "strength4xLb": 22 },
-  { "id": "pe-2-0", "pe": 2.0, "diameterMm": 0.235, "strength4xLb": 28 },
-  { "id": "pe-3-0", "pe": 3.0, "diameterMm": 0.285, "strength4xLb": 38 },
-  { "id": "pe-4-0", "pe": 4.0, "diameterMm": 0.330, "strength4xLb": 48 },
-  { "id": "pe-6-0", "pe": 6.0, "diameterMm": 0.405, "strength4xLb": 60 },
-  { "id": "pe-8-0", "pe": 8.0, "diameterMm": 0.470, "strength4xLb": 85 },
-  { "id": "pe-10-0", "pe": 10.0, "diameterMm": 0.520, "strength4xLb": 100 }
+  {
+    "id": "pe-0-4",
+    "pe": 0.4,
+    "diameterMm": 0.104,
+    "strength4xLb": 6,
+    "strength8xLb": 8,
+    "typicalUse": "Ultralight, BFS, tilápias e lambaris"
+  },
+  {
+    "id": "pe-0-6",
+    "pe": 0.6,
+    "diameterMm": 0.128,
+    "strength4xLb": 8,
+    "strength8xLb": 12,
+    "typicalUse": "Ultralight de praia, robalo-peva finesse, micro jigs"
+  },
+  {
+    "id": "pe-0-8",
+    "pe": 0.8,
+    "diameterMm": 0.148,
+    "strength4xLb": 10,
+    "strength8xLb": 16,
+    "typicalUse": "Robalo-peva no mangue, jighead fino, surfcasting fino"
+  },
+  {
+    "id": "pe-1-0",
+    "pe": 1.0,
+    "diameterMm": 0.165,
+    "strength4xLb": 14,
+    "strength8xLb": 20,
+    "typicalUse": "Robalo-flecha leve, tucunaré azul/amarelo, slow jigging raso"
+  },
+  {
+    "id": "pe-1-5",
+    "pe": 1.5,
+    "diameterMm": 0.205,
+    "strength4xLb": 20,
+    "strength8xLb": 28,
+    "typicalUse": "Tucunaré médio, traíra, costão leve e slow pitch 40–70 m"
+  },
+  {
+    "id": "pe-2-0",
+    "pe": 2.0,
+    "diameterMm": 0.235,
+    "strength4xLb": 25,
+    "strength8xLb": 35,
+    "typicalUse": "Slow pitch jigging (60–120 m), dourado-do-mar, sororoca"
+  },
+  {
+    "id": "pe-2-5",
+    "pe": 2.5,
+    "diameterMm": 0.26,
+    "strength4xLb": 32,
+    "strength8xLb": 42,
+    "typicalUse": "Robalo-flecha em galhada pesada, anchova e olhete médio"
+  },
+  {
+    "id": "pe-3-0",
+    "pe": 3.0,
+    "diameterMm": 0.285,
+    "strength4xLb": 40,
+    "strength8xLb": 50,
+    "typicalUse": "Tucunaré-açu amazônico, slow pitch profundo (100–180 m), xaréu"
+  },
+  {
+    "id": "pe-4-0",
+    "pe": 4.0,
+    "diameterMm": 0.33,
+    "strength4xLb": 50,
+    "strength8xLb": 62,
+    "typicalUse": "Speed jigging de olho-de-boi, badejos e backing de 30–50 lb"
+  },
+  {
+    "id": "pe-5-0",
+    "pe": 5.0,
+    "diameterMm": 0.37,
+    "strength4xLb": 65,
+    "strength8xLb": 78,
+    "typicalUse": "Popping de atuns/xaréus GT, speed jigging pesado de parcel"
+  },
+  {
+    "id": "pe-6-0",
+    "pe": 6.0,
+    "diameterMm": 0.405,
+    "strength4xLb": 80,
+    "strength8xLb": 92,
+    "typicalUse": "Backing hollow core 50W, atuns grandes, piraíba/jaú"
+  },
+  {
+    "id": "pe-8-0",
+    "pe": 8.0,
+    "diameterMm": 0.47,
+    "strength4xLb": 100,
+    "strength8xLb": 115,
+    "typicalUse": "Popping pesado de grandes atuns e backing de carretilhas 80W"
+  },
+  {
+    "id": "pe-10-0",
+    "pe": 10.0,
+    "diameterMm": 0.52,
+    "strength4xLb": 120,
+    "strength8xLb": 135,
+    "typicalUse": "Backing 130W heavy tackle e pesca extrema de fundo"
+  }
 ]

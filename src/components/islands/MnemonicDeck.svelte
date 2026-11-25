@@ -1,390 +1,258 @@
 <script lang="ts">
-  import { onMount, tick } from 'svelte';
-  import { FSRS_UPDATED_EVENT } from '../../lib/db';
+  import { FSRS_UPDATED_EVENT, isIndexedDbAvailable } from '../../lib/db';
   import {
+    formatIntervalPt,
     getDueCardsSummary,
     previewCardIntervals,
     scheduleCardReview,
+    type DueCardsSummary,
     type ReviewGrade,
   } from '../../lib/scheduler';
 
-  export interface FsrsPrompt {
+  export interface PromptItem {
     id: string;
-    moduleId: string;
-    category: string;
+    module: string;
+    type: 'retrieval' | 'visual-occlusion' | 'calculation';
     question: string;
     answer: string;
-    causalExplanation: string;
+    mnemonicCue?: string;
   }
 
-  interface Props {
-    prompts: FsrsPrompt[];
-  }
+  let {
+    prompts,
+    moduleFilter,
+    heading = 'Revisão Espaçada FSRS · Retenção Ativa',
+  }: {
+    prompts: PromptItem[];
+    moduleFilter?: string;
+    heading?: string;
+  } = $props();
 
-  let { prompts }: Props = $props();
+  const scopedPrompts = $derived(
+    moduleFilter ? prompts.filter((p) => p.module === moduleFilter) : prompts
+  );
+  const promptById = $derived(new Map(scopedPrompts.map((p) => [p.id, p])));
 
-  const RATING_OPTIONS: Array<{
-    grade: ReviewGrade;
-    keyLabel: string;
-    label: string;
-    toneClass: string;
-  }> = [
-    {
-      grade: 1,
-      keyLabel: '1',
-      label: 'Errei',
-      toneClass: 'border-salvage text-salvage hover:bg-salvage hover:text-canvas',
-    },
-    {
-      grade: 2,
-      keyLabel: '2',
-      label: 'Difícil',
-      toneClass: 'border-line-strong text-ink hover:bg-surface',
-    },
-    {
-      grade: 3,
-      keyLabel: '3',
-      label: 'Bom',
-      toneClass: 'border-ocean text-ocean hover:bg-ocean hover:text-canvas',
-    },
-    {
-      grade: 4,
-      keyLabel: '4',
-      label: 'Fácil',
-      toneClass: 'border-line-strong bg-ink text-canvas hover:opacity-90',
-    },
-  ];
-
-  let queue = $state<FsrsPrompt[]>([]);
-  let currentIndex = $state(0);
-  let revealed = $state(false);
-  let loading = $state(true);
-  let busy = $state(false);
-  let instantTransition = $state(false);
-  let cardRenderTick = $state(0);
-  let sessionDone = $state(0);
-  let nextDueAt = $state<Date | null>(null);
-  let lastFeedback = $state('');
+  let summary = $state<DueCardsSummary | null>(null);
   let intervals = $state<Record<ReviewGrade, string>>({
-    1: '1 min',
-    2: '6 min',
-    3: '10 min',
+    1: '10 min',
+    2: '12 h',
+    3: '1 dia',
     4: '4 dias',
   });
-  let deckRoot: HTMLElement | undefined = $state();
+  let isLoading = $state(true);
+  let dbWarning = $state<string | null>(null);
+  let revealed = $state(false);
+  let practiceMode = $state(false);
+  let practiceIndex = $state(0);
+  let lastFeedback = $state<string | null>(null);
 
-  const currentPrompt = $derived(queue[currentIndex] ?? null);
-  const totalInQueue = $derived(queue.length);
-
-  async function refreshQueue(preservePractice = false) {
-    const ids = prompts.map((p) => p.id);
-    const summary = await getDueCardsSummary(ids);
-    nextDueAt = summary.nextDueAt;
-
-    if (!preservePractice) {
-      const dueSet = new Set(summary.dueCardIds);
-      queue = prompts.filter((p) => dueSet.has(p.id));
-      currentIndex = 0;
-      revealed = false;
+  const activePrompt = $derived.by(() => {
+    if (summary && summary.dueCardIds.length > 0) {
+      return promptById.get(summary.dueCardIds[0]) ?? null;
     }
-    loading = false;
+    if (practiceMode && scopedPrompts.length > 0) {
+      return scopedPrompts[practiceIndex % scopedPrompts.length];
+    }
+    return null;
+  });
+
+  async function refreshDeck() {
+    const ids = scopedPrompts.map((p) => p.id);
+    if (!isIndexedDbAvailable()) {
+      dbWarning = 'IndexedDB indisponível neste navegador; revisões apenas na sessão.';
+    }
+    try {
+      const nextSummary = await getDueCardsSummary(ids);
+      summary = nextSummary;
+      const firstId =
+        nextSummary.dueCardIds[0] ??
+        (practiceMode && scopedPrompts.length > 0
+          ? scopedPrompts[practiceIndex % scopedPrompts.length].id
+          : null);
+      if (firstId) {
+        intervals = await previewCardIntervals(firstId);
+      }
+      dbWarning = null;
+    } catch {
+      dbWarning = 'Modo volátil temporário: IndexedDB indisponível.';
+    } finally {
+      isLoading = false;
+    }
   }
 
-  async function loadIntervalsForCurrent() {
-    if (!currentPrompt) return;
-    intervals = await previewCardIntervals(currentPrompt.id);
+  async function handleGrade(grade: ReviewGrade) {
+    if (!activePrompt) return;
+    const labels: Record<ReviewGrade, string> = {
+      1: 'Esqueci',
+      2: 'Difícil',
+      3: 'Bom',
+      4: 'Fácil',
+    };
+
+    try {
+      const result = await scheduleCardReview(activePrompt.id, grade, activePrompt.module);
+      lastFeedback = `Avaliado como ${labels[grade]} · próxima revisão em ${result.intervalLabel}.`;
+    } catch {
+      lastFeedback = `Avaliado como ${labels[grade]} (sessão atual).`;
+    }
+
+    revealed = false;
+    if (practiceMode) {
+      practiceIndex = (practiceIndex + 1) % Math.max(1, scopedPrompts.length);
+    }
+    await refreshDeck();
   }
 
   $effect(() => {
-    const active = currentPrompt;
-    if (active && typeof indexedDB !== 'undefined') {
-      void loadIntervalsForCurrent();
-    }
-  });
-
-  onMount(() => {
-    void refreshQueue(false);
-
-    const onExternalUpdate = () => {
-      if (!busy) {
-        void refreshQueue(false);
-      }
-    };
+    void refreshDeck();
+    if (typeof window === 'undefined') return;
+    const onExternalUpdate = () => void refreshDeck();
     window.addEventListener(FSRS_UPDATED_EVENT, onExternalUpdate);
-    return () => {
-      window.removeEventListener(FSRS_UPDATED_EVENT, onExternalUpdate);
-    };
+    return () => window.removeEventListener(FSRS_UPDATED_EVENT, onExternalUpdate);
   });
-
-  async function revealAnswer(viaKeyboard = false) {
-    if (!currentPrompt || revealed) return;
-    instantTransition = viaKeyboard;
-    revealed = true;
-    await tick();
-  }
-
-  async function handleGrade(grade: ReviewGrade, viaKeyboard = false) {
-    if (!currentPrompt || !revealed || busy) return;
-    busy = true;
-    instantTransition = viaKeyboard;
-
-    try {
-      const result = await scheduleCardReview(
-        currentPrompt.id,
-        grade,
-        currentPrompt.moduleId
-      );
-      sessionDone += 1;
-      lastFeedback = `${currentPrompt.category}: reagendado para ${result.intervalLabel}`;
-
-      const remaining = queue.filter((p) => p.id !== currentPrompt.id);
-      queue = remaining;
-      currentIndex = 0;
-      revealed = false;
-      cardRenderTick += 1;
-
-      const summary = await getDueCardsSummary(prompts.map((p) => p.id));
-      nextDueAt = summary.nextDueAt;
-    } finally {
-      busy = false;
-      if (viaKeyboard) {
-        requestAnimationFrame(() => {
-          instantTransition = false;
-        });
-      }
-    }
-  }
-
-  function startPracticeAll() {
-    instantTransition = false;
-    queue = [...prompts];
-    currentIndex = 0;
-    revealed = false;
-    cardRenderTick += 1;
-    lastFeedback = 'Modo treino livre ativado (fila completa).';
-  }
-
-  function isElementInViewport(el: HTMLElement | undefined): boolean {
-    if (!el) return false;
-    const rect = el.getBoundingClientRect();
-    return rect.bottom > 0 && rect.top < window.innerHeight;
-  }
-
-  function handleWindowKeydown(event: KeyboardEvent) {
-    const target = event.target as HTMLElement | null;
-    if (
-      target &&
-      (target.tagName === 'INPUT' ||
-        target.tagName === 'TEXTAREA' ||
-        target.tagName === 'SELECT' ||
-        target.isContentEditable)
-    ) {
-      return;
-    }
-    if (document.documentElement.dataset.mode === 'cais') return;
-    if (!currentPrompt || !isElementInViewport(deckRoot)) return;
-
-    if (event.code === 'Space' && !revealed) {
-      event.preventDefault();
-      void revealAnswer(true);
-      return;
-    }
-
-    if (revealed && ['1', '2', '3', '4'].includes(event.key)) {
-      event.preventDefault();
-      const grade = Number(event.key) as ReviewGrade;
-      void handleGrade(grade, true);
-    }
-  }
-
-  function formatNextDue(date: Date | null): string {
-    if (!date) return 'agora';
-    return date.toLocaleString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  }
 </script>
 
-<svelte:window onkeydown={handleWindowKeydown} />
-
 <section
-  bind:this={deckRoot}
-  id="revisao-fsrs"
+  id={moduleFilter ? `fsrs-${moduleFilter}` : 'fsrs-deck'}
   data-study-only
   aria-labelledby="fsrs-deck-title"
-  class="my-10 border border-line-strong bg-surface p-5 sm:p-6"
+  class="console-band"
 >
-  <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-line pb-3 mb-5">
+  <header class="flex flex-wrap items-baseline justify-between gap-3 border-b border-line pb-4 mb-6">
     <div>
-      <p class="font-mono text-[11px] font-bold uppercase tracking-widest text-salvage m-0">
-        MEIO MNEMÔNICO · FSRS (RETENÇÃO ALVO 90%)
+      <p class="m-0 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-salvage">
+        Meio Mnemônico Local-First · ts-fsrs
       </p>
-      <h2 id="fsrs-deck-title" class="font-sans text-lg font-bold tracking-tight text-ink mt-1 mb-0">
-        Recuperação Ativa de Convés
+      <h2 id="fsrs-deck-title" class="font-display text-xl sm:text-2xl font-semibold text-ink mt-1 mb-0">
+        {heading}
       </h2>
     </div>
-
-    <div class="flex items-center gap-3 font-mono text-xs tabular-telemetry">
-      <span class="text-ink-muted">
-        FILA: <strong class="text-ink">{totalInQueue}</strong>
-      </span>
-      <span class="text-ink-muted">
-        FEITAS: <strong class="text-ocean">{sessionDone}</strong>
-      </span>
+    <div class="flex items-center gap-4 font-mono text-xs tabular-telemetry">
+      <span class="text-ocean font-semibold">{summary?.dueToday ?? scopedPrompts.length} pendente(s)</span>
+      <span class="text-ink-muted">{scopedPrompts.length} no caderno</span>
     </div>
-  </div>
+  </header>
 
-  {#if loading}
-    <div class="border border-line bg-elevated p-5 font-mono text-xs text-ink-muted">
-      Sincronizando estado FSRS local no IndexedDB...
-    </div>
-  {:else if currentPrompt}
-    {#key cardRenderTick}
-      <div
-        class="mnemonic-card border border-line bg-elevated p-5 {instantTransition
-          ? 'is-instant'
-          : 'is-animated'}"
-      >
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-          <span class="font-mono text-[11px] font-bold uppercase tracking-wider text-ocean">
-            {currentPrompt.category} · {currentPrompt.moduleId.toUpperCase()}
-          </span>
-          <span class="font-mono text-[11px] text-ink-muted tabular-telemetry">
-            CARTÃO {String(currentIndex + 1).padStart(2, '0')} / {String(totalInQueue).padStart(2, '0')}
-          </span>
+  {#if dbWarning}
+    <p class="mb-4 font-mono text-xs text-salvage" role="status">{dbWarning}</p>
+  {/if}
+
+  {#if isLoading}
+    <p class="font-mono text-xs text-ink-muted py-6 m-0">Carregando fila FSRS local...</p>
+  {:else if activePrompt}
+    <div class="max-w-[66ch]">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3 font-mono text-[11px] uppercase tracking-wider text-ink-muted">
+        <span>{activePrompt.module.toUpperCase()} · {activePrompt.type}</span>
+        <span class="tabular-telemetry">
+          {summary ? `${summary.totalReviews} revisões registradas` : ''}
+        </span>
+      </div>
+
+      <p class="font-display text-lg sm:text-xl font-medium leading-snug text-ink mt-0 mb-5">
+        {activePrompt.question}
+      </p>
+
+      {#if !revealed}
+        <button
+          type="button"
+          onclick={() => (revealed = true)}
+          class="cursor-pointer border border-line-strong bg-ink px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-canvas hover:bg-salvage hover:border-salvage transition-colors"
+        >
+          Revelar Resposta
+        </button>
+      {:else}
+        <div class="border-t border-line-strong pt-4 mb-5">
+          <p class="m-0 font-mono text-[10px] font-semibold uppercase tracking-wider text-ocean">
+            Resposta Causal
+          </p>
+          <p class="mt-1.5 mb-0 text-sm sm:text-base leading-relaxed text-ink">
+            {activePrompt.answer}
+          </p>
+          {#if activePrompt.mnemonicCue}
+            <p class="mt-2.5 mb-0 font-mono text-xs text-salvage">
+              Âncora: {activePrompt.mnemonicCue}
+            </p>
+          {/if}
         </div>
 
-        <p class="font-editorial text-lg sm:text-xl leading-snug text-ink m-0">
-          {currentPrompt.question}
-        </p>
-
-        {#if !revealed}
-          <div class="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
-            <button
-              type="button"
-              onclick={() => revealAnswer(false)}
-              class="cursor-pointer border border-line-strong bg-ink px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-canvas transition-colors hover:bg-salvage hover:border-salvage"
-            >
-              Revelar Resposta
-            </button>
-            <span class="font-mono text-[11px] text-ink-muted">
-              Atalho: <kbd class="border border-line bg-surface px-1.5 py-0.5 text-ink">Espaço</kbd>
-            </span>
-          </div>
-        {:else}
-          <div
-            class="mnemonic-answer mt-5 border-t border-line pt-4 {instantTransition
-              ? 'is-instant'
-              : 'is-animated'}"
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" role="group" aria-label="Avaliar retenção">
+          <button
+            type="button"
+            onclick={() => handleGrade(1)}
+            class="cursor-pointer border border-salvage bg-salvage-soft px-3 py-2 text-left text-ink hover:bg-salvage hover:text-elevated transition-colors"
           >
-            <div class="border-l-3 border-salvage bg-salvage-soft/45 px-3.5 py-2.5 mb-3">
-              <span class="block font-mono text-[10px] font-bold uppercase tracking-widest text-salvage mb-1">
-                RESPOSTA DIRETA
-              </span>
-              <p class="font-sans text-sm sm:text-base font-bold leading-snug text-ink m-0">
-                {currentPrompt.answer}
-              </p>
-            </div>
+            <span class="block font-mono text-xs font-bold">1 · Esqueci</span>
+            <span class="block font-mono text-[10px] opacity-80 tabular-telemetry">
+              {intervals[1]}
+            </span>
+          </button>
 
-            <div class="mb-5">
-              <span class="block font-mono text-[10px] font-bold uppercase tracking-widest text-ocean mb-1">
-                MECANISMO CAUSAL
-              </span>
-              <p class="font-sans text-sm leading-relaxed text-ink-secondary m-0">
-                {currentPrompt.causalExplanation}
-              </p>
-            </div>
+          <button
+            type="button"
+            onclick={() => handleGrade(2)}
+            class="cursor-pointer border border-line-strong bg-elevated px-3 py-2 text-left text-ink hover:border-salvage transition-colors"
+          >
+            <span class="block font-mono text-xs font-bold">2 · Difícil</span>
+            <span class="block font-mono text-[10px] text-ink-muted tabular-telemetry">
+              {intervals[2]}
+            </span>
+          </button>
 
-            <div class="border-t border-line pt-3.5">
-              <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-ink-muted">
-                  AVALIE SUA EVOCAÇÃO (FSRS)
-                </span>
-                <span class="font-mono text-[10px] text-ink-muted">
-                  Atalhos 1–4 aplicam resposta instantânea (0 ms)
-                </span>
-              </div>
+          <button
+            type="button"
+            onclick={() => handleGrade(3)}
+            class="cursor-pointer border border-ocean bg-ocean-soft px-3 py-2 text-left text-ink hover:bg-ocean hover:text-elevated transition-colors"
+          >
+            <span class="block font-mono text-xs font-bold">3 · Bom</span>
+            <span class="block font-mono text-[10px] opacity-80 tabular-telemetry">
+              {intervals[3]}
+            </span>
+          </button>
 
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 tabular-telemetry">
-                {#each RATING_OPTIONS as opt}
-                  <button
-                    type="button"
-                    disabled={busy}
-                    onclick={() => handleGrade(opt.grade, false)}
-                    class="cursor-pointer border px-3 py-2 text-left transition-colors disabled:opacity-50 {opt.toneClass}"
-                  >
-                    <span class="flex items-center justify-between font-mono text-xs font-bold">
-                      <span>{opt.label}</span>
-                      <kbd class="border border-current/30 px-1 text-[10px] leading-tight">
-                        {opt.keyLabel}
-                      </kbd>
-                    </span>
-                    <span class="block font-mono text-[10px] opacity-80 mt-1">
-                      {intervals[opt.grade]}
-                    </span>
-                  </button>
-                {/each}
-              </div>
-            </div>
-          </div>
-        {/if}
-      </div>
-    {/key}
+          <button
+            type="button"
+            onclick={() => handleGrade(4)}
+            class="cursor-pointer border border-line-strong bg-elevated px-3 py-2 text-left text-ink hover:border-ocean transition-colors"
+          >
+            <span class="block font-mono text-xs font-bold">4 · Fácil</span>
+            <span class="block font-mono text-[10px] text-ink-muted tabular-telemetry">
+              {intervals[4]}
+            </span>
+          </button>
+        </div>
+      {/if}
+    </div>
   {:else}
-    <div class="border border-line bg-elevated p-5">
-      <p class="font-mono text-xs font-bold uppercase tracking-wider text-ocean m-0">
-        CONVOCAÇÃO CONCLUÍDA · SEM CARTÕES VENCIDOS
+    <div class="py-4 max-w-[66ch]">
+      <p class="m-0 font-display text-lg font-semibold text-ocean">
+        Fila em dia neste caderno.
       </p>
-      <p class="font-sans text-sm text-ink-secondary mt-2 mb-4">
-        Todas as revisões programadas pelo algoritmo FSRS foram processadas neste navegador.
-        {#if nextDueAt}
-          Próxima janela prevista: <strong class="font-mono text-ink">{formatNextDue(nextDueAt)}</strong>.
+      <p class="mt-1.5 mb-4 text-sm text-ink-secondary">
+        {#if summary?.nextDueAt}
+          Próxima revisão agendada em <strong class="font-mono text-ink">{formatIntervalPt(new Date(), summary.nextDueAt)}</strong>.
+        {:else}
+          Todos os cartões deste módulo foram concluídos.
         {/if}
       </p>
       <button
         type="button"
-        onclick={startPracticeAll}
-        class="cursor-pointer border border-line-strong bg-surface px-3.5 py-2 font-mono text-xs font-bold uppercase tracking-wider text-ink transition-colors hover:border-salvage hover:text-salvage"
+        onclick={() => {
+          practiceMode = true;
+          practiceIndex = 0;
+          revealed = false;
+          void refreshDeck();
+        }}
+        class="cursor-pointer border border-line-strong bg-elevated px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider text-ink hover:border-salvage transition-colors"
       >
-        Revisar Baralho Novamente ({prompts.length})
+        Revisar antecipado ({scopedPrompts.length})
       </button>
     </div>
   {/if}
 
   {#if lastFeedback}
-    <p class="mt-3 font-mono text-[11px] text-ink-muted m-0" role="status">
-      // {lastFeedback}
+    <p class="mt-4 mb-0 pt-3 border-t border-line font-mono text-xs text-ocean" role="status">
+      {lastFeedback}
     </p>
   {/if}
 </section>
-
-<style>
-  @keyframes ap-card-enter {
-    from {
-      opacity: 0.72;
-      transform: translateY(4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .mnemonic-card.is-animated,
-  .mnemonic-answer.is-animated {
-    animation: ap-card-enter 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
-    transition: opacity 200ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .mnemonic-card.is-instant,
-  .mnemonic-answer.is-instant,
-  .mnemonic-card.is-instant *,
-  .mnemonic-answer.is-instant * {
-    animation: none !important;
-    transition: none !important;
-  }
-</style>
