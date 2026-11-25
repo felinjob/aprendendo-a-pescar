@@ -1,0 +1,321 @@
+---
+import { getCollection } from 'astro:content';
+import StudyLayout from '../layouts/StudyLayout.astro';
+import Sidenote from '../components/Sidenote.astro';
+import GlossaryTerm from '../components/GlossaryTerm.astro';
+import DragCalculator from '../components/DragCalculator.svelte';
+import MnemonicDeck from '../components/islands/MnemonicDeck.svelte';
+import BackupStatus from '../components/islands/BackupStatus.svelte';
+import BlankActionSimulator from '../components/islands/BlankActionSimulator.svelte';
+import SpoolXRayDiagram from '../components/islands/SpoolXRayDiagram.svelte';
+import TackleCalculators from '../components/islands/TackleCalculators.svelte';
+import BoatElectronicsReference from '../components/islands/BoatElectronicsReference.svelte';
+import TrollingSpreadScrolly from '../components/islands/TrollingSpreadScrolly.svelte';
+import WaterColumnExplorer from '../components/islands/WaterColumnExplorer.svelte';
+import IgfaAuditorCalculator from '../components/islands/IgfaAuditorCalculator.svelte';
+import FlagHalyardBuilder from '../components/islands/FlagHalyardBuilder.svelte';
+import ConservationCharts from '../components/islands/ConservationCharts.svelte';
+import Legislation2026Explorer from '../components/islands/Legislation2026Explorer.svelte';
+import PostSaltwaterChecklist from '../components/islands/PostSaltwaterChecklist.svelte';
+
+const glossaryEntries = await getCollection('glossary');
+const glossaryById = new Map(glossaryEntries.map((item) => [item.id, item]));
+
+const fsrsEntries = await getCollection('fsrsPrompts');
+const fsrsPrompts = fsrsEntries.map((entry) => entry.data);
+
+const peLineEntries = await getCollection('peLines');
+const peLinesData = peLineEntries.map((entry) => entry.data);
+
+const legislationEntries = await getCollection('legislation2026');
+const legislationData = legislationEntries.map((entry) => entry.data);
+
+const tocItems = [
+  { id: 'sec-mecanica', tag: '01', label: 'Bobina Vazia & Rigging', studyOnly: true },
+  { id: 'sim-blank', tag: '02', label: 'Curva & High-Sticking', studyOnly: true },
+  { id: 'tackle-calculators', tag: '03', label: 'PE, CPT & Duelo 50W' },
+  { id: 'raio-x-carretel', tag: '04', label: 'Carretel em 4 Camadas', studyOnly: true },
+  { id: 'corrico-scrolly', tag: '05', label: 'Esteira & Bait-and-Switch', studyOnly: true },
+  { id: 'coluna-agua', tag: '06', label: 'Talude 14 °C & Óptica', studyOnly: true },
+  { id: 'revisao-fsrs', tag: '07', label: 'Evocação FSRS (5)', studyOnly: true },
+  { id: 'eletronica-bordo', tag: '08', label: 'VHF, CHIRP & Omni 360°' },
+  { id: 'calc-igfa', tag: '09', label: 'Sonda Rápida de Freio' },
+  { id: 'tabela-igfa', tag: '10', label: 'Matriz Oficial IGFA' },
+  { id: 'auditor-igfa', tag: '11', label: 'Auditor 2–130 lb & DQ' },
+  { id: 'adrica-bandeiras', tag: '12', label: 'Adriça de Boreste (1–7)' },
+  { id: 'conservacao-dados', tag: '13', label: 'Circle Hook & Cooke 2022', studyOnly: true },
+  { id: 'legislacao-2026', tag: '14', label: 'Portarias 2026 & UCs' },
+  { id: 'checklist-pos-mar', tag: '15', label: 'Lavagem Pós-Mar (5)' },
+];
+
+const igfaClasses = [
+  {
+    classe: '20 lb (10 kg)',
+    strikeLb: '5,0 – 6,7 lb',
+    strikeKg: '2,27 – 3,04 kg',
+    maxDupla: '4,57 m (15 ft)',
+    maxLider: '4,57 m (15 ft)',
+    tetoCombinado: '6,10 m (20 ft)',
+    nota: 'Linha fina; qualquer avanço precipitado na alavanca arrebenta na corrida inicial.',
+  },
+  {
+    classe: '30 lb (15 kg)',
+    strikeLb: '7,5 – 10,0 lb',
+    strikeKg: '3,40 – 4,54 kg',
+    maxDupla: '9,14 m (30 ft)',
+    maxLider: '9,14 m (30 ft)',
+    tetoCombinado: '12,19 m (40 ft)',
+    nota: 'Clássica de marlin-branco no pitch bait; wind-on de 9,14 m trava a dupla em 3,05 m.',
+  },
+  {
+    classe: '50 lb (24 kg)',
+    strikeLb: '12,5 – 16,7 lb',
+    strikeKg: '5,67 – 7,57 kg',
+    maxDupla: '9,14 m (30 ft)',
+    maxLider: '9,14 m (30 ft)',
+    tetoCombinado: '12,19 m (40 ft)',
+    nota: 'Espinha dorsal de torneio oceânico; conjunto 50W em stand-up com arnês.',
+  },
+  {
+    classe: '80 lb (37 kg)',
+    strikeLb: '20,0 – 26,7 lb',
+    strikeKg: '9,07 – 12,11 kg',
+    maxDupla: '9,14 m (30 ft)',
+    maxLider: '9,14 m (30 ft)',
+    tetoCombinado: '12,19 m (40 ft)',
+    nota: 'Padrão de marlin-azul pesado na quebra do talude (43–55 NM).',
+  },
+  {
+    classe: '130 lb (60 kg)',
+    strikeLb: '32,5 – 43,3 lb',
+    strikeKg: '14,74 – 19,64 kg',
+    maxDupla: '9,14 m (30 ft)',
+    maxLider: '9,14 m (30 ft)',
+    tetoCombinado: '12,19 m (40 ft)',
+    nota: 'Operação exclusiva em cadeira de combate (fighting chair) e cabo curvo #6.',
+  },
+];
+---
+
+<StudyLayout
+  title="Física da Tralha, Tática Pelágica e Conformidade Oceânica"
+  chapterCode="23°00′S · 042°00′W // CADERNO OPERACIONAL DE PESCA ESPORTIVA"
+  tocItems={tocItems}
+>
+  <BackupStatus
+    client:idle
+    slot="rail-left"
+    cardIds={fsrsPrompts.map((p) => p.id)}
+  />
+
+  <article class="cais-priority-stack">
+    <!-- ABERTURA EDITORIAL (Sem caixa quadrada externa; tipografia de destaque e telemetria) -->
+    <header class="pb-7 mb-10 border-b border-line-strong" data-cais-keep data-cais-header>
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+        <span class="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-salvage">
+          MONOGRAFIA INTERATIVA · ENGENHARIA, TÁTICA &amp; LEI
+        </span>
+        <span class="font-mono text-[11px] text-ink-muted tabular-telemetry">
+          CABO FRIO → BACIA DE SANTOS · NOV 2026
+        </span>
+      </div>
+
+      <h1 class="font-editorial text-3xl sm:text-5xl font-semibold tracking-tight leading-[1.08] text-ink mt-0 mb-5">
+        Física da Bobina Vazia, Leitura de Água Azul e a Guilhotina dos 12,19 Metros
+      </h1>
+
+      <p
+        class="border-l-2 border-salvage pl-4 font-sans text-base sm:text-lg leading-relaxed text-ink-secondary m-0"
+        data-study-only
+      >
+        Linha não estoura por falta de libragem: estoura porque o pescador empurra a alavanca para <em>Full</em> justo quando o raio do carretel caiu pela metade e o arrasto hidrodinâmico dobrou a carga na popa.
+      </p>
+
+      <!-- Faixa constante de referência rápida -->
+      <div class="telemetry-strip grid-cols-2 sm:grid-cols-4 mt-6 border-b-0 pb-0 tabular-telemetry">
+        <div class="telemetry-metric" data-tone="ocean">
+          <span class="block font-mono text-[9.5px] uppercase tracking-wider text-ink-muted">Strike (Bobina 100%)</span>
+          <strong class="font-mono text-sm text-ink">25% – 33%</strong>
+        </div>
+        <div class="telemetry-metric" data-tone="salvage">
+          <span class="block font-mono text-[9.5px] uppercase tracking-wider text-ink-muted">Teto IGFA &gt; 20 lb</span>
+          <strong class="font-mono text-sm text-salvage">12,19 m (40 ft)</strong>
+        </div>
+        <div class="telemetry-metric" data-tone="ocean">
+          <span class="block font-mono text-[9.5px] uppercase tracking-wider text-ink-muted">Ressurgência NE</span>
+          <strong class="font-mono text-sm text-ink">14 °C · 43–55 NM</strong>
+        </div>
+        <div class="telemetry-metric">
+          <span class="block font-mono text-[9.5px] uppercase tracking-wider text-ink-muted">Queda 0,09 inHg</span>
+          <strong class="font-mono text-sm text-ink">= 3 cm d'água</strong>
+        </div>
+      </div>
+    </header>
+
+    <!-- =====================================================================
+         ATO I · MECÂNICA DA TRALHA SOB CARGA
+         ===================================================================== -->
+    <section id="sec-mecanica" class="prose-editorial" data-study-only>
+      <p class="prose-lead-dropcap">
+        Calibre o <em>Strike Drag</em> na balança de mola entre 25% e 33% da classe de linha com o carretel cheio, mas jamais avance a alavanca quando um marlin levar metade do carretel. Os discos de carbono entregam torque fixo no eixo; conforme o raio do rolo encolhe numa corrida longa, a força necessária para girar a bobina dobra exatamente quando centenas de metros de linha formam uma barriga pesada dentro d'água.<Sidenote
+          id="sn-igfa-5m"
+          number={1}
+          label="IGFA · AMOSTRA DE 5 METROS"
+        >Desde abril de 2017, o laboratório da IGFA rompe apenas os <strong>5 metros (16,5 pés)</strong> imediatamente anteriores à linha dupla ou ao líder — permitindo estocar 400–600 jardas de <em>hollow core</em> fino no fundo do carretel sob um <em>top shot</em> de monofilamento na classe exata do torneio.</Sidenote> Empurrar a alavanca em pânico no meio da tomada de linha é o atalho mais curto para um estouro seco na popa.
+      </p>
+
+      <div class="prose-p">
+        Da mesma forma que o freio exige alívio na corrida, a geometria da vara proíbe erguer o cabo acima de 60° com peixe pesado encostado ao casco. Entrar em <GlossaryTerm termId="high-sticking" label="high-sticking" entry={glossaryById.get('high-sticking')} /> isola a carga inteira nos últimos centímetros da ponteira oca de grafite, colapsando a parede de carbono por compressão antes mesmo que a carretilha deslize um centímetro de linha.
+      </div>
+
+      <p>
+        Da emenda da linha dupla até o olho do anzol, a soma com o líder nunca pode passar de 12,19 metros (40 pés) nas classes acima de 20 lb, sob pena de desclassificação imediata no vídeo de popa. A regra admite até 9,14 metros individuais tanto para o <em>Bimini Twist</em> quanto para o líder, mas os tetos não se acumulam: escolher um <em>wind-on leader</em> de 9,14 m para aposentar o perigo de puxar cabo na mão obriga a cortar a linha dupla em exatos 3,05 metros.
+      </p>
+    </section>
+
+    <BlankActionSimulator client:visible />
+
+    <TackleCalculators client:visible peLines={peLinesData} />
+
+    <SpoolXRayDiagram client:visible />
+
+    <!-- =====================================================================
+         ATO II · HIDRODINÂMICA DA ESTEIRA & OCEANOGRAFIA PELÁGICA
+         ===================================================================== -->
+    <div class="act-divider" data-study-only>
+      <span class="act-kicker">ATO II · ESTEIRA, LUZ E RESSURGÊNCIA</span>
+      <span class="font-mono text-xs text-ink-muted">LEITURA DE ÁGUA AZUL &amp; TEMPO DE BOCA</span>
+    </div>
+
+    <section class="prose-editorial" data-study-only>
+      <div class="prose-p">
+        Respeite a cadência biológica do predador na mesma medida em que respeita o limite mecânico do polímero. Quando um marlin decide <GlossaryTerm termId="acender" label="acender" entry={glossaryById.get('acender')} /> atrás do <em>teaser</em> sem anzol, fechar o freio sem conceder os segundos de <em>drop-back</em> em <em>freespool</em> termina em <GlossaryTerm termId="sancocho" label="sancocho" entry={glossaryById.get('sancocho')} /> — recolhendo apenas o crânio do <em>ballyhoo</em>.<Sidenote
+          id="sn-balseiro-costa"
+          number={2}
+          label="SOMBRA NO AZUL &amp; MARÉ MORTA"
+        >No deserto pelágico, uma única tábua flutuante agrega toda a cadeia trófica; já em canais costeiros e manguezais, a ausência de correnteza desliga o corredor de caça de robalos e corvinas até que a maré volte a ganhar velocidade.</Sidenote>
+      </div>
+
+      <div class="prose-p">
+        Cada lâmina d'água impõe seu próprio relógio hidráulico: no largo, cruzar um <GlossaryTerm termId="balseiro" label="balseiro" entry={glossaryById.get('balseiro')} /> pede <GlossaryTerm termId="encachorrar" label="encachorrar" entry={glossaryById.get('encachorrar')} /> o primeiro dourado ao lado do casco para travar o cardume inteiro na sombra; no estuário, insistir no arremesso durante o <GlossaryTerm termId="estofo" label="estofo da maré" entry={glossaryById.get('estofo')} /> ou bater pontas de praia amazônicas logo que entra um <GlossaryTerm termId="repiquete" label="repiquete" entry={glossaryById.get('repiquete')} /> queima combustível contra peixes que já recuaram ou suspenderam a caça.
+      </div>
+    </section>
+
+    <TrollingSpreadScrolly client:visible />
+
+    <WaterColumnExplorer client:visible />
+
+    <!-- =====================================================================
+         ATO III · RETENÇÃO MNEMÔNICA & ELETRÔNICA DE PASSADIÇO
+         ===================================================================== -->
+    <div class="act-divider" data-study-only>
+      <span class="act-kicker">ATO III · MEMÓRIA OPERACIONAL &amp; SENSORES</span>
+      <span class="font-mono text-xs text-ink-muted">EVOCAÇÃO ATIVA FSRS &amp; ACÚSTICA SUBMARINA</span>
+    </div>
+
+    <section class="prose-editorial" data-study-only>
+      <p>
+        Leitura passiva dá sensação enganosa de domínio até o primeiro alarme cantar no passadiço.<Sidenote
+          id="sn-owc-omni"
+          number={3}
+          label="OWC 2026 · PENALIDADE DE SONAR"
+        >A varredura 360° dos sonares omnidirecionais retráteis alterou tanto a taxa de encontro com peixes de bico que o <em>Offshore World Championship</em> instituiu pontuação diferenciada para equipes que competem de sonar desligado.</Sidenote> Use os cartões abaixo para forçar a evocação antes de consultar os parâmetros rápidos de VHF, transdutores CHIRP e radar de aves.
+      </p>
+    </section>
+
+    <MnemonicDeck client:visible prompts={fsrsPrompts} />
+
+    <BoatElectronicsReference client:visible />
+
+    <!-- =====================================================================
+         ATO IV · REGRAS DE TORNEIO, BIOLOGIA DE SOLTURA & LEI 2026
+         ===================================================================== -->
+    <div class="act-divider" data-study-only>
+      <span class="act-kicker">ATO IV · AUDITORIA, SOLTURA &amp; LEI AMBIENTAL</span>
+      <span class="font-mono text-xs text-ink-muted">IGFA, COOKE ET AL. (2022) &amp; PORTARIAS MMA 2026</span>
+    </div>
+
+    <section class="prose-editorial" data-study-only>
+      <p>
+        Troféu perdido por descuido técnico dói menos que peixe anulado na mesa de arbitragem ou autuação ambiental na rampa do clube.<Sidenote
+          id="sn-portarias-out26"
+          number={4}
+          label="27 OUT 2026 · VIGÊNCIA PLENA"
+        >As Portarias GM/MMA nº 1.666 e nº 1.667/2026 encerraram o período de transição em 27 de outubro de 2026: embarcar peroá ou miragaia deixou de ser infração administrativa leve e passou ao regime de proibição integral.</Sidenote> Da geometria do <em>circle hook</em> alinhado ao código das sete bandeiras na adriça de boreste, cada detalhe abaixo separa uma tripulação limpa de um convés amador.
+      </p>
+    </section>
+
+    <DragCalculator client:visible />
+
+    <section id="tabela-igfa" data-cais-keep class="tufte-full-bleed my-10">
+      <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+        <div>
+          <p class="font-mono text-[10.5px] font-bold uppercase tracking-[0.1em] text-salvage m-0">
+            TABELA DE CONVÉS 5.1 · PADRÃO OFICIAL
+          </p>
+          <h2 class="font-editorial text-2xl font-semibold tracking-tight text-ink mt-1 mb-0">
+            Classes IGFA — Janela de Strike (25%–33%) e Tetos de Rigging
+          </h2>
+        </div>
+        <span class="font-mono text-[11px] text-ink-muted tabular-telemetry">
+          ÁGUA SALGADA · VIGÊNCIA 2026
+        </span>
+      </div>
+
+      <div class="tufte-table-wrap">
+        <table class="tufte-table tabular-telemetry">
+          <thead>
+            <tr>
+              <th>Classe</th>
+              <th>Strike (lb)</th>
+              <th>Strike (kg)</th>
+              <th>Máx. Dupla</th>
+              <th>Máx. Líder</th>
+              <th>Teto Soma</th>
+              <th>Nota de Arbitragem</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              igfaClasses.map((row) => (
+                <tr>
+                  <td class="font-mono font-bold text-ink whitespace-nowrap">
+                    {row.classe}
+                  </td>
+                  <td class="font-mono font-semibold text-ocean whitespace-nowrap">
+                    {row.strikeLb}
+                  </td>
+                  <td class="font-mono text-ink-secondary whitespace-nowrap">
+                    {row.strikeKg}
+                  </td>
+                  <td class="font-mono text-ink whitespace-nowrap">
+                    {row.maxDupla}
+                  </td>
+                  <td class="font-mono text-ink whitespace-nowrap">
+                    {row.maxLider}
+                  </td>
+                  <td class="font-mono font-bold text-salvage whitespace-nowrap">
+                    {row.tetoCombinado}
+                  </td>
+                  <td class="text-xs leading-snug text-ink-secondary min-w-[220px]">
+                    {row.nota}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <IgfaAuditorCalculator client:visible />
+
+    <FlagHalyardBuilder client:visible />
+
+    <ConservationCharts client:visible />
+
+    <Legislation2026Explorer client:visible entries={legislationData} />
+
+    <PostSaltwaterChecklist client:visible />
+  </article>
+</StudyLayout>

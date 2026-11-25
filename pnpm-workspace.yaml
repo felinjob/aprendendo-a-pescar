@@ -1,0 +1,10 @@
+allowBuilds:
+  esbuild: true
+  sharp: true
+
+minimumReleaseAgeExclude:
+  - svelte@5.59.2
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

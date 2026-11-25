@@ -1,0 +1,12 @@
+[
+  { "id": "pe-0-6", "pe": 0.6, "diameterMm": 0.128, "strength4xLb": 10 },
+  { "id": "pe-0-8", "pe": 0.8, "diameterMm": 0.148, "strength4xLb": 12 },
+  { "id": "pe-1-0", "pe": 1.0, "diameterMm": 0.165, "strength4xLb": 18 },
+  { "id": "pe-1-5", "pe": 1.5, "diameterMm": 0.205, "strength4xLb": 22 },
+  { "id": "pe-2-0", "pe": 2.0, "diameterMm": 0.235, "strength4xLb": 28 },
+  { "id": "pe-3-0", "pe": 3.0, "diameterMm": 0.285, "strength4xLb": 38 },
+  { "id": "pe-4-0", "pe": 4.0, "diameterMm": 0.330, "strength4xLb": 48 },
+  { "id": "pe-6-0", "pe": 6.0, "diameterMm": 0.405, "strength4xLb": 60 },
+  { "id": "pe-8-0", "pe": 8.0, "diameterMm": 0.470, "strength4xLb": 85 },
+  { "id": "pe-10-0", "pe": 10.0, "diameterMm": 0.520, "strength4xLb": 100 }
+]

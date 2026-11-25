@@ -1,0 +1,42 @@
+[
+  {
+    "id": "igfa-windon-teto-1219",
+    "moduleId": "cap-05",
+    "category": "Foco Mecânico",
+    "question": "Acima da classe 20 lb da IGFA, qual é o limite máximo de comprimento de um wind-on leader se a linha dupla (Bimini Twist) já mede 3,05 m?",
+    "answer": "9,14 m (30 pés), respeitando o teto combinado de 12,19 m (40 pés).",
+    "causalExplanation": "Acima de 20 lb, a IGFA limita linha dupla e líder a 9,14 m individuais, mas trava a soma combinada em 12,19 m — jamais 18,28 m. Com 3,05 m de linha dupla, sobram exatos 9,14 m de wind-on para girar o peixe junto à popa sem handlining e sem desclassificação na auditoria."
+  },
+  {
+    "id": "circle-hook-non-offset",
+    "moduleId": "cap-06",
+    "category": "Foco Conservação",
+    "question": "Por que regulamentos rigorosos de peixes de bico exigem circle hook sem offset (deslocamento lateral) em iscas naturais?",
+    "answer": "Porque o offset severo (~15°) anula a proteção anatômica do circle hook, elevando a fisgada profunda de 2% para 44% — patamar quase idêntico ao anzol J (46%).",
+    "causalExplanation": "Sem deslocamento lateral, a ponta curvada para dentro desliza para fora da garganta sob recolhimento contínuo e só gira para travar na dobradiça do canto da mandíbula (85% das fisgadas), reduzindo em 20,75× o risco de sangramento."
+  },
+  {
+    "id": "lavagem-carretilha-drag",
+    "moduleId": "cap-08",
+    "category": "Foco Saliência (Cais)",
+    "question": "Você lava a carretilha oceânica após a pescaria. Qual atitude mecânica obrigatória toma ANTES da água doce e qual DEPOIS da secagem?",
+    "answer": "Travar firmemente o drag ANTES de molhar; soltar totalmente o drag DEPOIS de seca para guardar.",
+    "causalExplanation": "Fechar o freio antes do enxágue suave comprime a pilha de discos e impede a entrada de água e sal nas arruelas internas; aliviar totalmente a alavanca ou estrela ao guardar evita comprimir e deformar os discos de carbono durante o armazenamento."
+  },
+  {
+    "id": "peroa-portaria-1667-2026",
+    "moduleId": "cap-07",
+    "category": "Foco Legal (Portarias 2026)",
+    "question": "Em novembro de 2026, você fisga um peroá (Balistes capriscus) no parcel. Pode embarcar para consumo próprio?",
+    "answer": "Não. Proibição total de captura, retenção e transporte em pleno vigor desde 27 de outubro de 2026 (Portaria GM/MMA nº 1.667/2026).",
+    "causalExplanation": "Enquadrado como Em Perigo (EN) sem Plano de Recuperação ativo nas Portarias 1.666 e 1.667/2026, o peroá encerrou seu prazo de adaptação de 180 dias em 27/10/2026; captura incidental só não gera autuação quando o peixe é devolvido imediatamente à água."
+  },
+  {
+    "id": "tiagra-50w-bobina-vazia",
+    "moduleId": "cap-02",
+    "category": "Foco de Duelo 50W",
+    "question": "Numa briga prolongada, por que um pescador com uma Shimano Tiagra 50W precisa reduzir o drag à medida que o carretel esvazia?",
+    "answer": "Porque o menor diâmetro de linha no carretel diminui o braço de alavanca sob torque constante dos discos, multiplicando a tensão efetiva sobre a linha.",
+    "causalExplanation": "Os discos internos exercem torque fixo no eixo; quando a corrida reduz o raio útil da bobina pela metade, a força linear necessária para girar o carretel dobra — somada ao arrasto hidrodinâmico de centenas de metros submersos. Avançar a alavanca em pânico estoura o conjunto."
+  }
+]

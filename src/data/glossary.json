@@ -1,0 +1,44 @@
+[
+  {
+    "id": "sancocho",
+    "term": "Sancocho",
+    "shortDef": "Tensionar a isca natural cedo demais no ataque de um marlin, recolhendo de volta apenas a cabeça da isca.",
+    "causalMechanism": "Peixes de bico batem e abocanham a presa de lado antes de girá-la para engolir; subir o drag sem conceder os segundos de drop-back em freespool arranca o corpo do ballyhoo antes que o circle hook deslize até a dobradiça da mandíbula."
+  },
+  {
+    "id": "repiquete",
+    "term": "Repiquete",
+    "shortDef": "Subida brusca do nível do rio por chuvas nas cabeceiras durante a vazante, dispersando os peixes na mata alagada.",
+    "causalMechanism": "A inversão hidrológica reabre o igapó inundado; com abrigo infinito e forragem espalhada sob a floresta onde o casco não entra, o tucunaré-açu abandona as pontas de praia e apenas reboja sem fechar o ataque até o rio estabilizar."
+  },
+  {
+    "id": "high-sticking",
+    "term": "High-sticking",
+    "shortDef": "Erguer exageradamente a vara na vertical durante a briga, transferindo toda a carga para a ponteira fina e fraturando o carbono.",
+    "causalMechanism": "Acima de 60° de elevação, o blank perde o braço de amortecimento da seção média e concentra um raio de curvatura crítico na parede delgada da ponteira, colapsando as fibras de grafite por compressão instantânea."
+  },
+  {
+    "id": "balseiro",
+    "term": "Balseiro",
+    "shortDef": "Tronco, boia desgarrada ou mancha de sargaço flutuando em alto-mar que concentra cardumes e dourados.",
+    "causalMechanism": "No deserto aberto da zona pelágica, qualquer sombra sólida forma um ponto de agregação para crustáceos e peixes forrageiros em busca de refúgio, atraindo predadores como dourados-do-mar (mahi-mahi) e bijupirás."
+  },
+  {
+    "id": "estofo",
+    "term": "Estofo / Reponto",
+    "shortDef": "Intervalo breve de água parada na transição entre maré enchente e vazante, onde a atividade alimentar cai ao mínimo.",
+    "causalMechanism": "Sem fluxo hidrodinâmico para varrer camarões, tatuíras e pequenos peixes pelas valas e canais, cessa a esteira de emboscada; predadores costeiros poupam energia e suspendem a caça ativa até a maré voltar a correr."
+  },
+  {
+    "id": "acender",
+    "term": "Acender (Lit Up)",
+    "shortDef": "Exibição súbita de listras azul-elétricas e violetas brilhantes no marlin ou peixe-vela ao entrar em caça atrás do teaser.",
+    "causalMechanism": "A descarga nervosa predatória expande cromatóforos e iridóforos na pele do peixe de bico, sinalizando excitação máxima no instante exato de recolher o teaser e entregar o pitch bait na água limpa."
+  },
+  {
+    "id": "encachorrar",
+    "term": "Encachorrar",
+    "shortDef": "Manter um exemplar fisgado dentro d'água junto à popa para segurar o restante do cardume curioso ao alcance dos arremessos.",
+    "causalMechanism": "Cardumes de dourados-do-mar operam sob forte coesão social e competição alimentar; manter o primeiro peixe ativo na água ao lado do barco trava o grupo inteiro na sombra do casco."
+  }
+]

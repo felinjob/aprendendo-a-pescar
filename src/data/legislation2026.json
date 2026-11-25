@@ -1,0 +1,42 @@
+[
+  {
+    "id": "peroa",
+    "commonName": "Peroá / Peixe-porco",
+    "scientificName": "Balistes capriscus",
+    "statusMMA2026": "EN (Em Perigo)",
+    "legalRegime": "Proibição total de captura, retenção, transporte e comercialização em pleno vigor desde 27 de outubro de 2026 (Portarias GM/MMA nº 1.666 e nº 1.667/2026; sem Plano de Recuperação ativo).",
+    "closedSeason": "Ano inteiro (proteção integral permanente)"
+  },
+  {
+    "id": "garoupa-verdadeira",
+    "commonName": "Garoupa-verdadeira",
+    "scientificName": "Epinephelus marginatus",
+    "statusMMA2026": "VU (Vulnerável)",
+    "legalRegime": "Uso controlado fora do defeso sob Plano de Recuperação (Portaria Interministerial nº 41/2018), restrito à janela de tamanho entre 47 e 73 cm (mínimo conservador de 50 cm na tabela FIPERJ-RJ 2026).",
+    "closedSeason": "1º de novembro a 28 de fevereiro (proibida para todas as embarcações)"
+  },
+  {
+    "id": "marlin-branco",
+    "commonName": "Marlin-branco",
+    "scientificName": "Kajikia albida",
+    "statusMMA2026": "Excluído da Portaria 1.667/2026 (Regime IN SEAP 12/2005)",
+    "legalRegime": "Excluído da lista de ameaçados em 2026, mas segue com devolução viva obrigatória (100% pesque-e-solte esportivo) e comercialização estritamente proibida pela IN SEAP nº 12/2005.",
+    "closedSeason": "Retenção e venda proibidas o ano inteiro (IN SEAP 12/2005)"
+  },
+  {
+    "id": "miragaia",
+    "commonName": "Miragaia / Piraúna",
+    "scientificName": "Pogonias courbina",
+    "statusMMA2026": "CR (Criticamente em Perigo)",
+    "legalRegime": "Proibição total de captura, guarda e transporte com fiscalização severa desde 27 de outubro de 2026 (Portaria GM/MMA nº 1.667/2026; soltura imediata se incidental).",
+    "closedSeason": "Ano inteiro (proteção integral permanente)"
+  },
+  {
+    "id": "mero",
+    "commonName": "Mero",
+    "scientificName": "Epinephelus itajara",
+    "statusMMA2026": "CR (Criticamente em Perigo)",
+    "legalRegime": "Proibição total sob moratória contínua desde 2002 e proteção integral pela Portaria GM/MMA nº 1.666/2026; exige liberação imediata ainda dentro d'água.",
+    "closedSeason": "Ano inteiro (moratória e proteção integral)"
+  }
+]

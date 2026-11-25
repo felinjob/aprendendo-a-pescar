@@ -1,0 +1,31 @@
+---
+interface Props {
+  id: string;
+  number: number | string;
+  label?: string;
+}
+
+const { id, number, label = 'ESCÓLIO DE CONVÉS' } = Astro.props;
+const padded = String(number).padStart(2, '0');
+---
+
+<span class="sidenote-wrapper">
+  <label
+    for={id}
+    class="sidenote-ref"
+    title="Alternar nota de margem"
+    aria-label={`Nota lateral ${padded}: ${label}`}
+  >
+    {padded}
+  </label>
+  <input
+    type="checkbox"
+    id={id}
+    class="sidenote-toggle sr-only"
+    aria-controls={`${id}-note`}
+  />
+  <span id={`${id}-note`} class="sidenote-content" role="note">
+    <span class="sidenote-header">{padded} · {label}</span>
+    <slot />
+  </span>
+</span>

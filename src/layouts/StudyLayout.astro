@@ -1,0 +1,325 @@
+---
+import '../styles/global.css';
+import { pwaInfo } from 'virtual:pwa-info';
+
+interface TocItem {
+  id: string;
+  label: string;
+  tag?: string;
+  studyOnly?: boolean;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  chapterCode?: string;
+  tocItems?: TocItem[];
+}
+
+const {
+  title,
+  description = 'Caderno técnico-editorial e instrumentos de convés sobre Pesca Esportiva oceânica e costeira.',
+  chapterCode = '23°00′S · 042°00′W // CADERNO DE CONVÉS',
+  tocItems = [],
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR" data-theme="light" data-mode="estudo" data-study-mode="estudo">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#171613" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {pwaInfo ? (
+      <Fragment set:html={pwaInfo.webManifest.linkTag} />
+    ) : (
+      <link rel="manifest" href="/manifest.webmanifest" />
+    )}
+    <title>{title} — Aprendendo a Pescar</title>
+
+    <!-- Inicialização bloqueante zero-FOUC para Tema (Claro/Escuro) e Modo (Estudo/Cais) -->
+    <script is:inline>
+      (() => {
+        try {
+          const root = document.documentElement;
+          const savedTheme = localStorage.getItem('ap-theme');
+          const prefersDark =
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme =
+            savedTheme === 'dark' || savedTheme === 'light'
+              ? savedTheme
+              : prefersDark
+                ? 'dark'
+                : 'light';
+
+          const savedMode = localStorage.getItem('ap-mode');
+          const mode = savedMode === 'cais' ? 'cais' : 'estudo';
+
+          root.dataset.theme = theme;
+          root.dataset.mode = mode;
+          root.dataset.studyMode = mode;
+        } catch {
+          document.documentElement.dataset.theme = 'light';
+          document.documentElement.dataset.mode = 'estudo';
+          document.documentElement.dataset.studyMode = 'estudo';
+        }
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a href="#conteudo-principal" class="skip-link">
+      Ir direto para a leitura
+    </a>
+
+    <!-- Barra Superior de Passadiço -->
+    <header class="sticky top-0 z-40 border-b border-line bg-canvas/92 backdrop-blur-md">
+      <div class="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-2.5">
+        <div class="flex items-center gap-3 min-w-0">
+          <a
+            href="/"
+            class="group inline-flex items-center gap-2.5 no-underline"
+            aria-label="Aprendendo a Pescar — Início"
+          >
+            <span
+              class="inline-flex h-6 w-6 items-center justify-center rounded-[3px] border border-line-strong bg-ink font-mono text-[10px] font-bold text-canvas transition-colors group-hover:border-salvage group-hover:bg-salvage"
+              aria-hidden="true"
+            >
+              AP
+            </span>
+            <span class="font-sans text-sm font-bold tracking-tight text-ink">
+              Aprendendo a Pescar
+            </span>
+          </a>
+
+          <span
+            class="hidden md:inline-block h-3.5 w-px bg-line"
+            aria-hidden="true"
+          ></span>
+          <span class="hidden md:inline-block font-mono text-[11px] text-ink-muted tabular-telemetry truncate">
+            {chapterCode}
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-2.5">
+          <!-- Alternador Tátil em Pílula: Modo Estudo vs. Modo Cais -->
+          <div
+            class="seg-pill-group"
+            role="group"
+            aria-label="Alternar regime de interface"
+          >
+            <button
+              type="button"
+              data-mode-btn="estudo"
+              aria-pressed="true"
+              class="seg-pill"
+            >
+              Estudo
+            </button>
+            <button
+              type="button"
+              data-mode-btn="cais"
+              aria-pressed="false"
+              class="seg-pill"
+            >
+              Cais
+            </button>
+          </div>
+
+          <!-- Alternador Tema Papel / Abissal -->
+          <button
+            type="button"
+            data-theme-toggle
+            aria-label="Alternar entre tema claro e abissal"
+            class="inline-flex items-center gap-1.5 cursor-pointer rounded-full border border-line bg-surface px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-ink-secondary transition-colors hover:border-line-strong hover:text-ink"
+          >
+            <span
+              class="inline-block h-2 w-2 rounded-full bg-salvage"
+              aria-hidden="true"
+            ></span>
+            <span data-theme-label>Papel</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sonda de progresso mobile (CSS Scroll-Driven) -->
+      <div class="scroll-progress-mobile-track" aria-hidden="true">
+        <div class="scroll-progress-mobile-bar"></div>
+      </div>
+    </header>
+
+    <!-- Grade Tufte Assimétrica (>= 1200px: 180px | 66ch | 260px) -->
+    <div class="tufte-grid">
+      <!-- COLUNA 1: Esquerda (180px, sticky) — Carta de Navegação & Progresso -->
+      <aside class="tufte-rail-left" aria-label="Carta de navegação do caderno">
+        <div class="flex items-start gap-3.5">
+          <div
+            class="scroll-progress-vertical-track shrink-0 mt-1"
+            aria-hidden="true"
+          >
+            <div class="scroll-progress-vertical-bar"></div>
+          </div>
+
+          <div class="min-w-0 flex-1">
+            <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-ink-muted m-0 mb-3">
+              ROTEIRO DE BORDO
+            </p>
+            <nav aria-label="Seções do caderno">
+              <ul class="m-0 list-none space-y-1.5 p-0">
+                {
+                  tocItems.map((item) => (
+                    <li {...(item.studyOnly ? { 'data-study-only': '' } : {})}>
+                      <a
+                        href={`#${item.id}`}
+                        class="group flex items-baseline gap-2 rounded-[2px] py-0.5 text-xs leading-snug text-ink-secondary no-underline transition-colors hover:text-ink"
+                      >
+                        {item.tag && (
+                          <span class="shrink-0 font-mono text-[9.5px] font-bold text-ink-muted tabular-telemetry transition-colors group-hover:text-salvage">
+                            {item.tag}
+                          </span>
+                        )}
+                        <span class="font-sans font-medium truncate">{item.label}</span>
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </nav>
+
+            <div class="tufte-rail-note mt-5 border-t border-line pt-3">
+              <p class="font-mono text-[9.5px] font-bold uppercase tracking-widest text-ink-muted m-0">
+                OPERAÇÃO NO PÍER
+              </p>
+              <p class="font-sans text-[11px] leading-relaxed text-ink-secondary mt-1 mb-0">
+                Acione <strong>Cais</strong> no topo para recolher a prosa e operar direto nas escalas, rádio e checklists.
+              </p>
+            </div>
+
+            <slot name="rail-left" />
+          </div>
+        </div>
+      </aside>
+
+      <!-- COLUNA 2: Centro (max-width: 66ch) — Monografia interativa & instrumentos -->
+      <main id="conteudo-principal" class="tufte-main">
+        <!-- Indicador enxuto visível apenas no Modo Cais -->
+        <div
+          class="cais-banner items-center justify-between gap-3 rounded-[4px] border border-line-strong border-l-3 border-l-salvage bg-surface px-4 py-2.5 mb-6"
+          role="status"
+        >
+          <div class="min-w-0">
+            <span class="block font-mono text-[10px] font-bold uppercase tracking-widest text-salvage">
+              REGIME DE CAIS · CONSULTA DIRETA
+            </span>
+            <span class="font-sans text-xs text-ink-secondary">
+              Ensaios, scrollytelling e cartas de estudo recolhidos; instrumentos prontos para operação.
+            </span>
+          </div>
+          <button
+            type="button"
+            data-mode-btn="estudo"
+            class="shrink-0 cursor-pointer rounded-full border border-line-strong bg-elevated px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-ink transition-colors hover:border-salvage hover:text-salvage"
+          >
+            Reabrir Estudo
+          </button>
+        </div>
+
+        <slot />
+
+        <!-- Colofão Editorial -->
+        <footer class="mt-16 border-t border-line pt-5 pb-2 flex flex-wrap items-center justify-between gap-3 font-mono text-[10px] text-ink-muted tabular-telemetry">
+          <span>APRENDENDO A PESCAR · EDIÇÃO NOV/2026</span>
+          <span>OFFLINE-FIRST PWA · DEXIE INDEXEDDB · FSRS 0.90</span>
+        </footer>
+      </main>
+
+      <!-- COLUNA 3: Direita (260px) — Margem de Notas Laterais (Tufte) -->
+      <aside class="tufte-rail-right" aria-label="Margem para notas laterais" data-study-only>
+        <p class="font-mono text-[9.5px] font-bold uppercase tracking-widest text-ink-muted border-b border-line pb-2 m-0">
+          MARGEM TÉCNICA // ESCÓLIOS
+        </p>
+      </aside>
+    </div>
+
+    <!-- Controle persistente de Tema e Modo -->
+    <script>
+      function syncControls() {
+        const root = document.documentElement;
+        const currentTheme = root.dataset.theme === 'dark' ? 'dark' : 'light';
+        const currentMode = root.dataset.mode === 'cais' ? 'cais' : 'estudo';
+
+        const themeLabel = document.querySelector('[data-theme-label]');
+        if (themeLabel) {
+          themeLabel.textContent = currentTheme === 'dark' ? 'Abissal' : 'Papel';
+        }
+
+        document.querySelectorAll<HTMLButtonElement>('[data-mode-btn]').forEach((btn) => {
+          const targetMode = btn.dataset.modeBtn;
+          const isActive = targetMode === currentMode;
+          btn.setAttribute('aria-pressed', String(isActive));
+        });
+      }
+
+      function setTheme(nextTheme: 'light' | 'dark') {
+        document.documentElement.dataset.theme = nextTheme;
+        try {
+          localStorage.setItem('ap-theme', nextTheme);
+        } catch {
+          // Contexto restrito sem localStorage
+        }
+        syncControls();
+      }
+
+      function setMode(nextMode: 'estudo' | 'cais') {
+        document.documentElement.dataset.mode = nextMode;
+        document.documentElement.dataset.studyMode = nextMode;
+        try {
+          localStorage.setItem('ap-mode', nextMode);
+        } catch {
+          // Contexto restrito sem localStorage
+        }
+        syncControls();
+      }
+
+      function bindControlEvents() {
+        const themeToggle = document.querySelector('[data-theme-toggle]');
+        if (themeToggle && !themeToggle.hasAttribute('data-bound')) {
+          themeToggle.setAttribute('data-bound', 'true');
+          themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.dataset.theme === 'dark';
+            setTheme(isDark ? 'light' : 'dark');
+          });
+        }
+
+        document.querySelectorAll<HTMLButtonElement>('[data-mode-btn]').forEach((btn) => {
+          if (btn.hasAttribute('data-bound')) return;
+          btn.setAttribute('data-bound', 'true');
+          btn.addEventListener('click', () => {
+            const target = btn.dataset.modeBtn === 'cais' ? 'cais' : 'estudo';
+            setMode(target);
+          });
+        });
+
+        syncControls();
+      }
+
+      bindControlEvents();
+      document.addEventListener('astro:after-swap', bindControlEvents);
+    </script>
+
+    <!-- Registro Offline-First PWA (Workbox autoUpdate) -->
+    <script>
+      import { registerSW } from 'virtual:pwa-register';
+      registerSW({ immediate: true });
+    </script>
+  </body>
+</html>
